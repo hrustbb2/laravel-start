@@ -18,3 +18,4 @@ Route::get('/', function () {
 });
 
 require base_path('src/FirstModule/Laravel/routes.php');
+require base_path('src/Auth/Laravel/routes.php');
