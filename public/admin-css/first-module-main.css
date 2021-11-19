@@ -10018,6 +10018,9 @@ body {
 .closed-sidebar .sidebar-item-name {
   display: none; }
 
+.closed-sidebar .treeview-menu {
+  display: none !important; }
+
 .closed-sidebar .sidebar-angle-button-container {
   display: none; }
 
@@ -10133,6 +10136,13 @@ body {
   margin: 0;
   padding-left: 5px;
   display: none; }
+
+.sidebar-menu .menu-open .treeview-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding-left: 5px;
+  display: block; }
 
 .sidebar-menu .treeview-menu > li > a {
   position: relative;

@@ -10,8 +10,11 @@ use Src\FirstModule\Factory as FirstModuleFactory;
 use Src\Auth\Interfaces\IModulesProvider as IAuthModulesProvider;
 use Src\Auth\Interfaces\IFactory as IAuthFactory;
 use Src\Auth\Factory as AuthFactory;
+use Src\Sidebar\Interfaces\IModulesProvider as ISidebarModulesProvider;
+use Src\Sidebar\Interfaces\IFactory as ISidebarFactory;
+use Src\Sidebar\Factory as SidebarFactory;
 
-class ModulesProvider implements IFirstModuleProvider, IAuthModulesProvider {
+class ModulesProvider implements IFirstModuleProvider, IAuthModulesProvider, ISidebarModulesProvider {
 
     /**
      * @var ICommonFactory
@@ -27,6 +30,11 @@ class ModulesProvider implements IFirstModuleProvider, IAuthModulesProvider {
      * @var IAuthFactory
      */
     protected ?IAuthFactory $authFactory = null;
+
+    /**
+     * @var ISidebarFactory
+     */
+    protected ?ISidebarFactory $sidebarFactory = null;
 
     public function getCommonFactory()
     {
@@ -62,6 +70,14 @@ class ModulesProvider implements IFirstModuleProvider, IAuthModulesProvider {
             $this->authFactory->injectModules($this);
         }
         return $this->authFactory;
+    }
+
+    public function getSidebarFactory()
+    {
+        if($this->sidebarFactory === null){
+            $this->sidebarFactory = new SidebarFactory();
+        }
+        return $this->sidebarFactory;
     }
 
 }

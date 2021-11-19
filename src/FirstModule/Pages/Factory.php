@@ -17,7 +17,7 @@ class Factory implements IFactory {
     public function createMainPage()
     {
         $page = new MainPage();
-        $sidebarMenu = $this->moduleFactory->getCommonFactory()->getPagesFactory()->getSidebarFactory()->getMenu();
+        $sidebarMenu = $this->moduleFactory->getSidebarFactory()->getMenu();
         $page->setSidebar($sidebarMenu);
         return $page;
     }

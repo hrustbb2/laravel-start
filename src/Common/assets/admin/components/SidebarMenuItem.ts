@@ -47,14 +47,12 @@ export class SidebarMenuItem implements ISidebarMenuItem {
     private hideSubItems()
     {
         this.isSubItemsCollapsed = true;
-        this.$subItems.hide();
         this.$container.removeClass('menu-open');
     }
 
     private showSubItems()
     {
         this.isSubItemsCollapsed = false;
-        this.$subItems.show();
         this.$container.addClass('menu-open');
     }
 }
