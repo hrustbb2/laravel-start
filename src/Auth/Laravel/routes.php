@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * prefix admin/auth
+ * as admin.auth.
+ */
+
 use Illuminate\Support\Facades\Route;
 use Src\Auth\Laravel\Controllers\LoginController;
 

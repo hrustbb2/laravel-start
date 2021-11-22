@@ -165,6 +165,8 @@ return [
         /*
          * Package Service Providers...
          */
+        Src\Auth\Laravel\Providers\Route::class,
+        Src\FirstModule\Laravel\Providers\Route::class,
 
         /*
          * Application Service Providers...
