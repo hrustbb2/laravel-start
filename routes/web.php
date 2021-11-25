@@ -16,6 +16,3 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-require base_path('src/FirstModule/Laravel/routes.php');
-require base_path('src/Auth/Laravel/routes.php');

@@ -36,7 +36,7 @@ class LoginForm implements ILoginForm {
     public function getJsSettings()
     {
         return [
-            'requestUrl' => $this->routeAdapter->getRoute('loginRequest'),
+            'requestUrl' => $this->routeAdapter->getRoute('admin.auth.loginRequest'),
         ];
     }
 
