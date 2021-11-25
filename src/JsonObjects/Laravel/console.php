@@ -8,7 +8,7 @@ Artisan::command('json-objects-init', function () {
     /** @var IModuleFactory */
     $factory = app()->get(AppServiceProvider::ADMIN_MODULES)->getJsonObjectsFactory();
     
-    $dirsDbTables = $factory->getDirsCategoriesFactory()->getInfrastructureFactory()->getDbTables();
+    $dirsDbTables = $factory->getDirsTreeFactory()->getInfrastructureFactory()->getDbTables();
     $dirsDbTables->init();
     $dirsDbTables->create();
     $dirsDbTables->fillData();

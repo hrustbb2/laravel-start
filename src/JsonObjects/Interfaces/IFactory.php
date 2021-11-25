@@ -28,8 +28,8 @@ interface IFactory {
     public function injectModules(IModulesProvider $provider);
     public function getSidebarFactory():ISidebarFactory;
     public function getCommonFactory():ICommonFactory;
-    public function setDirsCategoriesFactory(IDirsTreeFactory $factory);
-    public function getDirsCategoriesFactory():IDirsTreeFactory;
+    public function setDirsTreeFactory(IDirsTreeFactory $factory);
+    public function getDirsTreeFactory():IDirsTreeFactory;
     public function loadSettings(array $settings);
     public function getSetting(string $key);
     public function getDtoFactory():IDtoFactory;

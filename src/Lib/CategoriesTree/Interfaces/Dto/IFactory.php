@@ -6,8 +6,6 @@ use Src\Lib\CategoriesTree\Interfaces\IFactory as ILibFactory;
 
 interface IFactory {
     public function setLibFactory(ILibFactory $factory);
-    /**
-     * @return IPersist
-     */
-    public function createPersist();
+    public function createPersist():IPersist;
+    public function createResource():IResource;
 }

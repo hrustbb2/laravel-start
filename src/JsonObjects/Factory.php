@@ -46,12 +46,12 @@ class Factory implements IFactory {
         return $this->commonFactory;
     }
 
-    public function setDirsCategoriesFactory(IDirsTreeFactory $factory)
+    public function setDirsTreeFactory(IDirsTreeFactory $factory)
     {
         $this->dirsTreeFactory = $factory;
     }
 
-    public function getDirsCategoriesFactory():IDirsTreeFactory
+    public function getDirsTreeFactory():IDirsTreeFactory
     {
         return $this->dirsTreeFactory;
     }

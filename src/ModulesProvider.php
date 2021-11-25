@@ -114,7 +114,7 @@ class ModulesProvider implements IFirstModuleProvider, IAuthModulesProvider, ISi
                 ITreeCategoriesFactory::TABLE_NAME => 'json_objects_dirs',
             ];
             $dirsCategoriesFactory->loadSettings($treeSettings);
-            $this->jsonObjectsFactory->setDirsCategoriesFactory($dirsCategoriesFactory);
+            $this->jsonObjectsFactory->setDirsTreeFactory($dirsCategoriesFactory);
             $this->jsonObjectsFactory->injectModules($this);
         }
         return $this->jsonObjectsFactory;
