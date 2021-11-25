@@ -26,7 +26,7 @@ class Query extends SqlQueryBase implements IQuery {
     public function select(array $fields)
     {
         $this->reset();
-        $selectSection = $this->getSelectSection($fields, ['id', 'path', 'parent_id', 'name'], $this->tableName, 'category_');
+        $selectSection = $this->getSelectSection($fields, ['id', 'matherial_path', 'parent_id', 'name'], $this->tableName, 'category_');
         $this->queryBuilder->select($selectSection);
         $this->arrayProcConf = ['prefix' => 'category_'];
         return $this;
@@ -53,7 +53,7 @@ class Query extends SqlQueryBase implements IQuery {
     public function withParent(array $fields)
     {
         $this->joinParend();
-        $selectSection = $this->getSelectSection($fields, ['id', 'path', 'parent_id', 'name'], $this->tableName, 'parent_');
+        $selectSection = $this->getSelectSection($fields, ['id', 'matherial_path', 'parent_id', 'name'], $this->tableName, 'parent_');
         $this->queryBuilder->addSelect($selectSection);
         $this->arrayProcConf['parent'] = ['prefix' => 'parent_'];
         return $this;

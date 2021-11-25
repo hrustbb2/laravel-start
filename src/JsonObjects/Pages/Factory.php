@@ -19,15 +19,15 @@ class Factory implements IFactory {
 
     public function createDirPage(string $currentDirId):IDir
     {
-        if($this->dirPage === null){
-            $this->dirPage = new Dir();
-            $dirsStorage = $this->moduleFactory->getDirsTreeFactory()->getInfrastructureFactory()->getStorage();
-            $this->dirPage->setDirsStorage($dirsStorage);
-            $dirsDtoFactory = $this->moduleFactory->getDirsTreeFactory()->getDtoFactory();
-            $this->dirPage->setDirsDtoFactory($dirsDtoFactory);
-            $this->dirPage->init($currentDirId);
-        }
-        return $this->dirPage;
+        $page = new Dir();
+        $sidebarMenu = $this->moduleFactory->getSidebarFactory()->getMenu();
+        $page->setSidebar($sidebarMenu);
+        $dirsStorage = $this->moduleFactory->getDirsTreeFactory()->getInfrastructureFactory()->getStorage();
+        $page->setDirsStorage($dirsStorage);
+        $dirsDtoFactory = $this->moduleFactory->getDirsTreeFactory()->getDtoFactory();
+        $page->setDirsDtoFactory($dirsDtoFactory);
+        $page->init($currentDirId);
+        return $page;
     }
 
 }

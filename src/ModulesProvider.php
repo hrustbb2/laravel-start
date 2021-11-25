@@ -85,6 +85,11 @@ class ModulesProvider implements IFirstModuleProvider, IAuthModulesProvider, ISi
     {
         if($this->sidebarFactory === null){
             $this->sidebarFactory = new SidebarFactory();
+            $settings = [
+                ISidebarFactory::FRAMEWORK_NAME => ICommonFactory::LARAVEL,
+            ];
+            $this->sidebarFactory->loadSettings($settings);
+            $this->sidebarFactory->injectModules($this);
         }
         return $this->sidebarFactory;
     }

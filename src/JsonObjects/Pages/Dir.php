@@ -42,14 +42,14 @@ class Dir extends Page implements IDir {
     public function getCssStack()
     {
         return [
-
+            '<link rel="stylesheet" href="/admin-css/json-objects-dir.css?' . self::CSS_VERSION . '">',
         ];
     }
 
     public function getJsStack()
     {
         return [
-
+            '<script src="/admin-js/json-objects-dir.js?' . self::JS_VERSION . '"></script>',
         ];
     }
 

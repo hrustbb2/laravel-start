@@ -22,7 +22,7 @@ class DbTables extends InitDb implements IDbTables {
         $this->categoriesData = [
             [
                 'id' => $uniqId,
-                'path' => '',
+                'matherial_path' => '',
                 'parent_id' => '',
                 'name' => 'Name_1',
             ],
@@ -38,7 +38,7 @@ class DbTables extends InitDb implements IDbTables {
     {
         $table = $this->getTable($this->tableName, ['id' => false, 'primary_key' => ['id']]);
         $table  ->addColumn('id', 'string')
-                ->addColumn('path', 'text')
+                ->addColumn('matherial_path', 'text')
                 ->addColumn('parent_id', 'string')
                 ->addColumn('name', 'string')
                 ->create();

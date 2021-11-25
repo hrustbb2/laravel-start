@@ -19,15 +19,16 @@ class DirController extends Controller {
     {
         View::getFinder()
             ->setPaths([
-                base_path() . '/src/FirstModule/Laravel/Views',
+                base_path() . '/src/JsonObjects/Laravel/Views',
             ]);
-        $this->factory = app()->get(AppServiceProvider::ADMIN_MODULES)->getJsonObjectsModule();
+        $this->factory = app()->get(AppServiceProvider::ADMIN_MODULES)->getJsonObjectsFactory();
     }
 
     public function dir(Request $request)
     {
         $dirId = $request->get('dir-id') ?? '';
         $page = $this->factory->getPagesFactory()->createDirPage($dirId);
+        return view('dir', ['page' => $page]);
     }
 
 }
