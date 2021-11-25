@@ -6,6 +6,8 @@ abstract class AbstractItem {
 
     protected string $id;
 
+    protected string $key;
+
     protected string $name;
 
     protected string $description;
@@ -19,6 +21,7 @@ abstract class AbstractItem {
     {
         return [
             'id' => $this->id,
+            'key' => $this->key,
             'name' => $this->name,
             'description' => $this->description,
         ];
@@ -27,6 +30,7 @@ abstract class AbstractItem {
     public function load(array $data)
     {
         $this->id = $data['id'] ?? null;
+        $this->key = $data['key'] ?? null;
         $this->name = $data['name'] ?? null;
         $this->description = $data['description'] ?? null;
     }

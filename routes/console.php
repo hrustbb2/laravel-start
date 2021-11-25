@@ -21,3 +21,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 require base_path('src/Auth/Laravel/consolle.php');
+require base_path('src/JsonObjects/Laravel/console.php');

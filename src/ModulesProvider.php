@@ -13,8 +13,13 @@ use Src\Auth\Factory as AuthFactory;
 use Src\Sidebar\Interfaces\IModulesProvider as ISidebarModulesProvider;
 use Src\Sidebar\Interfaces\IFactory as ISidebarFactory;
 use Src\Sidebar\Factory as SidebarFactory;
+use Src\JsonObjects\Interfaces\IModulesProvider as IJsonObjectsProvider;
+use Src\JsonObjects\Interfaces\IFactory as IJsonObjectsFactory;
+use Src\JsonObjects\Factory as JsonObjectsFactory;
+use Src\Lib\CategoriesTree\Interfaces\IFactory as ITreeCategoriesFactory;
+use Src\Lib\CategoriesTree\Factory as TreeCategoriesFactory;
 
-class ModulesProvider implements IFirstModuleProvider, IAuthModulesProvider, ISidebarModulesProvider {
+class ModulesProvider implements IFirstModuleProvider, IAuthModulesProvider, ISidebarModulesProvider, IJsonObjectsProvider {
 
     /**
      * @var ICommonFactory
@@ -36,7 +41,11 @@ class ModulesProvider implements IFirstModuleProvider, IAuthModulesProvider, ISi
      */
     protected ?ISidebarFactory $sidebarFactory = null;
 
-    public function getCommonFactory()
+    protected ?IJsonObjectsFactory $jsonObjectsFactory = null;
+
+    protected ?ITreeCategoriesFactory $treeCategoriesFactory = null;
+
+    public function getCommonFactory():ICommonFactory
     {
         if($this->commonFactory === null){
             $this->commonFactory = new CommonFactory();
@@ -72,12 +81,48 @@ class ModulesProvider implements IFirstModuleProvider, IAuthModulesProvider, ISi
         return $this->authFactory;
     }
 
-    public function getSidebarFactory()
+    public function getSidebarFactory():ISidebarFactory
     {
         if($this->sidebarFactory === null){
             $this->sidebarFactory = new SidebarFactory();
         }
         return $this->sidebarFactory;
+    }
+
+    public function getJsonObjectsFactory(): IJsonObjectsFactory
+    {
+        if($this->jsonObjectsFactory === null){
+            $this->jsonObjectsFactory = new JsonObjectsFactory();
+            $jsonObjectsSettings = [
+                IJsonObjectsFactory::DB_HOST => 'db',
+                IJsonObjectsFactory::DB_NAME => 'dbname',
+                IJsonObjectsFactory::DB_USER => 'user',
+                IJsonObjectsFactory::DB_PASS => 'password',
+                IJsonObjectsFactory::DB_CHARSET => 'utf8',
+                IJsonObjectsFactory::FRAMEWORK_NAME => ICommonFactory::LARAVEL,
+                IJsonObjectsFactory::OBJECTS_TABLE => 'json_objects_table',
+            ];
+            $this->jsonObjectsFactory->loadSettings($jsonObjectsSettings);
+            $dirsCategoriesFactory = $this->createTreeCategoriesFactory();
+            $treeSettings = [
+                ITreeCategoriesFactory::DB_HOST => 'db',
+                ITreeCategoriesFactory::DB_NAME => 'dbname',
+                ITreeCategoriesFactory::DB_USER => 'user',
+                ITreeCategoriesFactory::DB_PASS => 'password',
+                ITreeCategoriesFactory::DB_CHARSET => 'utf8',
+                ITreeCategoriesFactory::FRAMEWORK_NAME => ICommonFactory::LARAVEL,
+                ITreeCategoriesFactory::TABLE_NAME => 'json_objects_dirs',
+            ];
+            $dirsCategoriesFactory->loadSettings($treeSettings);
+            $this->jsonObjectsFactory->setDirsCategoriesFactory($dirsCategoriesFactory);
+            $this->jsonObjectsFactory->injectModules($this);
+        }
+        return $this->jsonObjectsFactory;
+    }
+
+    protected function createTreeCategoriesFactory(): ITreeCategoriesFactory
+    {
+        return new TreeCategoriesFactory();
     }
 
 }

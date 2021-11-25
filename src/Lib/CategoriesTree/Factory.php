@@ -23,7 +23,7 @@ class Factory implements IFactory {
 
     public function getSetting(string $key)
     {
-        $this->settings[$key];
+        return $this->settings[$key];
     }
     
     public function getDtoFactory():IDtoFactory

@@ -19,6 +19,9 @@ class Factory implements IFactory {
         if($type == AbstractComposite::TEXT_TYPE){
             return new TextObject();
         }
+        if($type == ExampleComposit::EXAMPLE_COMPOSIT){
+            return new ExampleComposit();
+        }
         return null;
     }
 
