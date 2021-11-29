@@ -8,7 +8,7 @@ abstract class AbstractCategory {
 
     protected array $path = [];
 
-    protected AbstractCategory $parent;
+    protected ?AbstractCategory $parent = null;
 
     protected string $name;
 
@@ -19,7 +19,8 @@ abstract class AbstractCategory {
 
     public function load(array $data)
     {
-        $this->id = $data['id'] ?? null;
+        $this->id = $data['id'] ?? '';
+        $this->name = $data['name'] ?? '';
         if(key_exists('path', $data)){
             $this->loadPath($data['path']);
         }

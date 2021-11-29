@@ -9,6 +9,8 @@ use Src\Common\Interfaces\Adapters\IHash;
 use Src\Common\Adapters\Laravel\Hash;
 use Src\Common\Interfaces\Adapters\IRoute;
 use Src\Common\Adapters\Laravel\Route;
+use Src\Common\Interfaces\Adapters\ILog;
+use Src\Common\Adapters\Laravel\Log;
 
 class Factory implements IAdaptersFactory {
 
@@ -18,7 +20,9 @@ class Factory implements IAdaptersFactory {
 
     protected ?IRoute $route = null;
 
-    public function getAuth()
+    protected ?ILog $log = null;
+
+    public function getAuth():IAuth
     {
         if($this->auth === null){
             $this->auth = new Auth();
@@ -26,7 +30,7 @@ class Factory implements IAdaptersFactory {
         return $this->auth;
     }
 
-    public function getHash()
+    public function getHash():IHash
     {
         if($this->hash === null){
             $this->hash = new Hash();
@@ -34,12 +38,20 @@ class Factory implements IAdaptersFactory {
         return $this->hash;
     }
 
-    public function getRoute()
+    public function getRoute():IRoute
     {
         if($this->route === null){
             $this->route = new Route();
         }
         return $this->route;
+    }
+
+    public function getLog():ILog
+    {
+        if($this->log === null){
+            $this->log = new Log();
+        }
+        return $this->log;
     }
 
 }

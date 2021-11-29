@@ -31,4 +31,13 @@ class DirController extends Controller {
         return view('dir', ['page' => $page]);
     }
 
+    public function newDir(Request $request)
+    {
+        
+        $resp = [
+            'success' => true,
+        ];
+        return response()->json($resp);
+    }
+
 }

@@ -3,10 +3,11 @@
 namespace Src\JsonObjects\Pages;
 
 use Src\Common\Pages\Page;
+use Src\Common\Interfaces\Adapters\IRoute;
 use Src\JsonObjects\Interfaces\Pages\IDir;
 use Src\Lib\CategoriesTree\Interfaces\Infrastructure\IStorage as IDirsStorage;
 use Src\Lib\CategoriesTree\Interfaces\Dto\IFactory as IDirsDtoFactory;
-use Src\Lib\CategoriesTree\Interfaces\Dto\IResource;
+use Src\Lib\CategoriesTree\Interfaces\Dto\IResource as IDirResource;
 
 class Dir extends Page implements IDir {
 
@@ -14,10 +15,14 @@ class Dir extends Page implements IDir {
 
     protected IDirsDtoFactory $dirsDtoFactory;
 
+    protected IRoute $routeAdapter;
+
     /**
-     * @var IResource[]
+     * @var IDirResource[]
      */
     protected array $dirs = [];
+
+    protected IDirResource $currentDir;
 
     public function setDirsStorage(IDirsStorage $storage)
     {
@@ -28,14 +33,22 @@ class Dir extends Page implements IDir {
     {
         $this->dirsDtoFactory = $factory;
     }
+
+    public function setRouteAdapter(IRoute $adapter)
+    {
+        $this->routeAdapter = $adapter;
+    }
     
     public function init(string $currentDirId)
     {
+        $this->currentDir = $this->dirsDtoFactory->createResource();
+        $currentDirData = $this->dirsStorage->getById($currentDirId);
+        $this->currentDir->load($currentDirData);
         $dirsData = $this->dirsStorage->getByParentId($currentDirId);
         foreach($dirsData as $dirData){
             $dir = $this->dirsDtoFactory->createResource();
             $dir->load($dirData);
-            $this->dirs[] = $dir;
+            $this->dirs[$dir->getId()] = $dir;
         }
     }
     
@@ -55,8 +68,14 @@ class Dir extends Page implements IDir {
 
     public function getJsSettings()
     {
+        $dirs = array_map(function(IDirResource $dir){
+            return $dir->toArray();
+        }, $this->dirs);
         return [
-
+            'currentId' => $this->currentDir->getId(),
+            'dirs' => $dirs,
+            'url' => $this->routeAdapter->getRoute('admin.jsonObjects.dir'),
+            'newDirUrl' => $this->routeAdapter->getRoute('admin.jsonObjects.newDir'),
         ];
     }
 

@@ -26,6 +26,9 @@ class Factory implements IFactory {
         $page->setDirsStorage($dirsStorage);
         $dirsDtoFactory = $this->moduleFactory->getDirsTreeFactory()->getDtoFactory();
         $page->setDirsDtoFactory($dirsDtoFactory);
+        $frameworkName = $this->moduleFactory->getSetting(IModuleFactory::FRAMEWORK_NAME);
+        $routeAdapter = $this->moduleFactory->getCommonFactory()->getAdaptersFactory($frameworkName)->getRoute();
+        $page->setRouteAdapter($routeAdapter);
         $page->init($currentDirId);
         return $page;
     }

@@ -36,7 +36,7 @@ abstract class BaseValidator {
         return $this->cleanData;
     }
 
-    protected function validate(array $data, array $rules, array $messages)
+    protected function validate(array $data, array $rules, array $messages):bool
     {
         $validator = FacadeValidator::make($data, $rules, $messages);
         if($validator->fails()){
