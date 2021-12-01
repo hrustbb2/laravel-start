@@ -12,7 +12,7 @@ class Validator extends BaseValidator implements IValidator {
         $rules = [
             'parent-dir' => [
                 'max:36',
-                'required',
+                'nullable',
             ],
             'name' => [
                 'max:36',

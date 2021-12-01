@@ -47,4 +47,12 @@ export class AppContainer implements IAppContainer {
         }
     }
 
+    public appendDir(dirData:types.TDir)
+    {
+        let dir = this.dirCreator();
+        dir.load(dirData);
+        this.$itemsContainer.append(dir.template);
+        dir.eventsListen();
+    }
+
 }

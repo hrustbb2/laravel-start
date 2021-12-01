@@ -22,8 +22,8 @@ class Storage extends BaseStorage implements IStorage {
             $this->query->withParent($dsl['parent']);
         }
         $data = $this->query->one();
-        if(key_exists('path', $dsl)){
-            $ids = explode('|', $data['path']);
+        if(key_exists('path', $dsl) && isset($data['matherial_path'])){
+            $ids = explode('|', $data['matherial_path']);
             $path = $this->query->select($dsl['path'])->whereIdIn($ids)->all();
             $data['path'] = $path;
         }

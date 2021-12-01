@@ -40,7 +40,7 @@ class Resource extends AbstractCategory implements IResource {
     public function loadParent(array $data)
     {
         $this->parent = $this->dtoFactory->createResource();
-        $this->load($data);
+        $this->parent->load($data);
     }
 
     public function toArray(array $fields = []):array
@@ -56,10 +56,10 @@ class Resource extends AbstractCategory implements IResource {
             if($field == 'name'){
                 $result['name'] = $this->name;
             }
-            if($key == 'parent' && $this->parent){
+            if($key === 'parent' && $this->parent){
                 $result['parent'] = $this->parent->toArray($field);
             }
-            if($key == 'path'){
+            if($key === 'path'){
                 $path = array_map(function(IResource $item) use ($field) {
                     return $item->toArray($field);
                 }, $this->path);

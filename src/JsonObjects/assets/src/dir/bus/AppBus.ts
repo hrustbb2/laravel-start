@@ -1,18 +1,19 @@
 import {IAppBus} from '../interfaces/bus/IAppBus';
+import {TDir} from '../types/TDir';
 import {IFactory as IComponentsFactory} from '../interfaces/components/IFactory';
 
 export class AppBus implements IAppBus {
 
-    protected appFactory:IComponentsFactory;
+    protected componentsFactory:IComponentsFactory;
 
     public setComponentsFactory(factory:IComponentsFactory)
     {
-        this.appFactory = factory;
+        this.componentsFactory = factory;
     }
 
     public execContextMenu(x:number, y:number)
     {
-        let modal = this.appFactory.getContextMenu();
+        let modal = this.componentsFactory.getContextMenu();
         modal.show(x, y);
     }
 
@@ -26,6 +27,11 @@ export class AppBus implements IAppBus {
                 reject();
             }
         });
+    }
+
+    public newDir(dir:TDir)
+    {
+        this.componentsFactory.getAppContainer().appendDir(dir);
     }
 
 }

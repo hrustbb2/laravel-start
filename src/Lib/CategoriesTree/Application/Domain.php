@@ -7,6 +7,9 @@ use Src\Lib\CategoriesTree\Interfaces\Application\IDomain;
 use Src\Common\Interfaces\Adapters\ILog;
 use Src\Lib\CategoriesTree\Interfaces\Application\IValidator;
 use Src\Lib\CategoriesTree\Interfaces\Application\IDataBuilder;
+use Src\Lib\CategoriesTree\Interfaces\Dto\IFactory as IDtoFactory;
+use Src\Lib\CategoriesTree\Interfaces\Dto\IResource;
+use Src\Lib\CategoriesTree\Interfaces\Infrastructure\IPersistLayer;
 use \Throwable;
 
 class Domain extends BaseDomain implements IDomain {
@@ -16,6 +19,12 @@ class Domain extends BaseDomain implements IDomain {
     protected IValidator $validator;
 
     protected IDataBuilder $dataBuilder;
+
+    protected IDtoFactory $dtoFactory;
+
+    protected IPersistLayer $persistLayer;
+
+    protected ?IResource $dir = null;
 
     public function setLogAdapter(ILog $adapter):void
     {
@@ -32,13 +41,27 @@ class Domain extends BaseDomain implements IDomain {
         $this->dataBuilder = $builder;
     }
 
+    public function setDtoFactory(IDtoFactory $factory):void
+    {
+        $this->dtoFactory = $factory;
+    }
+
+    public function setPersistLayer(IPersistLayer $layer):void
+    {
+        $this->persistLayer = $layer;
+    }
+
     public function createDir(array $data):bool
     {
+        $this->dir = $this->dtoFactory->createResource();
         if($this->validator->createDir($data)){
             try{
                 $cleanData = $this->validator->getCleanData();
                 $dirData = $this->dataBuilder->buildData($cleanData);
-                
+                $dirPersist = $this->dtoFactory->createPersist();
+                $dirPersist->load($dirData);
+                $this->persistLayer->newDir($dirPersist);
+                $this->dir->load($dirPersist->getAttributes());
                 return true;
             }catch(Throwable $e){
                 $this->logAdapter->error($e);
@@ -49,6 +72,11 @@ class Domain extends BaseDomain implements IDomain {
             $this->responseCode = self::VALIDATION_FAILED_CODE;
             return false;
         }
+    }
+
+    public function getDir():IResource
+    {
+        return $this->dir;
     }
 
 }

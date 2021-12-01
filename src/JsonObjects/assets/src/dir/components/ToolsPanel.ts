@@ -43,7 +43,9 @@ export class ToolsPanel implements IToolsPanel {
                     return this.appCommands.newDir(settings.currentId, name);
                 })
                 .then((resp:any)=>{
-                    console.log(resp);
+                    if(resp.success){
+                        this.appBus.newDir(resp.dir);
+                    }
                 });
         });
     }

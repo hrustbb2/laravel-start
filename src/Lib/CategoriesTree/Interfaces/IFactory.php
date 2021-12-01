@@ -5,6 +5,7 @@ namespace Src\Lib\CategoriesTree\Interfaces;
 use Src\Common\Interfaces\IFactory as ICommonFactory;
 use Src\Lib\CategoriesTree\Interfaces\Dto\IFactory as IDtoFactory;
 use Src\Lib\CategoriesTree\Interfaces\Infrastructure\IFactory as IInfrastructureFactory;
+use Src\Lib\CategoriesTree\Interfaces\Application\IFactory as IApplicationFactory;
 
 interface IFactory {
     const FRAMEWORK_NAME = 'framework_name';
@@ -27,4 +28,5 @@ interface IFactory {
     public function getSetting(string $key);
     public function getDtoFactory():IDtoFactory;
     public function getInfrastructureFactory():IInfrastructureFactory;
+    public function getApplicationFactory():IApplicationFactory;
 }

@@ -33,11 +33,14 @@ class DirController extends Controller {
 
     public function newDir(Request $request)
     {
-        
+        $domain = $this->factory->getDirsTreeFactory()->getApplicationFactory()->getDomain();
+        $data = $request->all();
         $resp = [
-            'success' => true,
+            'success' => $domain->createDir($data),
+            'errors' => $domain->getErrors(),
+            'dir' => $domain->getDir()->toArray(['id', 'name']),
         ];
-        return response()->json($resp);
+        return response()->json($resp, $domain->getResponseCode());
     }
 
 }

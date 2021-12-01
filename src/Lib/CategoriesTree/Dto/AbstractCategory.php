@@ -19,13 +19,13 @@ abstract class AbstractCategory {
 
     public function load(array $data)
     {
-        $this->id = $data['id'] ?? '';
+        $this->id = $data['id'] ?? $this->id;
         $this->name = $data['name'] ?? '';
         if(key_exists('path', $data)){
             $this->loadPath($data['path']);
         }
         if(key_exists('parent', $data)){
-            $parentData = array_pop($data);
+            $parentData = array_pop($data['parent']);
             $this->loadParent($parentData);
         }
     }
@@ -38,6 +38,7 @@ abstract class AbstractCategory {
     {
         $attrs = [
             'id' => $this->id,
+            'name' => $this->name,
         ];
         $path = array_map(function(AbstractCategory $pathItem){
             return $pathItem->getAttributes();
@@ -49,7 +50,7 @@ abstract class AbstractCategory {
                 $this->parent->getId() => $parentAttrs,
             ];
         }
-        return $path;
+        return $attrs;
     }
 
 }

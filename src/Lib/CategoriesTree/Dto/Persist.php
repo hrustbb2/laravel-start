@@ -5,12 +5,20 @@ namespace Src\Lib\CategoriesTree\Dto;
 use Src\Lib\CategoriesTree\Interfaces\Dto\IPersist;
 use Src\Lib\CategoriesTree\Interfaces\Dto\IFactory as IDtoFactory;
 
+/**
+ * @property IPersist $parent
+ */
 class Persist extends AbstractCategory implements IPersist {
 
     /**
      * @var IDtoFactory
      */
     protected $dtoFactory;
+
+    public function init():void
+    {
+        $this->id = uniqid();
+    }
 
     public function setDtoFactory(IDtoFactory $factory)
     {
@@ -23,7 +31,13 @@ class Persist extends AbstractCategory implements IPersist {
         foreach($data as $itemData){
             $pathItem = $this->dtoFactory->createPersist();
             $pathItem->load($itemData);
+            $this->path[] = $pathItem;
         }
+    }
+
+    public function getPath():array
+    {
+        return $this->path;
     }
 
     public function loadParent(array $data)
@@ -34,17 +48,18 @@ class Persist extends AbstractCategory implements IPersist {
 
     public function getInsertAttributes():array
     {
-        $parentId = ($this->parent) ? $this->parent->getId() : 0;
+        $parentId = ($this->parent) ? $this->parent->getId() : '';
         $attrs = [
             'id' => $this->id,
             'parent_id' => $parentId,
             'name' => $this->name,
         ];
+        $parentPath = ($this->parent) ? $this->parent->getPath() : [];
         $pathIds = array_map(function(AbstractCategory $item){
             return $item->getId();
-        }, $this->path);
+        }, $parentPath);
         $pathIds[] = $parentId;
-        $attrs['path'] = join('|', $pathIds);
+        $attrs['matherial_path'] = join('|', $pathIds);
         return $attrs;
     }
 

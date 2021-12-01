@@ -7,4 +7,5 @@ export interface IAppContainer {
     init(container:JQuery):void;
     setDirCreator(callback:()=>IDir):void;
     loadDirs(dirsData:types.TDirs):void;
+    appendDir(dirData:types.TDir):void;
 }

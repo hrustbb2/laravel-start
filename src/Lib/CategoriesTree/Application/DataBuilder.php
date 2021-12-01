@@ -17,7 +17,7 @@ class DataBuilder implements IDataBuilder {
     public function buildData(array $requestData):array
     {
         $dsl = [
-            'id',
+            'id', 'matherial_path',
             'path' => ['id']
         ];
         $parentData = $this->storage->getById($requestData['parent-dir'], $dsl);

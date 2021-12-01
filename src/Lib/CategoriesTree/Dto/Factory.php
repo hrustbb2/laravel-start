@@ -25,6 +25,7 @@ class Factory implements IFactory {
     {
         $persist = $this->newPersist();
         $persist->setDtoFactory($this);
+        $persist->init();
         return $persist;
     }
 

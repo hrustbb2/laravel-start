@@ -17,7 +17,7 @@ class Factory implements IFactory {
         $this->libFactory = $factory;
     }
 
-    public function getDomain()
+    public function getDomain():IDomain
     {
         if($this->domain === null){
             $this->domain = new Domain();
@@ -28,6 +28,10 @@ class Factory implements IFactory {
             $this->domain->setValidator($validator);
             $dataBuilder = $this->createDataBuilder();
             $this->domain->setDataBuilder($dataBuilder);
+            $dtoFactory = $this->libFactory->getDtoFactory();
+            $this->domain->setDtoFactory($dtoFactory);
+            $persistLayer = $this->libFactory->getInfrastructureFactory()->getPersistLayer();
+            $this->domain->setPersistLayer($persistLayer);
         }
         return $this->domain;
     }
