@@ -13,6 +13,8 @@ use Src\JsonObjects\Interfaces\Pages\IFactory as IPagesFactory;
 use Src\JsonObjects\Pages\Factory as PagesFactory;
 use Src\JsonObjects\Interfaces\Infrastructure\IFactory as IInfrastructureFactory;
 use Src\JsonObjects\Infrastructure\Factory as InfrastructureFactory;
+use Src\JsonObjects\Interfaces\Application\IFactory as IApplicationFactory;
+use Src\JsonObjects\Application\Factory as ApplicationFactory;
 
 class Factory implements IFactory {
 
@@ -25,6 +27,8 @@ class Factory implements IFactory {
     protected ?IDtoFactory $dtoFactory = null;
 
     protected ?IPagesFactory $pagesFactory = null;
+
+    protected ?IApplicationFactory $applicationFactory = null;
 
     protected ?IInfrastructureFactory $infrastructureFactory = null;
 
@@ -91,6 +95,15 @@ class Factory implements IFactory {
             $this->infrastructureFactory->setModuleFactory($this);
         }
         return $this->infrastructureFactory;
+    }
+
+    public function getApplicationFactory():IApplicationFactory
+    {
+        if($this->applicationFactory === null){
+            $this->applicationFactory = new ApplicationFactory();
+            $this->applicationFactory->setModuleFactory($this);
+        }
+        return $this->applicationFactory;
     }
 
 }

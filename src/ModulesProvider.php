@@ -98,6 +98,7 @@ class ModulesProvider implements IFirstModuleProvider, IAuthModulesProvider, ISi
     {
         if($this->jsonObjectsFactory === null){
             $this->jsonObjectsFactory = new JsonObjectsFactory();
+            $objFactory = new \Src\JsonObjects\Dto\Object\Factory();
             $jsonObjectsSettings = [
                 IJsonObjectsFactory::DB_HOST => 'db',
                 IJsonObjectsFactory::DB_NAME => 'dbname',
@@ -106,6 +107,7 @@ class ModulesProvider implements IFirstModuleProvider, IAuthModulesProvider, ISi
                 IJsonObjectsFactory::DB_CHARSET => 'utf8',
                 IJsonObjectsFactory::FRAMEWORK_NAME => ICommonFactory::LARAVEL,
                 IJsonObjectsFactory::OBJECTS_TABLE => 'json_objects_table',
+                IJsonObjectsFactory::OBJECTS_FACTORY => $objFactory,
             ];
             $this->jsonObjectsFactory->loadSettings($jsonObjectsSettings);
             $dirsCategoriesFactory = $this->createTreeCategoriesFactory();

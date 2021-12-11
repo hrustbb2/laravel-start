@@ -38,6 +38,11 @@ export class Dir implements IDir {
         return this.$template;
     }
 
+    public get id():string
+    {
+        return this.data.id;
+    }
+
     public setAppBus(bus:IAppBus)
     {
         this.appBus = bus;
@@ -54,7 +59,7 @@ export class Dir implements IDir {
         });
         this.template.on('contextmenu', (e:JQuery.Event)=>{
             e.preventDefault();
-            this.appBus.execContextMenu(e.pageX, e.pageY);
+            this.appBus.execContextMenu(e.pageX, e.pageY, this.data);
         });
     }
 
@@ -62,6 +67,11 @@ export class Dir implements IDir {
     {
         this.data = data;
         this.$name.text(data.name);
+    }
+
+    public rename(name:string)
+    {
+        this.$name.text(name);
     }
 
 }

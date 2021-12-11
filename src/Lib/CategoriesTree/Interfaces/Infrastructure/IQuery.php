@@ -28,5 +28,10 @@ interface IQuery extends IQueryBase {
     /**
      * @return $this
      */
+    public function whereInPath(string $matherialPath);
+
+    /**
+     * @return $this
+     */
     public function withParent(array $fields);
 }

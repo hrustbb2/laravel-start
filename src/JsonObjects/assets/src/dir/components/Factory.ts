@@ -60,7 +60,12 @@ export class Factory implements IFactory {
     {
         if(this.contextMenu === null){
             this.contextMenu = new ContextMenu();
+            let appBus = this.appFactory.getBusFactory().getAppBus();
+            this.contextMenu.setAppBus(appBus);
+            let appCommands = this.appFactory.getCommandsFactory().getAppCommands();
+            this.contextMenu.setAppCommands(appCommands);
             $('body').append(this.contextMenu.template);
+            this.contextMenu.eventsListen();
         }
         return this.contextMenu;
     }

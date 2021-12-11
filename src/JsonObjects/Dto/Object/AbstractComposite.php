@@ -44,7 +44,10 @@ abstract class AbstractComposite extends AbstractObject {
     {
         foreach($attrs as $key=>$attr){
             /** @var AbstractObject $field */
-            $field = $this->fields[$key];
+            $field = $this->fields[$key] ?? null;
+            if(!$field){
+                continue;
+            }
             $field->loadAttributes($attr);
         }
     }

@@ -52,7 +52,8 @@
             "php vendor/bin/phpunit -c src/Common/Tests/phpunit.xml src/Common/Tests/Infrastructure/SqlQueryBaseTest.php"
         ],
         "test": [
-            "php vendor/bin/phpunit -c src/JsonObjects/Tests/phpunit.xml src/JsonObjects/Tests/Dto/Object/CompositeTest.php"
+            "php vendor/bin/phpunit -c src/JsonObjects/Tests/phpunit.xml src/JsonObjects/Tests/Dto/Object/CompositeTest.php",
+            "php vendor/bin/phpunit -c src/JsonObjects/Tests/phpunit.xml src/JsonObjects/Tests/Application/DomainTest.php"
         ]
     },
     "extra": {

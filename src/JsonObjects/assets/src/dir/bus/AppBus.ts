@@ -11,10 +11,10 @@ export class AppBus implements IAppBus {
         this.componentsFactory = factory;
     }
 
-    public execContextMenu(x:number, y:number)
+    public execContextMenu(x:number, y:number, dirData:TDir)
     {
         let modal = this.componentsFactory.getContextMenu();
-        modal.show(x, y);
+        modal.show(x, y, dirData);
     }
 
     public execDirModal(name:string = ''):Promise<string>
@@ -32,6 +32,16 @@ export class AppBus implements IAppBus {
     public newDir(dir:TDir)
     {
         this.componentsFactory.getAppContainer().appendDir(dir);
+    }
+
+    public renamedDir(dir:TDir)
+    {
+        this.componentsFactory.getAppContainer().renameDir(dir);
+    }
+
+    public deletedDir(dir:TDir)
+    {
+        this.componentsFactory.getAppContainer().deleteDir(dir);
     }
 
 }

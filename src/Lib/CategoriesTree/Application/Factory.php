@@ -32,6 +32,8 @@ class Factory implements IFactory {
             $this->domain->setDtoFactory($dtoFactory);
             $persistLayer = $this->libFactory->getInfrastructureFactory()->getPersistLayer();
             $this->domain->setPersistLayer($persistLayer);
+            $storage = $this->libFactory->getInfrastructureFactory()->getStorage();
+            $this->domain->setStorage($storage);
         }
         return $this->domain;
     }

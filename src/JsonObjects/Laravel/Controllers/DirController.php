@@ -43,4 +43,27 @@ class DirController extends Controller {
         return response()->json($resp, $domain->getResponseCode());
     }
 
+    public function renameDir(Request $request)
+    {
+        $domain = $this->factory->getDirsTreeFactory()->getApplicationFactory()->getDomain();
+        $data = $request->all();
+        $resp = [
+            'success' => $domain->renameDir($data),
+            'errors' => $domain->getErrors(),
+            'dir' => $domain->getDir()->toArray(['id', 'name']),
+        ];
+        return response()->json($resp, $domain->getResponseCode());
+    }
+
+    public function deleteDir(Request $request)
+    {
+        $domain = $this->factory->getDirsTreeFactory()->getApplicationFactory()->getDomain();
+        $data = $request->all();
+        $resp = [
+            'success' => $domain->deleteDir($data),
+            'errors' => $domain->getErrors(),
+        ];
+        return response()->json($resp, $domain->getResponseCode());
+    }
+
 }

@@ -8,4 +8,6 @@ export interface IAppContainer {
     setDirCreator(callback:()=>IDir):void;
     loadDirs(dirsData:types.TDirs):void;
     appendDir(dirData:types.TDir):void;
+    renameDir(dirData:types.TDir):void;
+    deleteDir(dirData:types.TDir):void;
 }

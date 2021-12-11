@@ -20,7 +20,10 @@ class Factory implements IFactory {
             return new TextObject();
         }
         if($type == ExampleComposit::EXAMPLE_COMPOSIT){
-            return new ExampleComposit();
+            $object = new ExampleComposit();
+            $object->setFieldsFactory($this);
+            $object->init();
+            return $object;
         }
         return null;
     }

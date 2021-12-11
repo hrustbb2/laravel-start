@@ -1,5 +1,12 @@
+import {IAppBus} from '../bus/IAppBus';
+import {IAppCommands} from '../commands/IAppCommands';
+import {TDir} from '../../types/TDir';
+
 export interface IContextMenu {
     template:JQuery;
-    show(x:number, y:number):void;
+    eventsListen():void;
+    setAppBus(bus:IAppBus):void;
+    setAppCommands(commands:IAppCommands):void;
+    show(x:number, y:number, dirData:TDir):void;
     hide():void;
 }

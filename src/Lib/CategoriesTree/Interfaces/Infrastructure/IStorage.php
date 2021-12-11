@@ -8,4 +8,5 @@ interface IStorage {
     public function setQuery(IQuery $query);
     public function getById($id, array $dsl = []):array;
     public function getByParentId($parentId, array $dsl = []):array;
+    public function getIdsInDir(string $materialPath):array;
 }

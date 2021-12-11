@@ -30,4 +30,53 @@ export class AppCommands implements IAppCommands {
         });
     }
 
+    public renameDir(dirId:string, name:string):Promise<any>
+    {
+        return new Promise<any>((resolve:any, reject:any)=>{
+            let formData = new FormData();
+            formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+            formData.append('id', dirId);
+            formData.append('name', name);
+
+            $.ajax({
+                url: settings.renameDirUrl,
+                data: formData,
+                type: 'POST',
+                dataType: 'json',
+                processData : false,
+                contentType : false,
+                success: (resp:any) => {
+                    resolve(resp);
+                },
+                error: (e:JQueryXHR) => {
+                    reject(e.responseJSON);
+                }
+            });
+        });
+    }
+
+    public deleteDir(dirId:string):Promise<any>
+    {
+        return new Promise<any>((resolve:any, reject:any)=>{
+            let formData = new FormData();
+            formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+            formData.append('id', dirId);
+
+            $.ajax({
+                url: settings.deleteDirUrl,
+                data: formData,
+                type: 'POST',
+                dataType: 'json',
+                processData : false,
+                contentType : false,
+                success: (resp:any) => {
+                    resolve(resp);
+                },
+                error: (e:JQueryXHR) => {
+                    reject(e.responseJSON);
+                }
+            });
+        });
+    }
+
 }

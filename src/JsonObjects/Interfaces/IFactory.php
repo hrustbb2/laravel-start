@@ -9,6 +9,7 @@ use Src\Lib\CategoriesTree\Interfaces\IFactory as IDirsTreeFactory;
 use Src\JsonObjects\Interfaces\Dto\IFactory as IDtoFactory;
 use Src\JsonObjects\Interfaces\Pages\IFactory as IPagesFactory;
 use Src\JsonObjects\Interfaces\Infrastructure\IFactory as IInfrastructureFactory;
+use Src\JsonObjects\Interfaces\Application\IFactory as IApplicationFactory;
 
 interface IFactory {
     const FRAMEWORK_NAME = 'framework_name';
@@ -25,6 +26,8 @@ interface IFactory {
 
     const OBJECTS_TABLE = 'objects_table';
 
+    const OBJECTS_FACTORY = 'objects_factory';
+
     public function injectModules(IModulesProvider $provider);
     public function getSidebarFactory():ISidebarFactory;
     public function getCommonFactory():ICommonFactory;
@@ -35,4 +38,5 @@ interface IFactory {
     public function getDtoFactory():IDtoFactory;
     public function getPagesFactory():IPagesFactory;
     public function getInfrastructureFactory():IInfrastructureFactory;
+    public function getApplicationFactory():IApplicationFactory;
 }

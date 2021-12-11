@@ -50,6 +50,12 @@ class Query extends SqlQueryBase implements IQuery {
         return $this;
     }
 
+    public function whereInPath(string $matherialPath)
+    {
+        $this->queryBuilder->where($this->tableName . '.matherial_path', 'like', $matherialPath . '%');
+        return $this;
+    }
+
     public function withParent(array $fields)
     {
         $this->joinParend();

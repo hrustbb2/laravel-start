@@ -11,6 +11,8 @@ export class AppContainer implements IAppContainer {
 
     protected toolsPanel:IToolsPanel;
 
+    protected dirs:IDir[] = [];
+
     protected dirCreator:()=>IDir;
 
     public setToolsPanel(toolsPanel:IToolsPanel)
@@ -44,6 +46,7 @@ export class AppContainer implements IAppContainer {
             dir.load(dirsData[id]);
             this.$itemsContainer.append(dir.template);
             dir.eventsListen();
+            this.dirs.push(dir);
         }
     }
 
@@ -53,6 +56,26 @@ export class AppContainer implements IAppContainer {
         dir.load(dirData);
         this.$itemsContainer.append(dir.template);
         dir.eventsListen();
+        this.dirs.push(dir);
+    }
+
+    public renameDir(dirData:types.TDir)
+    {
+        for(let dir of this.dirs){
+            if(dir.id == dirData.id){
+                dir.rename(dirData.name);
+            }
+        }
+    }
+
+    public deleteDir(dirData:types.TDir)
+    {
+        for(let i in this.dirs){
+            if(this.dirs[i].id == dirData.id){
+                this.dirs[i].template.remove();
+                this.dirs.splice(+i, 1);
+            }
+        }
     }
 
 }

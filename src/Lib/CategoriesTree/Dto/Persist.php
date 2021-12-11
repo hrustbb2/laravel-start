@@ -15,6 +15,8 @@ class Persist extends AbstractCategory implements IPersist {
      */
     protected $dtoFactory;
 
+    protected array $updatedAttrs = [];
+
     public function init():void
     {
         $this->id = uniqid();
@@ -46,6 +48,14 @@ class Persist extends AbstractCategory implements IPersist {
         $this->parent->load($data);
     }
 
+    public function update(array $data):void
+    {
+        if(isset($data['name']) && $data['name'] != $this->name){
+            $this->name = $data['name'];
+            $this->updatedAttrs['name'] = $data['name'];
+        }
+    }
+
     public function getInsertAttributes():array
     {
         $parentId = ($this->parent) ? $this->parent->getId() : '';
@@ -61,6 +71,11 @@ class Persist extends AbstractCategory implements IPersist {
         $pathIds[] = $parentId;
         $attrs['matherial_path'] = join('|', $pathIds);
         return $attrs;
+    }
+
+    public function getUpdatedAttrs():array
+    {
+        return $this->updatedAttrs;
     }
 
 }

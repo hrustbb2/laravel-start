@@ -8,6 +8,9 @@ use Src\JsonObjects\Interfaces\Infrastructure\IDbTables;
 use Src\JsonObjects\Infrastructure\ObjectsQuery;
 use Src\JsonObjects\Interfaces\Infrastructure\IObjectsStorage;
 use Src\JsonObjects\Infrastructure\ObjectsStorage;
+use Src\JsonObjects\Interfaces\Infrastructure\IObjectsPersistLayer;
+use Src\JsonObjects\Infrastructure\ObjectsPersistLayer;
+use Src\Lib\CategoriesTree\Infrastructure\PersistLayer;
 
 class Factory implements IFactory {
 
@@ -16,6 +19,8 @@ class Factory implements IFactory {
     protected ?IDbTables $dbTables = null;
 
     protected ?IObjectsStorage $storage = null;
+
+    protected ?IObjectsPersistLayer $persistLayer = null;
 
     public function setModuleFactory(IModuleFactory $factory)
     {
@@ -58,6 +63,16 @@ class Factory implements IFactory {
             $this->storage->setObjectsQuery($query);
         }
         return $this->storage;
+    }
+
+    public function getPersistLayer():IObjectsPersistLayer
+    {
+        if($this->persistLayer === null){
+            $this->persistLayer = new ObjectsPersistLayer();
+            $tableName = $this->moduleFactory->getSetting(IModuleFactory::OBJECTS_TABLE);
+            $this->persistLayer->setTableName($tableName);
+        }
+        return $this->persistLayer;
     }
 
 }

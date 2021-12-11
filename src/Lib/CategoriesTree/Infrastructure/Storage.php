@@ -35,4 +35,17 @@ class Storage extends BaseStorage implements IStorage {
         return $this->query->select($dsl)->whereParentId($parentId)->all();
     }
 
+    public function getIdsInDir(string $dirId):array
+    {
+        $dirData = $this->query->select(['id', 'matherial_path'])->whereId($dirId)->one();
+        $pathIds = ($dirData['matherial_path']) ? explode('|', $dirData['matherial_path']) : [];
+        $pathIds[] = $dirId;
+        $matherialPath = join('|', $pathIds);
+        $dirs = $this->query->select(['id'])->whereInPath($matherialPath)->all();
+        $ids = array_map(function($dir){
+            return $dir['id'];
+        }, $dirs);
+        return array_values($ids);
+    }
+
 }

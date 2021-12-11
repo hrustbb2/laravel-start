@@ -22,4 +22,20 @@ class PersistLayer implements IPersistLayer {
         return $qb->insert($attrs);
     }
 
+    public function updateDir(IPersist $dto):int
+    {
+        $attrs = $dto->getUpdatedAttrs();
+        if($attrs){
+            $qb = DB::table($this->tableName);
+            return $qb->where($this->tableName . '.id', '=', $dto->getId())->update($attrs);
+        }
+        return 0;
+    }
+
+    public function deleteDirs(array $ids):int
+    {
+        $qb = DB::table($this->tableName);
+        return $qb->whereIn($this->tableName . '.id', $ids)->delete();
+    }
+
 }

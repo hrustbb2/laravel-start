@@ -7,7 +7,7 @@ use Src\JsonObjects\Dto\Object\ObjectsArray;
 
 class ExampleComposit extends AbstractComposite {
 
-    const EXAMPLE_COMPOSIT = 'example-composit';
+    const EXAMPLE_COMPOSIT = 'example-composit-test';
     
     public function init()
     {

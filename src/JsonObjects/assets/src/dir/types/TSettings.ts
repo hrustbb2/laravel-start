@@ -5,4 +5,6 @@ export type TSettings = {
     dirs:TDirs;
     url:string;
     newDirUrl:string;
+    renameDirUrl:string;
+    deleteDirUrl:string;
 }

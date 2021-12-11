@@ -26,4 +26,38 @@ class Validator extends BaseValidator implements IValidator {
         return $this->validate($data, $rules, $messages);
     }
 
+    public function renameDir(array $data):bool
+    {
+        $rules = [
+            'id' => [
+                'max:36',
+                'nullable',
+            ],
+            'name' => [
+                'max:36',
+                'required',
+            ],
+        ];
+        $messages = [
+            'max' => 'Слишком длинная строка',
+            'required' => 'Обязательное поле',
+        ];
+        return $this->validate($data, $rules, $messages);
+    }
+
+    public function deleteDir(array $data):bool
+    {
+        $rules = [
+            'id' => [
+                'max:36',
+                'nullable',
+            ],
+        ];
+        $messages = [
+            'max' => 'Слишком длинная строка',
+            'required' => 'Обязательное поле',
+        ];
+        return $this->validate($data, $rules, $messages);
+    }
+
 }
