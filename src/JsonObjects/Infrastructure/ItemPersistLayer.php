@@ -2,11 +2,11 @@
 
 namespace Src\JsonObjects\Infrastructure;
 
-use Src\JsonObjects\Interfaces\Infrastructure\IObjectsPersistLayer;
+use Src\JsonObjects\Interfaces\Infrastructure\IItemPersistLayer;
 use Src\JsonObjects\Interfaces\Dto\Item\IPersistItem;
 use Illuminate\Support\Facades\DB;
 
-class ObjectsPersistLayer implements IObjectsPersistLayer {
+class ItemPersistLayer implements IItemPersistLayer {
 
     protected string $tableName;
 

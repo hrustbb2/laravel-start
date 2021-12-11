@@ -4,7 +4,7 @@ namespace Src\JsonObjects\Interfaces\Infrastructure;
 
 use Src\Common\Interfaces\Infrastructure\IQueryBase;
 
-interface IObjectQuery extends IQueryBase {
+interface IItemQuery extends IQueryBase {
     /**
      * @return $this
      */

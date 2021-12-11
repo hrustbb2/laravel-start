@@ -3,10 +3,10 @@
 namespace Src\JsonObjects\Infrastructure;
 
 use Src\Common\Infrastructure\SqlQueryBase;
-use Src\JsonObjects\Interfaces\Infrastructure\IObjectQuery;
+use Src\JsonObjects\Interfaces\Infrastructure\IItemQuery;
 use Illuminate\Support\Facades\DB;
 
-class ObjectsQuery extends SqlQueryBase implements IObjectQuery {
+class ItemQuery extends SqlQueryBase implements IItemQuery {
 
     protected string $tableName;
 

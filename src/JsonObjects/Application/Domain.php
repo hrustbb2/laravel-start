@@ -6,7 +6,7 @@ use Src\Common\Application\BaseDomain;
 use Src\JsonObjects\Interfaces\Application\IDomain;
 use Src\JsonObjects\Interfaces\Application\IValidator;
 use Src\JsonObjects\Interfaces\Dto\IFactory as IDtoFactory;
-use Src\JsonObjects\Interfaces\Infrastructure\IObjectsPersistLayer;
+use Src\JsonObjects\Interfaces\Infrastructure\IItemPersistLayer;
 
 class Domain extends BaseDomain implements IDomain {
 
@@ -14,7 +14,7 @@ class Domain extends BaseDomain implements IDomain {
 
     protected IDtoFactory $dtoFactory;
 
-    protected IObjectsPersistLayer $persistLayer;
+    protected IItemPersistLayer $persistLayer;
 
     public function setValidator(IValidator $validator):void
     {
@@ -26,7 +26,7 @@ class Domain extends BaseDomain implements IDomain {
         $this->dtoFactory = $factory;
     }
 
-    public function setPersistLayer(IObjectsPersistLayer $layer):void
+    public function setPersistLayer(IItemPersistLayer $layer):void
     {
         $this->persistLayer = $layer;
     }

@@ -3,14 +3,14 @@
 namespace Src\JsonObjects\Infrastructure;
 
 use Src\Common\Infrastructure\BaseStorage;
-use Src\JsonObjects\Interfaces\Infrastructure\IObjectsStorage;
-use Src\JsonObjects\Interfaces\Infrastructure\IObjectQuery;
+use Src\JsonObjects\Interfaces\Infrastructure\IItemStorage;
+use Src\JsonObjects\Interfaces\Infrastructure\IItemQuery;
 
-class ObjectsStorage extends BaseStorage implements IObjectsStorage {
+class ItemStorage extends BaseStorage implements IItemStorage {
 
-    protected IObjectQuery $objectsQuery;
+    protected IItemQuery $objectsQuery;
 
-    public function setObjectsQuery(IObjectQuery $query)
+    public function setObjectsQuery(IItemQuery $query)
     {
         $this->objectsQuery = $query;
     }

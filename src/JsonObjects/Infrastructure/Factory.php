@@ -5,12 +5,11 @@ namespace Src\JsonObjects\Infrastructure;
 use Src\JsonObjects\Interfaces\Infrastructure\IFactory;
 use Src\JsonObjects\Interfaces\IFactory as IModuleFactory;
 use Src\JsonObjects\Interfaces\Infrastructure\IDbTables;
-use Src\JsonObjects\Infrastructure\ObjectsQuery;
-use Src\JsonObjects\Interfaces\Infrastructure\IObjectsStorage;
-use Src\JsonObjects\Infrastructure\ObjectsStorage;
-use Src\JsonObjects\Interfaces\Infrastructure\IObjectsPersistLayer;
-use Src\JsonObjects\Infrastructure\ObjectsPersistLayer;
-use Src\Lib\CategoriesTree\Infrastructure\PersistLayer;
+use Src\JsonObjects\Infrastructure\ItemQuery;
+use Src\JsonObjects\Interfaces\Infrastructure\IItemStorage;
+use Src\JsonObjects\Infrastructure\ItemStorage;
+use Src\JsonObjects\Interfaces\Infrastructure\IItemPersistLayer;
+use Src\JsonObjects\Infrastructure\ItemPersistLayer;
 
 class Factory implements IFactory {
 
@@ -18,9 +17,9 @@ class Factory implements IFactory {
 
     protected ?IDbTables $dbTables = null;
 
-    protected ?IObjectsStorage $storage = null;
+    protected ?IItemStorage $storage = null;
 
-    protected ?IObjectsPersistLayer $persistLayer = null;
+    protected ?IItemPersistLayer $persistLayer = null;
 
     public function setModuleFactory(IModuleFactory $factory)
     {
@@ -49,26 +48,26 @@ class Factory implements IFactory {
 
     protected function createQuery()
     {
-        $query = new ObjectsQuery();
+        $query = new ItemQuery();
         $tableName = $this->moduleFactory->getSetting(IModuleFactory::OBJECTS_TABLE);
         $query->setTableName($tableName);
         return $query;
     }
 
-    public function getStorage():IObjectsStorage
+    public function getStorage():IItemStorage
     {
         if($this->storage === null){
-            $this->storage = new ObjectsStorage();
+            $this->storage = new ItemStorage();
             $query = $this->createQuery();
             $this->storage->setObjectsQuery($query);
         }
         return $this->storage;
     }
 
-    public function getPersistLayer():IObjectsPersistLayer
+    public function getPersistLayer():IItemPersistLayer
     {
         if($this->persistLayer === null){
-            $this->persistLayer = new ObjectsPersistLayer();
+            $this->persistLayer = new ItemPersistLayer();
             $tableName = $this->moduleFactory->getSetting(IModuleFactory::OBJECTS_TABLE);
             $this->persistLayer->setTableName($tableName);
         }
