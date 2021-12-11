@@ -25,6 +25,7 @@ abstract class AbstractComposite extends AbstractObject {
             /** @var AbstractObject $field */
             $attrs[$key] = $field->getAttributes();
         }
+        $attrs['type'] = $this->type;
         return $attrs;
     }
 

@@ -20,6 +20,7 @@ class DomainTest extends TestCase {
             'description' => 'description',
         ];
         $r = $domain->createObject($data);
+        $this->assertTrue($r);
     }
 
 }

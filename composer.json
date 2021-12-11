@@ -53,7 +53,8 @@
         ],
         "test": [
             "php vendor/bin/phpunit -c src/JsonObjects/Tests/phpunit.xml src/JsonObjects/Tests/Dto/Object/CompositeTest.php",
-            "php vendor/bin/phpunit -c src/JsonObjects/Tests/phpunit.xml src/JsonObjects/Tests/Application/DomainTest.php"
+            "php vendor/bin/phpunit -c src/JsonObjects/Tests/phpunit.xml src/JsonObjects/Tests/Application/DomainTest.php",
+            "php vendor/bin/phpunit -c src/JsonObjects/Tests/phpunit.xml src/JsonObjects/Tests/Dto/Item/PersistItemTest.php"
         ]
     },
     "extra": {
