@@ -18,7 +18,7 @@ class ItemQuery extends SqlQueryBase implements IItemQuery {
     public function select(array $fields = [])
     {
         $this->queryBuilder = DB::table($this->tableName);
-        $select = $this->getSelectSection($fields, ['id', 'dir_id', 'key', 'object'], $this->tableName, 'object_');
+        $select = $this->getSelectSection($fields, ['id', 'dir_id', 'key', 'name', 'description', 'object'], $this->tableName, 'object_');
         $this->queryBuilder->select($select);
         $this->arrayProcConf = ['prefix' => 'object_'];
         return $this;

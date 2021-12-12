@@ -41,6 +41,8 @@ class DbTables extends InitDb implements IDbTables {
                 'id' => $id,
                 'dir_id' => $dirData['id'],
                 'key' => 'key',
+                'name' => 'name',
+                'description' => 'description',
                 'object' => json_encode($ex->getAttributes()),
             ];
         }
@@ -57,6 +59,8 @@ class DbTables extends InitDb implements IDbTables {
         $table  ->addColumn('id', 'string')
                 ->addColumn('dir_id', 'string')
                 ->addColumn('key', 'string')
+                ->addColumn('name', 'string')
+                ->addColumn('description', 'string')
                 ->addColumn('object', 'json')
                 ->create();
     }

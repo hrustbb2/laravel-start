@@ -5,12 +5,11 @@ namespace Src\JsonObjects\Pages;
 use Src\JsonObjects\Interfaces\Pages\IFactory;
 use Src\JsonObjects\Interfaces\IFactory as IModuleFactory;
 use Src\JsonObjects\Interfaces\Pages\IDir;
+use Src\JsonObjects\Interfaces\Pages\IItem;
 
 class Factory implements IFactory {
 
     protected IModuleFactory $moduleFactory;
-
-    protected ?IDir $dirPage = null;
 
     public function setModuleFactory(IModuleFactory $factory)
     {
@@ -26,10 +25,22 @@ class Factory implements IFactory {
         $page->setDirsStorage($dirsStorage);
         $dirsDtoFactory = $this->moduleFactory->getDirsTreeFactory()->getDtoFactory();
         $page->setDirsDtoFactory($dirsDtoFactory);
+        $itemStorage = $this->moduleFactory->getInfrastructureFactory()->getStorage();
+        $page->setItemStorage($itemStorage);
+        $itemDtoFactory = $this->moduleFactory->getDtoFactory()->getItemFactory();
+        $page->setItemDtoFactory($itemDtoFactory);
         $frameworkName = $this->moduleFactory->getSetting(IModuleFactory::FRAMEWORK_NAME);
         $routeAdapter = $this->moduleFactory->getCommonFactory()->getAdaptersFactory($frameworkName)->getRoute();
         $page->setRouteAdapter($routeAdapter);
         $page->init($currentDirId);
+        return $page;
+    }
+
+    public function createItemPage(string $itemId):IItem
+    {
+        $page = new Item();
+        $sidebarMenu = $this->moduleFactory->getSidebarFactory()->getMenu();
+        $page->setSidebar($sidebarMenu);
         return $page;
     }
 

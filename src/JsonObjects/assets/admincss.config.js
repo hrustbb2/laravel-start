@@ -6,7 +6,8 @@ module.exports = env => {
   let config = {};
 
   config.entry = [
-      './src/dir/json-objects-dir.scss'
+      './src/dir/json-objects-dir.scss',
+      './src/item/json-objects-item.scss'
   ];
 
   config.module = {

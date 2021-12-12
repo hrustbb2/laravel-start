@@ -50,9 +50,10 @@ abstract class AbstractItem {
         $this->name = $data['name'] ?? '';
         $this->description = $data['description'] ?? '';
         if(key_exists('object', $data)){
-            $type = $data['object']['type'];
+            $objectData = json_decode($data['object'], true);
+            $type = $objectData['type'];
             $this->object = $this->objectsFactory->createObjectField($type);
-            $this->object->loadAttributes($data['object']);
+            $this->object->loadAttributes($objectData);
         }
     }
 

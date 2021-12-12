@@ -1,5 +1,6 @@
 import {IAppContainer} from '../interfaces/components/IAppContainer';
 import {IDir} from '../interfaces/components/IDir';
+import {IItem} from '../interfaces/components/IItem';
 import {IToolsPanel} from '../interfaces/components/IToolsPanel';
 import * as types from '../types';
 
@@ -13,7 +14,11 @@ export class AppContainer implements IAppContainer {
 
     protected dirs:IDir[] = [];
 
+    protected items:IItem[] = [];
+
     protected dirCreator:()=>IDir;
+
+    protected itemCreator:()=>IItem;
 
     public setToolsPanel(toolsPanel:IToolsPanel)
     {
@@ -39,6 +44,11 @@ export class AppContainer implements IAppContainer {
         this.dirCreator = callback;
     }
 
+    public setItemCreator(callback:()=>IItem)
+    {
+        this.itemCreator = callback;
+    }
+
     public loadDirs(dirsData:types.TDirs)
     {
         for(let id in dirsData){
@@ -47,6 +57,17 @@ export class AppContainer implements IAppContainer {
             this.$itemsContainer.append(dir.template);
             dir.eventsListen();
             this.dirs.push(dir);
+        }
+    }
+
+    public loadItems(itemsData:types.TItems)
+    {
+        for(let id in itemsData){
+            let item = this.itemCreator();
+            item.load(itemsData[id]);
+            this.$itemsContainer.append(item.template);
+            item.eventsListen();
+            this.items.push(item);
         }
     }
 

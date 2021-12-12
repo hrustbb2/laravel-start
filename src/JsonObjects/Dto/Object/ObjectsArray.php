@@ -6,6 +6,8 @@ use Src\JsonObjects\Interfaces\Dto\Object\IFactory as IFieldsFactory;
 
 class ObjectsArray extends AbstractObject {
     
+    protected string $type = self::ARRAY_TYPE;
+    
     protected string $itemsType;
 
     /**
@@ -48,6 +50,7 @@ class ObjectsArray extends AbstractObject {
             return $item->getJson();
         }, $this->items);
         return [
+            'type' => $this->type,
             'items_type' => $this->itemsType,
             'description' => $this->description,
             'items' => $items,

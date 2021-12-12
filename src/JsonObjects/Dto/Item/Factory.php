@@ -6,7 +6,7 @@ use Src\JsonObjects\Interfaces\IFactory as IModuleFactory;
 use Src\JsonObjects\Interfaces\Dto\Item\IFactory;
 use Src\JsonObjects\Interfaces\Dto\IFactory as IDtoFactory;
 use Src\JsonObjects\Interfaces\Dto\Item\IPersistItem;
-use Src\JsonObjects\Dto\Item\PersistItem;
+use Src\JsonObjects\Interfaces\Dto\Item\IResourceItem;
 
 class Factory implements IFactory {
 
@@ -23,6 +23,14 @@ class Factory implements IFactory {
         $objFactory = $this->dtoFactory->getModulesFactory()->getSetting(IModuleFactory::OBJECTS_FACTORY);
         $persist->setObjectsFactory($objFactory);
         return $persist;
+    }
+
+    public function createResource():IResourceItem
+    {
+        $resource = new ResourceItem();
+        $objFactory = $this->dtoFactory->getModulesFactory()->getSetting(IModuleFactory::OBJECTS_FACTORY);
+        $resource->setObjectsFactory($objFactory);
+        return $resource;
     }
 
 }

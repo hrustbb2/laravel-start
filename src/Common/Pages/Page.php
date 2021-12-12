@@ -15,17 +15,17 @@ abstract class Page {
     /**
      * @return array
      */
-    public abstract function getCssStack();
+    public abstract function getCssStack():array;
 
     /**
      * @return array
      */
-    public abstract function getJsStack();
+    public abstract function getJsStack():array;
 
     /**
      * @return array
      */
-    public function getCommonJsSettings()
+    public function getCommonJsSettings():array
     {
         return [];
     }
@@ -33,14 +33,14 @@ abstract class Page {
     /**
      * @return array
      */
-    public abstract function getJsSettings();
+    public abstract function getJsSettings():array;
 
     /**
      * @return string
      */
-    public abstract function getTitle();
+    public abstract function getTitle():string;
 
-    public function setSidebar(IMenu $menu)
+    public function setSidebar(IMenu $menu):void
     {
         $this->sidebar = $menu;
     }
@@ -48,7 +48,7 @@ abstract class Page {
     /**
      * @return IMenu
      */
-    public function getSidebar()
+    public function getSidebar():IMenu
     {
         return $this->sidebar;
     }

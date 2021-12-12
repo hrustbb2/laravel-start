@@ -8,9 +8,21 @@ use Src\JsonObjects\Interfaces\Pages\IDir;
 use Src\Lib\CategoriesTree\Interfaces\Infrastructure\IStorage as IDirsStorage;
 use Src\Lib\CategoriesTree\Interfaces\Dto\IFactory as IDirsDtoFactory;
 use Src\Lib\CategoriesTree\Interfaces\Dto\IResource as IDirResource;
+use Src\JsonObjects\Interfaces\Infrastructure\IItemStorage;
+use Src\JsonObjects\Interfaces\Dto\Item\IFactory as IItemDtoFactory;
+use Src\JsonObjects\Interfaces\Dto\Item\IResourceItem;
 
 class Dir extends Page implements IDir {
 
+    protected IItemStorage $itemSorage;
+
+    protected IItemDtoFactory $itemDtoFactory;
+
+    /**
+     * @var IResourceItem
+     */
+    protected array $items = [];
+    
     protected IDirsStorage $dirsStorage;
 
     protected IDirsDtoFactory $dirsDtoFactory;
@@ -24,22 +36,32 @@ class Dir extends Page implements IDir {
 
     protected IDirResource $currentDir;
 
-    public function setDirsStorage(IDirsStorage $storage)
+    public function setDirsStorage(IDirsStorage $storage):void
     {
         $this->dirsStorage = $storage;
     }
 
-    public function setDirsDtoFactory(IDirsDtoFactory $factory)
+    public function setDirsDtoFactory(IDirsDtoFactory $factory):void
     {
         $this->dirsDtoFactory = $factory;
     }
 
-    public function setRouteAdapter(IRoute $adapter)
+    public function setItemStorage(IItemStorage $storage):void
+    {
+        $this->itemSorage = $storage;
+    }
+
+    public function setItemDtoFactory(IItemDtoFactory $factory):void
+    {
+        $this->itemDtoFactory = $factory;
+    }
+
+    public function setRouteAdapter(IRoute $adapter):void
     {
         $this->routeAdapter = $adapter;
     }
     
-    public function init(string $currentDirId)
+    public function init(string $currentDirId):void
     {
         $this->currentDir = $this->dirsDtoFactory->createResource();
         $currentDirData = $this->dirsStorage->getById($currentDirId);
@@ -50,30 +72,40 @@ class Dir extends Page implements IDir {
             $dir->load($dirData);
             $this->dirs[$dir->getId()] = $dir;
         }
+        $itemsData = $this->itemSorage->getByDirId($currentDirId);
+        foreach($itemsData as $data){
+            $item = $this->itemDtoFactory->createResource();
+            $item->load($data);
+            $this->items[$item->getId()] = $item;
+        }   
     }
     
-    public function getCssStack()
+    public function getCssStack():array
     {
         return [
             '<link rel="stylesheet" href="/admin-css/json-objects-dir.css?' . self::CSS_VERSION . '">',
         ];
     }
 
-    public function getJsStack()
+    public function getJsStack():array
     {
         return [
             '<script src="/admin-js/json-objects-dir.js?' . self::JS_VERSION . '"></script>',
         ];
     }
 
-    public function getJsSettings()
+    public function getJsSettings():array
     {
         $dirs = array_map(function(IDirResource $dir){
-            return $dir->toArray();
+            return $dir->toArray(['id', 'name']);
         }, $this->dirs);
+        $items = array_map(function(IResourceItem $item){
+            return $item->toArray(['id', 'name']);
+        }, $this->items);
         return [
             'currentId' => $this->currentDir->getId(),
             'dirs' => $dirs,
+            'items' => $items,
             'url' => $this->routeAdapter->getRoute('admin.jsonObjects.dir'),
             'newDirUrl' => $this->routeAdapter->getRoute('admin.jsonObjects.newDir'),
             'renameDirUrl' => $this->routeAdapter->getRoute('admin.jsonObjects.renameDir'),
@@ -81,7 +113,7 @@ class Dir extends Page implements IDir {
         ];
     }
 
-    public function getTitle()
+    public function getTitle():string
     {
         return 'JSON Objects';
     }

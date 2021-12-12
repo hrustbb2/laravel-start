@@ -13,6 +13,8 @@ class PersistItem extends AbstractItem implements IPersistItem {
             'id' => $this->id,
             'dir_id' => '',
             'key' => $this->key,
+            'name' => $this->name,
+            'description' => $this->description,
             'object' => json_encode($this->object->getAttributes()),
         ];
     }

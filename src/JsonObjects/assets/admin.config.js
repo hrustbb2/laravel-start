@@ -6,6 +6,9 @@ module.exports = {
   entry: {
       'json-objects-dir': [
           './src/dir/main.ts'
+      ],
+      'json-objects-item': [
+        './src/item/main.ts'
       ]
   },
   plugins: [

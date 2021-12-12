@@ -4,6 +4,8 @@ import {IAppContainer} from '../interfaces/components/IAppContainer';
 import {AppContainer} from '../components/AppContainer';
 import {IDir} from '../interfaces/components/IDir';
 import {Dir} from '../components/Dir';
+import {IItem} from '../interfaces/components/IItem';
+import {Item} from '../components/Item';
 import {IContextMenu} from '../interfaces/components/IContextMenu';
 import {ContextMenu} from '../components/ContextMenu';
 import {IToolsPanel} from '../interfaces/components/IToolsPanel';
@@ -28,6 +30,9 @@ export class Factory implements IFactory {
         this.appContainer.setDirCreator(()=>{
             return this.createDir();
         });
+        this.appContainer.setItemCreator(()=>{
+            return this.createItem();
+        });
         let toolsPanel = this.createToolsPanel();
         this.appContainer.setToolsPanel(toolsPanel);
         this.appContainer.init(appContainer);
@@ -44,6 +49,14 @@ export class Factory implements IFactory {
         let appBus = this.appFactory.getBusFactory().getAppBus();
         dir.setAppBus(appBus);
         return dir;
+    }
+
+    public createItem():IItem
+    {
+        let item = new Item();
+        let appBus = this.appFactory.getBusFactory().getAppBus();
+        item.setAppBus(appBus);
+        return item;
     }
 
     protected createToolsPanel():IToolsPanel

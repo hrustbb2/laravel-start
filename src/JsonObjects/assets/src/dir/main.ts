@@ -11,4 +11,5 @@ $(()=>{
     let factory = new Factory();
     factory.init($('.js-dir-app-container'));
     factory.getComponentsFactory().getAppContainer().loadDirs(settings.dirs);
+    factory.getComponentsFactory().getAppContainer().loadItems(settings.items);
 });
