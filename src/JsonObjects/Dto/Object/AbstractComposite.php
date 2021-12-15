@@ -36,6 +36,7 @@ abstract class AbstractComposite extends AbstractObject {
         }, $this->fields);
         return [
             'type' => $this->type,
+            'description' => $this->description,
             'fields' => $fields,
             'errors' => $this->errors,
         ];

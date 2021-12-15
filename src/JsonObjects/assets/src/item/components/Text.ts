@@ -1,0 +1,66 @@
+import {TValueObject} from '../types/TValueObject';
+import {IValueObject} from '../interfaces/components/IValueObject';
+
+export class Text implements IValueObject {
+
+    protected html:string = `
+        <div class="object-field">
+            <label class="form-label js-label"></label>
+            <textarea class="form-control js-input"></textarea>
+            <div class="invalid-feedback js-error-message"></div>
+        </div>
+    `;
+
+    protected $template:JQuery;
+
+    protected $label:JQuery;
+
+    protected $input:JQuery;
+
+    protected $errorMessage:JQuery;
+
+    protected data:TValueObject;
+
+    public constructor()
+    {
+        this.$template = $(this.html);
+        this.$label = this.$template.find('.js-label');
+        this.$input = this.$template.find('.js-input');
+        this.$errorMessage = this.template.find('.js-error-message');
+    }
+
+    public get template():JQuery
+    {
+        return this.$template;
+    }
+
+    public loadData(data:TValueObject)
+    {
+        this.data = data;
+        this.$label.text(data.description);
+        this.$input.val(data.value);
+    }
+
+    public showErrors()
+    {
+        this.$input.addClass('is-invalid');
+        this.$errorMessage.text(this.data.errors[0]);
+    }
+
+    public clearErrors()
+    {
+        this.$input.removeClass('is-invalid');
+        this.$errorMessage.text('');
+    }
+
+    public serialize():TValueObject
+    {
+        return this.data;
+    }
+
+    public eventsListen()
+    {
+        
+    }
+
+}

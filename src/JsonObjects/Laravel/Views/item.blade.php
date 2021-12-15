@@ -32,7 +32,19 @@
                     </div>
                 </div>
                 <div class="box-body js-box-body">
+                    <div class="js-app-container">
+                        <div class="col-sm-12 col-lg-6 col-xl-3">
+                            <label class="form-label">Key</label>
+                            <input type="text" class="form-control js-key-input">
+                            <div class="invalid-feedback js-key-error-message"></div>
+                        </div>
 
+                        <div class="js-object-form-container object-form-container col-sm-12 col-lg-6 col-xl-3"></div>
+
+                        <div class="col-sm-12 col-lg-6 col-xl-3">
+                            <button class="btn btn-info js-submit-button">Submit</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,2 +1,13 @@
 @import "~common/css/main.scss";
 @import "../../node_modules/bootstrap/dist/css/bootstrap.css";
+
+.object-field:not(:first-child) {
+    margin-top: 10px;
+}
+
+.object-form-container {
+    padding: 15px 15px 15px 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background-color: #f3f3f3;
+}

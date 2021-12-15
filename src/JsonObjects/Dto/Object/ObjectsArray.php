@@ -47,6 +47,7 @@ class ObjectsArray extends AbstractObject {
     public function getJson()
     {
         $items = array_map(function(AbstractObject $item){
+            $item->setDescriptionStr($this->itemDescription);
             return $item->getJson();
         }, $this->items);
         return [

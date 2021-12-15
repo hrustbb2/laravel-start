@@ -8,11 +8,6 @@ class StringObject extends AbstractObject {
 
     protected string $type = self::STRING_TYPE;
 
-    public function getTitle()
-    {
-        return $this->value ?? parent::getTitle();
-    }
-
     public function getAttributes()
     {
         return [

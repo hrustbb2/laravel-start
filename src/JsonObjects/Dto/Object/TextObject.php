@@ -8,11 +8,6 @@ class TextObject extends AbstractObject {
 
     protected string $type = self::TEXT_TYPE;
 
-    public function getTitle()
-    {
-        return $this->value ?? parent::getTitle();
-    }
-
     public function getAttributes()
     {
         return [

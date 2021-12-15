@@ -41,6 +41,11 @@ class Factory implements IFactory {
         $page = new Item();
         $sidebarMenu = $this->moduleFactory->getSidebarFactory()->getMenu();
         $page->setSidebar($sidebarMenu);
+        $itemStorage = $this->moduleFactory->getInfrastructureFactory()->getStorage();
+        $page->setItemStorage($itemStorage);
+        $itemDtoFactory = $this->moduleFactory->getDtoFactory()->getItemFactory();
+        $page->setItemDtoFactory($itemDtoFactory);
+        $page->init($itemId);
         return $page;
     }
 

@@ -3,6 +3,8 @@ import {IAppBus} from '../interfaces/bus/IAppBus';
 import * as types from '../types';
 import 'bootstrap';
 
+declare let settings:types.TSettings;
+
 export class Item implements IItem {
     
     protected html:string = `
@@ -50,9 +52,9 @@ export class Item implements IItem {
             title: this.data.name,
         };
         (<any>this.$template).tooltip(options);
-        // this.template.on('click', ()=>{
-        //     window.location.href = settings.url + '?dir-id=' + this.data.id;
-        // });
+        this.template.on('click', ()=>{
+            window.location.href = settings.itemUrl + '?item-id=' + this.data.id;
+        });
         // this.template.on('contextmenu', (e:JQuery.Event)=>{
         //     e.preventDefault();
         //     this.appBus.execContextMenu(e.pageX, e.pageY, this.data);

@@ -28,7 +28,7 @@ class ItemController extends Controller {
     {
         $itemId = $request->get('item-id') ?? '';
         $page = $this->factory->getPagesFactory()->createItemPage($itemId);
-        return view('dir', ['page' => $page]);
+        return view('item', ['page' => $page]);
     }
 
 }
