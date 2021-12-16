@@ -45,8 +45,9 @@ export class Factory implements IFactory {
     public init(container:JQuery)
     {
         this.appContainer = new AppContainer();
-        let composite = this.createInputField(EInputTypes.composite);
-        this.appContainer.setComposite(<Composite>composite);
+        this.appContainer.setCompositeCreator(()=>{
+            return <Composite>this.createInputField(EInputTypes.composite);
+        });
         this.appContainer.init(container);
     }
 
@@ -71,6 +72,8 @@ export class Factory implements IFactory {
             return input;
         }
         let input = new Composite();
+        let appBus = this.appFactory.getBusFactory().getAppBus();
+        input.setAppBus(appBus);
         input.setFieldCreator((type:EInputTypes)=>{
             return this.createInputField(type);
         });

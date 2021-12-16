@@ -35,7 +35,7 @@ abstract class AbstractComposite extends AbstractObject {
             return $field->getJson();
         }, $this->fields);
         return [
-            'type' => $this->type,
+            'type' => self::COMPOSITE_TYPE,
             'description' => $this->description,
             'fields' => $fields,
             'errors' => $this->errors,

@@ -46,6 +46,7 @@ export class ObjectsArray implements IObjectsArray {
         this.$label.text(data.description);
         for(let itemData of data.items){
             let item = this.itemCreator();
+            itemData.container = this.data.container;
             item.loadData(itemData);
             this.items.push(item);
             this.$items.append(item.template);

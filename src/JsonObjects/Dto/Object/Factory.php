@@ -25,6 +25,12 @@ class Factory implements IFactory {
             $object->init();
             return $object;
         }
+        if($type == NestedComposite::NESTED_COMPOSIT){
+            $object = new NestedComposite();
+            $object->setFieldsFactory($this);
+            $object->init();
+            return $object;
+        }
         return null;
     }
 

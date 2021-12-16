@@ -10,6 +10,8 @@ abstract class AbstractObject {
 
     const ARRAY_TYPE = 'array';
 
+    const COMPOSITE_TYPE = 'composite';
+
     protected string $type;
 
     protected string $description;

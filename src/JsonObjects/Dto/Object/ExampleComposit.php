@@ -25,6 +25,10 @@ class ExampleComposit extends AbstractComposite {
         $array->setItemDescription('Item str');
         $array->setItemsType(AbstractComposite::STRING_TYPE);
         $this->fields['array'] = $array;
+
+        $object = $this->fieldsFactory->createObjectField(NestedComposite::NESTED_COMPOSIT);
+        $object->setDescriptionStr('Object');
+        $this->fields['obj'] = $object;
     }
 
 }

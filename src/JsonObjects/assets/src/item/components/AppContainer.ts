@@ -1,5 +1,6 @@
 import {IAppContainer} from '../interfaces/components/IAppContainer';
 import {IComposite} from '../interfaces/components/IComposite';
+import {TComposite} from '../types/TComposite';
 import {TSettings} from '../types/TSettings';
 
 declare let settings:TSettings;
@@ -16,11 +17,11 @@ export class AppContainer implements IAppContainer {
 
     protected $submitButton:JQuery;
 
-    protected composite:IComposite;
+    protected compositeCreator:()=>IComposite;
 
-    public setComposite(composite:IComposite)
+    public setCompositeCreator(callback:()=>IComposite)
     {
-        this.composite = composite;
+        this.compositeCreator = callback;
     }
 
     public init(container:JQuery)
@@ -32,10 +33,16 @@ export class AppContainer implements IAppContainer {
         this.$submitButton = this.$container.find('.js-submit-button');
         
         this.$keyInput.val(settings.item.key);
-        this.composite.loadData(settings.item.object);
-        this.composite.build();
-        this.$objectForm.append(this.composite.template);
-        this.composite.eventsListen();
+    }
+
+    public render(composite:TComposite)
+    {
+        let c = this.compositeCreator();
+        c.loadData(composite);
+        c.build();
+        this.$objectForm.empty();
+        this.$objectForm.append(c.template);
+        c.eventsListen();
     }
 
 }

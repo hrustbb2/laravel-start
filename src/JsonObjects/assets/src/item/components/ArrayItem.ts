@@ -1,5 +1,7 @@
 import {IArrayItem} from '../interfaces/components/IArrayItem';
 import {TAbstractObject} from '../types/TAbstractObject';
+import {TComposite} from '../types/TComposite';
+import {EInputTypes} from '../types/EInputTypes';
 import {IAppBus} from '../interfaces/bus/IAppBus';
 
 export class ArrayItem implements IArrayItem {
@@ -56,7 +58,11 @@ export class ArrayItem implements IArrayItem {
     {
         this.$template.on('click', (e:Event)=>{
             e.preventDefault();
-            this.appBus.execObjectModal(this.data);
+            if(this.data.type == EInputTypes.composite){
+                this.appBus.renderForm(<TComposite>this.data);
+            }else{
+                this.appBus.execObjectModal(this.data);
+            }
         });
     }
 
