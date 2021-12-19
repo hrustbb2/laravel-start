@@ -67,12 +67,12 @@ export class ObjectsArray implements IObjectsArray {
             let item = this.itemCreator();
             item.setOnDelete(()=>{
                 this.data.items.splice(+i, 1);
-                this.appBus.renderForm(this.data.container);
+                this.appBus.rerender();
             });
             item.setOnUpdated((item:TAbstractObject)=>{
                 this.data.items[i] = item;
+                this.appBus.rerender();
             });
-            data.items[i].container = this.data.container;
             item.loadData(data.items[i]);
             this.items.push(item);
             this.$items.append(item.template);
@@ -127,16 +127,16 @@ export class ObjectsArray implements IObjectsArray {
         this.$addItemBtn.on('click', (e:Event)=>{
             e.preventDefault();
             if(this.data.item_proto.type == EInputTypes.composite){
-                this.appBus.renderForm(<TComposite>this.deepClone(this.data.item_proto), {showSaveButton: true})
+                this.appBus.renderForm(<TComposite>this.deepClone(this.data.item_proto))
                     .then((newItem:TComposite)=>{
                         this.data.items.push(newItem);
-                        this.appBus.renderForm(this.data.container);
+                        this.appBus.back();
                     });
             }else{
                 this.appBus.execObjectModal(this.deepClone(this.data.item_proto))
                     .then((newItem:TValueObject)=>{
                         this.data.items.push(newItem);
-                        this.appBus.renderForm(this.data.container);
+                        this.appBus.rerender();
                     })
             }
         });

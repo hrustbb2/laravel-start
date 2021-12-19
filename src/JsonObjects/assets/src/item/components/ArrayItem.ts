@@ -113,17 +113,18 @@ export class ArrayItem implements IArrayItem {
         this.$template.on('click', (e:Event)=>{
             e.preventDefault();
             if(this.data.type == EInputTypes.composite){
-                this.appBus.renderForm(<TComposite>this.deepClone(this.data), {showSaveButton: true})
+                this.appBus.renderForm(<TComposite>this.deepClone(this.data))
                     .then((updatedItem:TComposite)=>{
-                        this.data = updatedItem;
+                        (<TComposite>this.data).fields = updatedItem.fields;
                         this.onUpdated(updatedItem);
-                        this.appBus.renderForm(<TComposite>this.data.container);
+                        this.appBus.back();
                     });
             }else{
                 this.appBus.execObjectModal(this.data)
                     .then((updatedItem:TComposite)=>{
                         this.data = updatedItem;
                         this.onUpdated(updatedItem);
+                        this.appBus.rerender();
                     });
             }
         });

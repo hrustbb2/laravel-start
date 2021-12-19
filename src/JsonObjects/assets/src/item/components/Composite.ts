@@ -3,9 +3,6 @@ import {IAbstractObject} from '../interfaces/components/IAbstractObject';
 import {IAppBus} from '../interfaces/bus/IAppBus';
 import {EInputTypes} from '../types/EInputTypes';
 import {TComposite} from '../types/TComposite';
-import {TObjectsArray} from '../types/TObjectsArray';
-import {TCompositeFormOptions} from '../types/TCompositeFormOptions';
-import { TAbstractObject } from '../types';
 
 type TFields = {
     [field:string]:IAbstractObject;
@@ -85,19 +82,12 @@ export class Composite implements IComposite {
         this.data = data;
         for(let name in data.fields){
             let field = this.fieldCreator(data.fields[name].type);
-            if(data.fields[name].type == EInputTypes.composite){
-                data.fields[name].container = this.data;
-            }
-            if(data.fields[name].type == EInputTypes.array){
-                data.fields[name].container = this.data;
-                (<TObjectsArray>data.fields[name]).item_proto.container = this.data;
-            }
             field.loadData(data.fields[name]);
             this.fields[name] = field;
         }
     }
     
-    public build(options:TCompositeFormOptions):Promise<TComposite>
+    public build():Promise<TComposite>
     {
         return new Promise<TComposite>((resolve:any, reject:any)=>{
             this.resolve = resolve;
@@ -110,16 +100,17 @@ export class Composite implements IComposite {
                 }
                 this.$body.append(this.fields[name].template);
             }
-            if(this.data.container){
-                this.$backButton.show();
-            }else{
-                this.$backButton.hide();
-            }
-            this.$saveButton.hide();
-            if(options && options.showSaveButton){
-                this.$saveButton.show();
-            }
         });
+    }
+
+    public showSaveButton()
+    {
+        this.$saveButton.show();
+    }
+
+    public showBackButton()
+    {
+        this.$backButton.show();
     }
 
     public showErrors():void
@@ -170,17 +161,14 @@ export class Composite implements IComposite {
         this.$collapsedTemplate.on('click', (e:Event)=>{
             e.preventDefault();
             this.appBus.renderForm(this.deepClone(this.data))
-                .then((updatetObj:TComposite)=>{
-                    this.data = updatetObj;
-                    if(this.data.container){
-                        
-                    }
+                .then((updatedObj:TComposite)=>{
+                    this.data.fields = updatedObj.fields;
+                    this.appBus.back();
                 });
         });
         this.$backButton.on('click', (e:Event)=>{
             e.preventDefault();
-            this.appBus.renderForm(this.data.container);
-            // this.reject();
+            this.appBus.back();
         });
         this.$saveButton.on('click', (e:Event)=>{
             e.preventDefault();

@@ -1,7 +1,7 @@
 import {IAppContainer} from '../interfaces/components/IAppContainer';
 import {IComposite} from '../interfaces/components/IComposite';
 import {TComposite} from '../types/TComposite';
-import {TCompositeFormOptions} from '../types/TCompositeFormOptions';
+import {TAbstractObject} from '../types/TAbstractObject';
 import {TSettings} from '../types/TSettings';
 
 declare let settings:TSettings;
@@ -17,6 +17,8 @@ export class AppContainer implements IAppContainer {
     protected $objectForm:JQuery;
 
     protected $submitButton:JQuery;
+
+    protected stack:TAbstractObject[] = [];
 
     protected compositeCreator:()=>IComposite;
 
@@ -36,15 +38,51 @@ export class AppContainer implements IAppContainer {
         this.$keyInput.val(settings.item.key);
     }
 
-    public render(composite:TComposite, options:TCompositeFormOptions = null):Promise<TComposite>
+    public render(composite:TComposite):Promise<TComposite>
     {
+        this.stack.push(composite);
         let c = this.compositeCreator();
         c.loadData(composite);
-        let promise = c.build(options);
+        let promise = c.build();
         this.$objectForm.empty();
         this.$objectForm.append(c.template);
         c.eventsListen();
+        if(this.stack.length > 1){
+            c.showBackButton();
+            c.showSaveButton();
+        }
         return promise;
+    }
+
+    public rerender()
+    {
+        let composite = this.stack[this.stack.length - 1];
+        let c = this.compositeCreator();
+        c.loadData(composite);
+        c.build();
+        this.$objectForm.empty();
+        this.$objectForm.append(c.template);
+        c.eventsListen();
+        if(this.stack.length > 1){
+            c.showBackButton();
+            c.showSaveButton();
+        }
+    }
+
+    public back()
+    {
+        this.stack.pop();
+        let composite = this.stack[this.stack.length - 1];
+        let c = this.compositeCreator();
+        c.loadData(composite);
+        c.build();
+        this.$objectForm.empty();
+        this.$objectForm.append(c.template);
+        c.eventsListen();
+        if(this.stack.length > 1){
+            c.showBackButton();
+            c.showSaveButton();
+        }
     }
 
 }
