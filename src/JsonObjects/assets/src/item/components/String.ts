@@ -60,7 +60,10 @@ export class String implements IValueObject {
 
     public eventsListen()
     {
-        
+        this.$input.on('input', (e:Event)=>{
+            let val = $(e.target).val();
+            this.data.value = val;
+        });
     }
 
 }

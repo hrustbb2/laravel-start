@@ -1,6 +1,6 @@
 import {TAbstractObject} from './TAbstractObject';
 
 export interface TObjectsArray extends TAbstractObject {
-    items_type:string;
+    item_proto:TAbstractObject;
     items:TAbstractObject[];
 }

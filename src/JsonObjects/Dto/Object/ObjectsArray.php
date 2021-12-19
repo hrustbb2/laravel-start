@@ -47,12 +47,16 @@ class ObjectsArray extends AbstractObject {
     public function getJson()
     {
         $items = array_map(function(AbstractObject $item){
-            $item->setDescriptionStr($this->itemDescription);
+            $json = $item->getJson();
+            $descriptionStr = ($json['value']) ? $json['value'] : $this->itemDescription;
+            $item->setDescriptionStr($descriptionStr);
             return $item->getJson();
         }, $this->items);
+        $prototype = $this->fieldsFactory->createObjectField($this->itemsType);
+        $prototype->setDescriptionStr($this->itemDescription);
         return [
             'type' => $this->type,
-            'items_type' => $this->itemsType,
+            'item_proto' => $prototype->getJson(),
             'description' => $this->description,
             'items' => $items,
             'errors' => $this->errors,

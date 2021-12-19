@@ -1,6 +1,7 @@
 import {IAppContainer} from '../interfaces/components/IAppContainer';
 import {IComposite} from '../interfaces/components/IComposite';
 import {TComposite} from '../types/TComposite';
+import {TCompositeFormOptions} from '../types/TCompositeFormOptions';
 import {TSettings} from '../types/TSettings';
 
 declare let settings:TSettings;
@@ -35,14 +36,15 @@ export class AppContainer implements IAppContainer {
         this.$keyInput.val(settings.item.key);
     }
 
-    public render(composite:TComposite)
+    public render(composite:TComposite, options:TCompositeFormOptions = null):Promise<TComposite>
     {
         let c = this.compositeCreator();
         c.loadData(composite);
-        c.build();
+        let promise = c.build(options);
         this.$objectForm.empty();
         this.$objectForm.append(c.template);
         c.eventsListen();
+        return promise;
     }
 
 }

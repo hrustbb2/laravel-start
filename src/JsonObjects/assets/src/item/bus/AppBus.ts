@@ -2,6 +2,7 @@ import {IAppBus} from '../interfaces/bus/IAppBus';
 import {IFactory as IComponentsFactory} from '../interfaces/components/IFactory';
 import {TComposite} from '../types/TComposite';
 import {TAbstractObject} from '../types/TAbstractObject';
+import {TCompositeFormOptions} from '../types/TCompositeFormOptions';
 
 export class AppBus implements IAppBus {
 
@@ -12,14 +13,14 @@ export class AppBus implements IAppBus {
         this.componentsFactory = factory;
     }
 
-    public execObjectModal(obj:TAbstractObject)
+    public execObjectModal(obj:TAbstractObject):Promise<TAbstractObject>
     {
-        this.componentsFactory.getModal().show(obj);
+        return this.componentsFactory.getModal().show(obj);
     }
 
-    public renderForm(data:TComposite)
+    public renderForm(data:TComposite, options:TCompositeFormOptions = null):Promise<TComposite>
     {
-        this.componentsFactory.getAppContainer().render(data);
+        return this.componentsFactory.getAppContainer().render(data, options);
     }
 
 }

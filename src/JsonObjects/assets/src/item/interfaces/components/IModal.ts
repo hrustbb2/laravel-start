@@ -5,6 +5,7 @@ import {EInputTypes} from '../../types/EInputTypes';
 export interface IModal {
     template:JQuery;
     setObjCreator(callback:(type:EInputTypes)=>IAbstractObject):void;
-    show(obj:TAbstractObject):void;
+    show(obj:TAbstractObject):Promise<TAbstractObject>;
     hide():void;
+    eventsListen():void;
 }

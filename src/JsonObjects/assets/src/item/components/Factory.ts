@@ -38,6 +38,7 @@ export class Factory implements IFactory {
                 return this.createInputField(type);
             });
             $('body').append(this.modal.template);
+            this.modal.eventsListen();
         }
         return this.modal;
     }
@@ -53,6 +54,7 @@ export class Factory implements IFactory {
 
     public createInputField(type:EInputTypes):IAbstractObject
     {
+        let appBus = this.appFactory.getBusFactory().getAppBus();
         if(type == EInputTypes.string){
             let input = new String();
             return input;
@@ -63,6 +65,7 @@ export class Factory implements IFactory {
         }
         if(type == EInputTypes.array){
             let input = new ObjectsArray();
+            input.setAppBus(appBus);
             input.setItemCreator(()=>{
                 let item = new ArrayItem();
                 let appBus = this.appFactory.getBusFactory().getAppBus();
@@ -72,7 +75,6 @@ export class Factory implements IFactory {
             return input;
         }
         let input = new Composite();
-        let appBus = this.appFactory.getBusFactory().getAppBus();
         input.setAppBus(appBus);
         input.setFieldCreator((type:EInputTypes)=>{
             return this.createInputField(type);

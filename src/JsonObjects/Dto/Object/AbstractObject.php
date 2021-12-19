@@ -14,7 +14,7 @@ abstract class AbstractObject {
 
     protected string $type;
 
-    protected string $description;
+    protected ?string $description = null;
 
     protected array $errors = [];
 
