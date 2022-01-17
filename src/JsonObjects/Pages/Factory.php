@@ -45,6 +45,9 @@ class Factory implements IFactory {
         $page->setItemStorage($itemStorage);
         $itemDtoFactory = $this->moduleFactory->getDtoFactory()->getItemFactory();
         $page->setItemDtoFactory($itemDtoFactory);
+        $frameworkName = $this->moduleFactory->getSetting(IModuleFactory::FRAMEWORK_NAME);
+        $routeAdapter = $this->moduleFactory->getCommonFactory()->getAdaptersFactory($frameworkName)->getRoute();
+        $page->setRouteAdapter($routeAdapter);
         $page->init($itemId);
         return $page;
     }

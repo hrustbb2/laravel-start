@@ -3,12 +3,16 @@ import {IFactory as IComponentsFactory} from './interfaces/components/IFactory';
 import {Factory as ComponentsFactory} from './components/Factory';
 import {IFactory as IBusFactory} from './interfaces/bus/IFactory';
 import {Factory as BusFactory} from './bus/Factory';
+import {IFactory as ICommandsFactory} from './interfaces/commands/IFactory';
+import {Factory as CommandsFactory} from './commands/Factory';
 
 export class Factory implements IFactory {
     
     protected componentsFactory:IComponentsFactory = null;
 
     protected busFactory:IBusFactory = null;
+
+    protected commandsFactory:ICommandsFactory = null;
 
     public init(container:JQuery)
     {
@@ -31,6 +35,15 @@ export class Factory implements IFactory {
             this.busFactory.setAppFactory(this);
         }
         return this.busFactory;
+    }
+
+    public getCommandsFactory():ICommandsFactory
+    {
+        if(this.commandsFactory === null){
+            this.commandsFactory = new CommandsFactory();
+            this.commandsFactory.setAppFactory(this);
+        }
+        return this.commandsFactory;
     }
 
 }

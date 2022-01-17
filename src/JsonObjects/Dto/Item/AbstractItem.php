@@ -38,7 +38,7 @@ abstract class AbstractItem {
             'description' => $this->description,
         ];
         if($this->object){
-            $attrs['object'] = $this->object->getAttributes();
+            $attrs['object'] = json_encode($this->object->getAttributes());
         }
         return $attrs;
     }
@@ -55,6 +55,12 @@ abstract class AbstractItem {
             $this->object = $this->objectsFactory->createObjectField($type);
             $this->object->loadAttributes($objectData);
         }
+        if(key_exists('dir', $data)){
+            $dirData = array_pop($data['dir']);
+            $this->loadDir($dirData);
+        }
     }
+
+    abstract public function loadDir(array $dirData):void;
 
 }

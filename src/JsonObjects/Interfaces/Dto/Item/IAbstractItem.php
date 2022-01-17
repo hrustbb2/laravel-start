@@ -9,4 +9,5 @@ interface IAbstractItem {
     public function getId();
     public function getAttributes():array;
     public function load(array $data):void;
+    public function loadDir(array $dirData):void;
 }

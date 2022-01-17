@@ -81,12 +81,16 @@ export class ObjectsArray implements IObjectsArray {
 
     public showErrors():void
     {
-        
+        for(let item of this.items){
+            item.showErrors();
+        }
     }
 
     public clearErrors():void
     {
-        
+        for(let item of this.items){
+            item.clearErrors();
+        }
     }
 
     public serialize():TObjectsArray

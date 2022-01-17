@@ -31,4 +31,16 @@ class ItemController extends Controller {
         return view('item', ['page' => $page]);
     }
 
+    public function editItem(Request $request)
+    {
+        $data = $request->all();
+        $domain = $this->factory->getApplicationFactory()->getDomain();
+        $resp = [
+            'success' => $domain->editObject($data),
+            'errors' => $domain->getErrors(),
+            'item' => $domain->getItem()->toArray(),
+        ];
+        return response()->json($resp, $domain->getResponseCode());
+    }
+
 }

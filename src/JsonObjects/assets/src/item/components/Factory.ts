@@ -49,6 +49,8 @@ export class Factory implements IFactory {
         this.appContainer.setCompositeCreator(()=>{
             return <Composite>this.createInputField(EInputTypes.composite);
         });
+        let appCommands = this.appFactory.getCommandsFactory().getAppCommands();
+        this.appContainer.setAppCommands(appCommands);
         this.appContainer.init(container);
     }
 

@@ -22,4 +22,14 @@ class ItemPersistLayer implements IItemPersistLayer {
         return $qb->insert($attrs);
     }
 
+    public function update(IPersistItem $dto):int
+    {
+        $attrs = $dto->getUpdatedAttrs();
+        if($attrs){
+            $qb = DB::table($this->tableName);
+            return $qb->where($this->tableName . '.id', '=', $dto->getId())->update($attrs);
+        }
+        return 0;
+    }
+
 }

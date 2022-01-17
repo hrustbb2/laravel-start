@@ -1,7 +1,12 @@
 import {IAppContainer} from '../interfaces/components/IAppContainer';
+import {IAppCommands} from '../interfaces/commands/IAppCommands';
 import {IComposite} from '../interfaces/components/IComposite';
 import {TComposite} from '../types/TComposite';
 import {TAbstractObject} from '../types/TAbstractObject';
+import {EInputTypes} from '../types/EInputTypes';
+import {TValueObject} from '../types/TValueObject';
+import {TObjectsArray} from '../types/TObjectsArray';
+import {TErrors} from '../types/TErrors';
 import {TSettings} from '../types/TSettings';
 
 declare let settings:TSettings;
@@ -20,11 +25,18 @@ export class AppContainer implements IAppContainer {
 
     protected stack:TAbstractObject[] = [];
 
+    protected appCommands:IAppCommands;
+
     protected compositeCreator:()=>IComposite;
 
     public setCompositeCreator(callback:()=>IComposite)
     {
         this.compositeCreator = callback;
+    }
+
+    public setAppCommands(commands:IAppCommands)
+    {
+        this.appCommands = commands;
     }
 
     public init(container:JQuery)
@@ -36,6 +48,34 @@ export class AppContainer implements IAppContainer {
         this.$submitButton = this.$container.find('.js-submit-button');
         
         this.$keyInput.val(settings.item.key);
+        this.eventsListen();
+    }
+
+    protected eventsListen()
+    {
+        this.$submitButton.on('click', (e:Event)=>{
+            e.preventDefault();
+            let key = <string>this.$keyInput.val();
+            this.appCommands.editObject(key, <TComposite>this.stack[0])
+                .then((resp:any)=>{
+                    if(resp.success){
+                        window.location.href = settings.successUrl;
+                    }
+                })
+                .catch((resp:any)=>{
+                    this.showErrors(resp.errors);
+                    this.stack[this.stack.length - 1] = resp.item;
+                    this.rerender();
+                });
+        })
+    };
+
+    protected showErrors(errors:TErrors)
+    {
+        if(errors['key']){
+            this.$keyError.text(errors['key'][0]);
+            this.$keyError.addClass('is-invalid');
+        }
     }
 
     public render(composite:TComposite):Promise<TComposite>

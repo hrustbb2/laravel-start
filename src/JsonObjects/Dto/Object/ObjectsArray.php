@@ -48,7 +48,7 @@ class ObjectsArray extends AbstractObject {
     {
         $items = array_map(function(AbstractObject $item){
             $json = $item->getJson();
-            $descriptionStr = ($json['value']) ? $json['value'] : $this->itemDescription;
+            $descriptionStr = (key_exists('value', $json)) ? $json['value'] : $this->itemDescription;
             $item->setDescriptionStr($descriptionStr);
             return $item->getJson();
         }, $this->items);
@@ -65,6 +65,7 @@ class ObjectsArray extends AbstractObject {
 
     public function loadAttributes(array $attrs)
     {
+        $this->items = [];
         foreach($attrs['items'] as $itemAttrs){
             $item = $this->fieldsFactory->createObjectField($this->itemsType);
             $item->loadAttributes($itemAttrs);

@@ -60,6 +60,8 @@ class Factory implements IFactory {
             $this->storage = new ItemStorage();
             $query = $this->createQuery();
             $this->storage->setObjectsQuery($query);
+            $dirStorage = $this->moduleFactory->getDirsTreeFactory()->getInfrastructureFactory()->getStorage();
+            $this->storage->setDirStorage($dirStorage);
         }
         return $this->storage;
     }

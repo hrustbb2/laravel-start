@@ -28,6 +28,8 @@ class Factory implements IFactory {
     public function createResource():IResourceItem
     {
         $resource = new ResourceItem();
+        $dirResource = $this->dtoFactory->getModulesFactory()->getDirsTreeFactory()->getDtoFactory()->createResource();
+        $resource->setDir($dirResource);
         $objFactory = $this->dtoFactory->getModulesFactory()->getSetting(IModuleFactory::OBJECTS_FACTORY);
         $resource->setObjectsFactory($objFactory);
         return $resource;

@@ -3,9 +3,22 @@
 namespace Src\JsonObjects\Dto\Item;
 
 use Src\JsonObjects\Interfaces\Dto\Item\IResourceItem;
+use Src\Lib\CategoriesTree\Interfaces\Dto\IResource as IDirResource;
 
 class ResourceItem extends AbstractItem implements IResourceItem {
 
+    protected IDirResource $dir;
+
+    public function setDir(IDirResource $dir):void
+    {
+        $this->dir = $dir;
+    }
+
+    public function loadDir(array $dirData): void
+    {
+        $this->dir->load($dirData);
+    }
+    
     public function toArray(array $fields = []):array
     {
         $result = [];
@@ -30,6 +43,11 @@ class ResourceItem extends AbstractItem implements IResourceItem {
             }
         }
         return $result;
+    }
+
+    public function getDir():IDirResource
+    {
+        return $this->dir;
     }
 
 }

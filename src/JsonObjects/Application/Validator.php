@@ -33,4 +33,26 @@ class Validator extends BaseValidator implements IValidator {
         return $this->validate($data, $rules, $messages);
     }
 
+    public function editObject(array $data):bool
+    {
+        $rules = [
+            'id' => [
+                'required',
+                'max:32',
+            ],
+            'key' => [
+                'required',
+                'max:32',
+            ],
+            'object' => [
+                'required',
+                'array',
+            ]
+        ];
+        $messages = [
+
+        ];
+        return $this->validate($data, $rules, $messages);
+    }
+
 }

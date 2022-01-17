@@ -15,3 +15,4 @@ Route::post('/rename-dir', [DirController::class, 'renameDir'])->name('renameDir
 Route::post('/delete-dir', [DirController::class, 'deleteDir'])->name('deleteDir');
 
 Route::get('/item', [ItemController::class, 'item'])->name('item');
+Route::post('/edit-item', [ItemController::class, 'editItem'])->name('editItem');

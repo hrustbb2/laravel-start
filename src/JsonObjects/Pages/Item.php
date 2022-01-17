@@ -4,6 +4,7 @@ namespace Src\JsonObjects\Pages;
 
 use Src\Common\Pages\Page;
 use Src\JsonObjects\Interfaces\Pages\IItem;
+use Src\Common\Interfaces\Adapters\IRoute;
 use Src\JsonObjects\Interfaces\Infrastructure\IItemStorage;
 use Src\JsonObjects\Interfaces\Dto\Item\IFactory as IItemDtoFactory;
 use Src\JsonObjects\Interfaces\Dto\Item\IResourceItem;
@@ -16,6 +17,8 @@ class Item extends Page implements IItem {
 
     protected IResourceItem $item;
 
+    protected IRoute $routeAdapter;
+
     public function setItemStorage(IItemStorage $storage)
     {
         $this->itemStorage = $storage;
@@ -26,10 +29,19 @@ class Item extends Page implements IItem {
         $this->itemDtoFactory = $factory;
     }
 
+    public function setRouteAdapter(IRoute $adapter):void
+    {
+        $this->routeAdapter = $adapter;
+    }
+
     public function init(string $itemId)
     {
         $this->item = $this->itemDtoFactory->createResource();
-        $itemData = $this->itemStorage->getById($itemId);
+        $dsl = [
+            '*',
+            'dir' => ['*'],
+        ];
+        $itemData = $this->itemStorage->getById($itemId, $dsl);
         $this->item->load($itemData);
     }
     
@@ -51,6 +63,8 @@ class Item extends Page implements IItem {
     {
         return [
             'item' => $this->item->toArray(),
+            'editObjUrl' => $this->routeAdapter->getRoute('admin.jsonObjects.editItem'),
+            'successUrl' => $this->routeAdapter->getRoute('admin.jsonObjects.dir', ['dir-id' => $this->item->getDir()->getId()]),
         ];
     }
 

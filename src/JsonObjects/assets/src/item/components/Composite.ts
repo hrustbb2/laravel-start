@@ -85,6 +85,7 @@ export class Composite implements IComposite {
             field.loadData(data.fields[name]);
             this.fields[name] = field;
         }
+        this.showErrors();
     }
     
     public build():Promise<TComposite>
@@ -115,7 +116,15 @@ export class Composite implements IComposite {
 
     public showErrors():void
     {
+        if(!this.data.errors.length){
+            return;
+        }
+        this.$collapsedTemplate.removeClass('btn-info');
+        this.$collapsedTemplate.addClass('btn-danger');
 
+        for(let name in this.fields){
+            this.fields[name].showErrors();
+        }
     }
 
     public clearErrors():void
