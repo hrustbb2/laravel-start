@@ -27,15 +27,20 @@ class ExampleComposit extends AbstractComposite {
         $array = $this->fieldsFactory->createObjectField(AbstractComposite::ARRAY_TYPE);
         $array->setDescriptionStr('Array');
         $array->setItemDescription('Item str');
-        $array->setItemsType(AbstractComposite::STRING_TYPE);
+        $array->setItemsTypes([AbstractComposite::STRING_TYPE]);
         $this->fields['array'] = $array;
 
         /** @var ObjectsArray $arrayObj */
         $arrayObj = $this->fieldsFactory->createObjectField(AbstractComposite::ARRAY_TYPE);
         $arrayObj->setDescriptionStr('Array obj');
         $arrayObj->setItemDescription('Obj');
-        $arrayObj->setItemsType(NestedComposite::NESTED_COMPOSIT);
+        $arrayObj->setItemsTypes([NestedComposite::NESTED_COMPOSIT]);
         $this->fields['array_obj'] = $arrayObj;
+    }
+
+    public function validate()
+    {
+        $this->fields['name']->appendErrorMessage('Error!!!');
     }
 
 }

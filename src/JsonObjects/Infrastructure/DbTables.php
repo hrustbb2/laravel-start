@@ -28,9 +28,18 @@ class DbTables extends InitDb implements IDbTables {
             'text' => ['value' => 'Text'],
             'array' => [
                 'items' => [
-                    ['value' => ''],
-                    ['value' => 'Item_2'],
-                    ['value' => 'Item_3'],
+                    [
+                        'value' => '',
+                        'type' => \Src\JsonObjects\Dto\Object\AbstractObject::STRING_TYPE,
+                    ],
+                    [
+                        'value' => 'Item_2',
+                        'type' => \Src\JsonObjects\Dto\Object\AbstractObject::STRING_TYPE,
+                    ],
+                    [
+                        'value' => 'Item_3',
+                        'type' => \Src\JsonObjects\Dto\Object\AbstractObject::STRING_TYPE,
+                    ],
                 ]
             ],
         ];

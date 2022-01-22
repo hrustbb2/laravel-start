@@ -68,7 +68,9 @@ class Domain extends BaseDomain implements IDomain {
             $item->update($cleanData);
             $this->persistLayer->update($item);
             $this->item->load($item->getAttributes());
-            return true;
+            $this->item->getObject()->validate();
+            $this->responseCode = self::VALIDATION_FAILED_CODE;
+            return false;
         }else{
             $this->errors = $this->validator->getErrors();
             $this->responseCode = self::VALIDATION_FAILED_CODE;

@@ -64,7 +64,7 @@ export class AppContainer implements IAppContainer {
                 })
                 .catch((resp:any)=>{
                     this.showErrors(resp.errors);
-                    this.stack[this.stack.length - 1] = resp.item;
+                    this.stack[this.stack.length - 1] = resp.item.object;
                     this.rerender();
                 });
         })

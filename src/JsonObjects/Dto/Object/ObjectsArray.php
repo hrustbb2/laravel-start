@@ -8,7 +8,7 @@ class ObjectsArray extends AbstractObject {
     
     protected string $type = self::ARRAY_TYPE;
     
-    protected string $itemsType;
+    protected array $itemsTypes = [];
 
     /**
      * @var AbstractObject[]
@@ -29,15 +29,17 @@ class ObjectsArray extends AbstractObject {
         $this->fieldsFactory = $factory;
     } 
 
-    public function setItemsType(string $itemsType)
+    public function setItemsTypes(array $itemsTypes)
     {
-        $this->itemsType = $itemsType;
+        $this->itemsTypes = $itemsTypes;
     }
 
     public function getAttributes()
     {
         $items = array_map(function(AbstractObject $item){
-            return $item->getAttributes();
+            $attrs = $item->getAttributes();
+            $attrs['type'] = $item->getType();
+            return $attrs;
         }, $this->items);
         return [
             'items' => $items,
@@ -52,11 +54,14 @@ class ObjectsArray extends AbstractObject {
             $item->setDescriptionStr($descriptionStr);
             return $item->getJson();
         }, $this->items);
-        $prototype = $this->fieldsFactory->createObjectField($this->itemsType);
-        $prototype->setDescriptionStr($this->itemDescription);
+        $protoTypesJson = array_map(function(string $itemTupe){
+            $protoType = $this->fieldsFactory->createObjectField($itemTupe);
+            $protoType->setDescriptionStr($this->itemDescription);
+            return $protoType->getJson();
+        }, $this->itemsTypes);
         return [
             'type' => $this->type,
-            'item_proto' => $prototype->getJson(),
+            'item_proto' => $protoTypesJson,
             'description' => $this->description,
             'items' => $items,
             'errors' => $this->errors,
@@ -67,7 +72,7 @@ class ObjectsArray extends AbstractObject {
     {
         $this->items = [];
         foreach($attrs['items'] as $itemAttrs){
-            $item = $this->fieldsFactory->createObjectField($this->itemsType);
+            $item = $this->fieldsFactory->createObjectField($itemAttrs['type']);
             $item->loadAttributes($itemAttrs);
             $this->items[] = $item;
         }

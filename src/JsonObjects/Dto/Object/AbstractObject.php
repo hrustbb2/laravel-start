@@ -28,6 +28,11 @@ abstract class AbstractObject {
         return $this->description;
     }
 
+    protected function getType()
+    {
+        return $this->type;
+    }
+
     public function appendErrorMessage(string $message)
     {
         $this->errors[] = $message;

@@ -130,14 +130,14 @@ export class ObjectsArray implements IObjectsArray {
         }
         this.$addItemBtn.on('click', (e:Event)=>{
             e.preventDefault();
-            if(this.data.item_proto.type == EInputTypes.composite){
-                this.appBus.renderForm(<TComposite>this.deepClone(this.data.item_proto))
+            if(this.data.item_proto[0].type == EInputTypes.composite){
+                this.appBus.renderForm(<TComposite>this.deepClone(this.data.item_proto[0]))
                     .then((newItem:TComposite)=>{
                         this.data.items.push(newItem);
                         this.appBus.back();
                     });
             }else{
-                this.appBus.execObjectModal(this.deepClone(this.data.item_proto))
+                this.appBus.execObjectModal(this.deepClone(this.data.item_proto[0]))
                     .then((newItem:TValueObject)=>{
                         this.data.items.push(newItem);
                         this.appBus.rerender();

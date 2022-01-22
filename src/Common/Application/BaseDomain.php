@@ -33,7 +33,7 @@ abstract class BaseDomain {
      * Сообщения об ошибках
      * @var array
      */
-    protected $errors;
+    protected $errors = [];
 
     /**
      * @var int код ответа

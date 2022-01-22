@@ -43,8 +43,10 @@ export class Text implements IValueObject {
 
     public showErrors()
     {
-        this.$input.addClass('is-invalid');
-        this.$errorMessage.text(this.data.errors[0]);
+        if(this.data.errors.length){
+            this.$input.addClass('is-invalid');
+            this.$errorMessage.text(this.data.errors[0]);
+        }
     }
 
     public clearErrors()

@@ -116,11 +116,10 @@ export class Composite implements IComposite {
 
     public showErrors():void
     {
-        if(!this.data.errors.length){
-            return;
+        if(this.data.errors.length){
+            this.$collapsedTemplate.removeClass('btn-info');
+            this.$collapsedTemplate.addClass('btn-danger');
         }
-        this.$collapsedTemplate.removeClass('btn-info');
-        this.$collapsedTemplate.addClass('btn-danger');
 
         for(let name in this.fields){
             this.fields[name].showErrors();

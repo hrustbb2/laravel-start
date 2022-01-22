@@ -64,8 +64,10 @@ export class ArrayItem implements IArrayItem {
 
     public showErrors():void
     {
-        this.$template.removeClass('btn-info');
-        this.$template.addClass('btn-danger');
+        if(this.data.errors.length){
+            this.$template.removeClass('btn-info');
+            this.$template.addClass('btn-danger');
+        }
     }
 
     public clearErrors():void
