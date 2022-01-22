@@ -2,7 +2,6 @@ import {IArrayItem} from '../interfaces/components/IArrayItem';
 import {TAbstractObject} from '../types/TAbstractObject';
 import {TValueObject} from '../types/TValueObject';
 import {TComposite} from '../types/TComposite';
-import {EInputTypes} from '../types/EInputTypes';
 import {IAppBus} from '../interfaces/bus/IAppBus';
 
 export class ArrayItem implements IArrayItem {
@@ -65,6 +64,11 @@ export class ArrayItem implements IArrayItem {
         }else{
             this.$label.text((<TValueObject>data).value);
         }
+    }
+
+    public setLabel(label:string)
+    {
+        this.$label.text(label);
     }
 
     public showErrors():void

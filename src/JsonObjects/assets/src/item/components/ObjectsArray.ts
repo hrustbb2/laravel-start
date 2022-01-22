@@ -2,7 +2,6 @@ import {IObjectsArray} from '../interfaces/components/IObjectsArray';
 import {IArrayItem} from '../interfaces/components/IArrayItem';
 import {TObjectsArray} from '../types/TObjectsArray';
 import {IAppBus} from '../interfaces/bus/IAppBus';
-import {EInputTypes} from '../types/EInputTypes';
 import {TValueObject} from '../types/TValueObject';
 import { TAbstractObject, TComposite } from '../types';
 
@@ -74,6 +73,11 @@ export class ObjectsArray implements IObjectsArray {
                 this.appBus.rerender();
             });
             item.loadData(data.items[i]);
+            let descriptionField = data.label_field;
+            if(descriptionField && data.items[i].composite){
+                let label = (<TValueObject>(<TComposite>data.items[i]).fields[descriptionField]).value;
+                item.setLabel(label);
+            }
             this.items.push(item);
             this.$items.append(item.template);
         }

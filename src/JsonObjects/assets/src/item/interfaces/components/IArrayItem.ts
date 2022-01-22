@@ -6,4 +6,5 @@ export interface IArrayItem extends IAbstractObject {
     setAppBus(bus:IAppBus):void;
     setOnDelete(callbck:(item:TAbstractObject)=>void):void;
     setOnUpdated(callback:(item:TAbstractObject)=>void):void;
+    setLabel(label:string):void;
 }

@@ -17,6 +17,8 @@ class ObjectsArray extends AbstractObject {
 
     protected ?string $itemDescription;
 
+    protected ?string $labelField = null;
+
     protected IFieldsFactory $fieldsFactory;
 
     public function setItemDescription(string $description)
@@ -27,7 +29,12 @@ class ObjectsArray extends AbstractObject {
     public function setFieldsFactory(IFieldsFactory $factory)
     {
         $this->fieldsFactory = $factory;
-    } 
+    }
+    
+    public function setLabelField(string $field)
+    {
+        $this->labelField = $field;
+    }
 
     public function setItemsTypes(array $itemsTypes)
     {
@@ -62,6 +69,7 @@ class ObjectsArray extends AbstractObject {
         return [
             'type' => $this->type,
             'composite' => false,
+            'label_field' => $this->labelField,
             'item_proto' => $protoTypesJson,
             'description' => $this->description,
             'items' => $items,

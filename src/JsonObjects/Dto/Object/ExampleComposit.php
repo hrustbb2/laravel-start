@@ -35,6 +35,7 @@ class ExampleComposit extends AbstractComposite {
         $arrayObj->setDescriptionStr('Array obj');
         $arrayObj->setItemDescription('Obj');
         $arrayObj->setItemsTypes([NestedComposite::NESTED_COMPOSIT]);
+        $arrayObj->setLabelField('name');
         $this->fields['array_obj'] = $arrayObj;
     }
 

@@ -3,9 +3,6 @@ import {IAppCommands} from '../interfaces/commands/IAppCommands';
 import {IComposite} from '../interfaces/components/IComposite';
 import {TComposite} from '../types/TComposite';
 import {TAbstractObject} from '../types/TAbstractObject';
-import {EInputTypes} from '../types/EInputTypes';
-import {TValueObject} from '../types/TValueObject';
-import {TObjectsArray} from '../types/TObjectsArray';
 import {TErrors} from '../types/TErrors';
 import {TSettings} from '../types/TSettings';
 
