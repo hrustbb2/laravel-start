@@ -95,7 +95,7 @@ export class Composite implements IComposite {
             this.reject = reject;
             this.$body.empty();
             for(let name in this.fields){
-                if(this.fields[name].serialize().type == EInputTypes.composite){
+                if(this.fields[name].serialize().composite){
                     this.$body.append((<IComposite>this.fields[name]).collapsedTemplate);
                     continue;
                 }

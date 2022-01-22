@@ -47,7 +47,7 @@ export class Factory implements IFactory {
     {
         this.appContainer = new AppContainer();
         this.appContainer.setCompositeCreator(()=>{
-            return <Composite>this.createInputField(EInputTypes.composite);
+            return this.createComposite();
         });
         let appCommands = this.appFactory.getCommandsFactory().getAppCommands();
         this.appContainer.setAppCommands(appCommands);
@@ -76,12 +76,19 @@ export class Factory implements IFactory {
             });
             return input;
         }
-        let input = new Composite();
-        input.setAppBus(appBus);
-        input.setFieldCreator((type:EInputTypes)=>{
+        let input = this.createComposite();
+        return input;
+    }
+
+    protected createComposite()
+    {
+        let appBus = this.appFactory.getBusFactory().getAppBus();
+        let composite = new Composite();
+        composite.setAppBus(appBus);
+        composite.setFieldCreator((type:EInputTypes)=>{
             return this.createInputField(type);
         });
-        return input;
+        return composite;
     }
 
 }

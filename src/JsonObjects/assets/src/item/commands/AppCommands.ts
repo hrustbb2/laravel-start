@@ -38,7 +38,7 @@ export class AppCommands implements IAppCommands {
     
     protected fillFormData(obj:TAbstractObject, formData:FormData, name:string)
     {
-        if(obj.type == EInputTypes.composite){
+        if(obj.composite){
             for(let field in (<TComposite>obj).fields){
                 let n = name + '[' + field + ']';
                 this.fillFormData((<TComposite>obj).fields[field], formData, n);
@@ -49,6 +49,7 @@ export class AppCommands implements IAppCommands {
             for(let i in (<TObjectsArray>obj).items){
                 let n = name + '[items][' + i + ']';
                 this.fillFormData((<TObjectsArray>obj).items[i], formData, n);
+                formData.append(name + '[items][' + i + '][type]', (<TObjectsArray>obj).items[i].type);
             }
             return;
         }

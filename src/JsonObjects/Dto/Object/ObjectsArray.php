@@ -61,6 +61,7 @@ class ObjectsArray extends AbstractObject {
         }, $this->itemsTypes);
         return [
             'type' => $this->type,
+            'composite' => false,
             'item_proto' => $protoTypesJson,
             'description' => $this->description,
             'items' => $items,

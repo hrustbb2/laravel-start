@@ -19,6 +19,7 @@ class TextObject extends AbstractObject {
     {
         return [
             'type' => $this->type,
+            'composite' => false,
             'description' => $this->getTitle(),
             'value' => $this->value,
             'errors' => $this->errors,

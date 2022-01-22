@@ -130,7 +130,7 @@ export class ObjectsArray implements IObjectsArray {
         }
         this.$addItemBtn.on('click', (e:Event)=>{
             e.preventDefault();
-            if(this.data.item_proto[0].type == EInputTypes.composite){
+            if(this.data.item_proto[0].composite){
                 this.appBus.renderForm(<TComposite>this.deepClone(this.data.item_proto[0]))
                     .then((newItem:TComposite)=>{
                         this.data.items.push(newItem);

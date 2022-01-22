@@ -1,5 +1,6 @@
 import {IArrayItem} from '../interfaces/components/IArrayItem';
 import {TAbstractObject} from '../types/TAbstractObject';
+import {TValueObject} from '../types/TValueObject';
 import {TComposite} from '../types/TComposite';
 import {EInputTypes} from '../types/EInputTypes';
 import {IAppBus} from '../interfaces/bus/IAppBus';
@@ -59,7 +60,11 @@ export class ArrayItem implements IArrayItem {
     public loadData(data:TAbstractObject):void
     {
         this.data = data;
-        this.$label.text(data.description);
+        if(this.data.composite){
+            this.$label.text(data.description);
+        }else{
+            this.$label.text((<TValueObject>data).value);
+        }
     }
 
     public showErrors():void
@@ -114,7 +119,7 @@ export class ArrayItem implements IArrayItem {
         });
         this.$template.on('click', (e:Event)=>{
             e.preventDefault();
-            if(this.data.type == EInputTypes.composite){
+            if(this.data.composite){
                 this.appBus.renderForm(<TComposite>this.deepClone(this.data))
                     .then((updatedItem:TComposite)=>{
                         (<TComposite>this.data).fields = updatedItem.fields;
@@ -124,7 +129,7 @@ export class ArrayItem implements IArrayItem {
             }else{
                 this.appBus.execObjectModal(this.data)
                     .then((updatedItem:TComposite)=>{
-                        this.data = updatedItem;
+                        this.loadData(updatedItem);
                         this.onUpdated(updatedItem);
                         this.appBus.rerender();
                     });
