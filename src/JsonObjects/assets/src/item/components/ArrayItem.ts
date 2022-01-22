@@ -7,7 +7,7 @@ import {IAppBus} from '../interfaces/bus/IAppBus';
 export class ArrayItem implements IArrayItem {
 
     protected html:string = `
-        <button class="btn btn-info mr-1 mt-1">
+        <button class="btn btn-info mt-1">
             <span class="js-label"></span>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="js-remove-btn bi bi-x-circle-fill" viewBox="0 0 16 16">
                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
@@ -28,6 +28,16 @@ export class ArrayItem implements IArrayItem {
     protected onDelete:(item:TAbstractObject)=>void;
 
     protected onUpdated:(item:TAbstractObject)=>void;
+
+    protected onDragStarted:(item:IArrayItem)=>void;
+
+    protected onDragMove:(x:number, y:number)=>void;
+
+    protected onDragEnded:(item:IArrayItem)=>void;
+
+    protected index:number;
+
+    protected isDragStarted:boolean;
 
     public constructor()
     {
@@ -54,6 +64,36 @@ export class ArrayItem implements IArrayItem {
     public setOnUpdated(callback:(item:TAbstractObject)=>void)
     {
         this.onUpdated = callback;
+    }
+
+    public setOnDragStarted(callback:(item:IArrayItem)=>void)
+    {
+        this.onDragStarted = callback;
+    }
+
+    public setOnDragMove(callback:(x:number, y:number)=>void)
+    {
+        this.onDragMove = callback;
+    }
+
+    public setOnDragEnded(callback:(item:IArrayItem)=>void)
+    {
+        this.onDragEnded = callback;
+    }
+
+    public setIndex(index:number)
+    {
+        this.index = index;
+    }
+
+    public getIndex():number
+    {
+        return this.index;
+    }
+
+    public getData():TAbstractObject
+    {
+        return this.data;
     }
 
     public loadData(data:TAbstractObject):void
@@ -117,28 +157,76 @@ export class ArrayItem implements IArrayItem {
 
     public eventsListen()
     {
+        this.$template.off();
+        this.$removeBtn.off();
         this.$removeBtn.on('click', (e:Event)=>{
             e.stopPropagation();
             this.onDelete(this.data);
         });
-        this.$template.on('click', (e:Event)=>{
-            e.preventDefault();
-            if(this.data.composite){
-                this.appBus.renderForm(<TComposite>this.deepClone(this.data))
-                    .then((updatedItem:TComposite)=>{
-                        (<TComposite>this.data).fields = updatedItem.fields;
-                        this.onUpdated(updatedItem);
-                        this.appBus.back();
-                    });
+        this.$removeBtn.on('mousedown', (event:Event)=>{
+            event.stopPropagation();
+        });
+        let draggable = true;
+        this.$template.on('mousedown', (event:Event)=>{
+            setTimeout(()=>{
+                if(draggable){
+                    this.isDragStarted = true;
+                    this.startDrag(event);
+                }
+            }, 200);
+        });
+        this.$template.on('mouseup', (event:Event)=>{
+            if(!this.isDragStarted){
+                this.onClick(event);
+                draggable = false;
             }else{
-                this.appBus.execObjectModal(this.data)
-                    .then((updatedItem:TComposite)=>{
-                        this.loadData(updatedItem);
-                        this.onUpdated(updatedItem);
-                        this.appBus.rerender();
-                    });
+                if(this.onDragEnded){
+                    this.onDragEnded(this);
+                }
+            }
+            this.isDragStarted = false;
+        });
+        $('body').on('mousemove', (event:Event)=>{
+            if(this.isDragStarted){
+                this.$template[0].style.left = (<MouseEvent>event).pageX - this.$template[0].offsetWidth / 2 + 'px';
+                this.$template[0].style.top = (<MouseEvent>event).pageY - this.$template[0].offsetHeight / 2 + 'px';
+                if(this.onDragMove){
+                    this.onDragMove((<MouseEvent>event).pageX, (<MouseEvent>event).pageY);
+                }
             }
         });
+    }
+
+    protected startDrag(event:Event)
+    {
+        this.$template.css('position', 'absolute');
+        $('body').append(this.$template);
+        this.$template[0].style.zIndex = '1000';
+        this.$template[0].style.left = (<MouseEvent>event).pageX - this.$template[0].offsetWidth / 2 + 'px';
+        this.$template[0].style.top = (<MouseEvent>event).pageY - this.$template[0].offsetHeight / 2 + 'px';
+        if(this.onDragStarted){
+            this.onDragStarted(this);
+        }
+    }
+
+    protected onClick(event:Event)
+    {
+        event.preventDefault();
+        if(this.data.composite){
+            this.appBus.renderForm(<TComposite>this.deepClone(this.data))
+                .then((updatedItem:TComposite)=>{
+                    (<TComposite>this.data).fields = updatedItem.fields;
+                    this.onUpdated(updatedItem);
+                    this.appBus.back();
+                });
+        }else{
+            this.appBus.execObjectModal(this.data)
+                .then((updatedItem:TComposite)=>{
+                    this.loadData(updatedItem);
+                    this.onUpdated(updatedItem);
+                    this.appBus.rerender();
+                });
+        }
     }
 
 }

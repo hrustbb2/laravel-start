@@ -5,6 +5,49 @@ import {IAppBus} from '../interfaces/bus/IAppBus';
 import {TValueObject} from '../types/TValueObject';
 import { TAbstractObject, TComposite } from '../types';
 
+class DropableElement {
+
+    private html:string = `
+        <div class="array-item-dropable mt-1"></div>
+    `;
+
+    private $template:JQuery;
+
+    private _index:number;
+
+    public get template():JQuery
+    {
+        return this.$template;
+    }
+
+    public get index():number
+    {
+        return this._index;
+    }
+
+    public constructor(index:number)
+    {
+        this.$template = $(this.html);
+        this._index = index;
+    }
+
+    public getRectangle()
+    {
+        return this.template[0].getBoundingClientRect();
+    }
+
+    public setActive()
+    {
+        this.$template.addClass('array-item-dropable-active');
+    }
+
+    public unsetActive()
+    {
+        this.$template.removeClass('array-item-dropable-active');
+    }
+
+}
+
 export class ObjectsArray implements IObjectsArray {
 
     protected html:string = `
@@ -35,6 +78,10 @@ export class ObjectsArray implements IObjectsArray {
 
     protected itemCreator:()=>IArrayItem;
 
+    protected dropableElements:DropableElement[] = [];
+
+    private currendDropable:DropableElement;
+
     public constructor()
     {
         this.$template = $(this.html);
@@ -62,8 +109,15 @@ export class ObjectsArray implements IObjectsArray {
     {
         this.data = data;
         this.$label.text(data.description);
-        for(let i in data.items){
+        this.renderItems();
+    }
+
+    protected renderItems()
+    {
+        this.$items.empty();
+        for(let i in this.data.items){
             let item = this.itemCreator();
+            item.setIndex(+i);
             item.setOnDelete(()=>{
                 this.data.items.splice(+i, 1);
                 this.appBus.rerender();
@@ -72,15 +126,73 @@ export class ObjectsArray implements IObjectsArray {
                 this.data.items[i] = item;
                 this.appBus.rerender();
             });
-            item.loadData(data.items[i]);
-            let descriptionField = data.label_field;
-            if(descriptionField && data.items[i].composite){
-                let label = (<TValueObject>(<TComposite>data.items[i]).fields[descriptionField]).value;
+            item.loadData(this.data.items[i]);
+            let descriptionField = this.data.label_field;
+            if(descriptionField && this.data.items[i].composite){
+                let label = (<TValueObject>(<TComposite>this.data.items[i]).fields[descriptionField]).value;
                 item.setLabel(label);
             }
+
+            item.setOnDragStarted((item:IArrayItem) => {
+                //this.draggingItem = item;
+                let index = item.getIndex();
+                this.dropableElements[index].template.hide();
+            });
+            item.setOnDragMove((x:number, y:number)=>{
+                let dr = this.findDroppable(x, y);
+                if(this.currendDropable && !dr){
+                    this.currendDropable.unsetActive();
+                }
+                if(!this.currendDropable && dr){
+                    dr.setActive();
+                }
+                this.currendDropable = dr;
+            });
+            item.setOnDragEnded((item:IArrayItem)=>{
+                if(this.currendDropable){
+                    let newIndex = this.currendDropable.index;
+                    item.setIndex(newIndex);
+                    item.template.remove();
+                    this.reorderItems();
+                }else{
+                    item.template.remove();
+                    this.reorderItems();
+                }
+            });
+
+            let dropableEl = new DropableElement(this.items.length);
+            this.dropableElements.push(dropableEl);
+
             this.items.push(item);
+            this.$items.append(dropableEl.template);
             this.$items.append(item.template);
         }
+    }
+
+    protected findDroppable(x:number, y:number)
+    {
+        for(let dr of this.dropableElements){
+            let rect = dr.getRectangle();
+            if(rect.left < x && rect.right > x && rect.top < y && rect.bottom > y){
+                return dr;
+            }
+        }
+        return null;
+    }
+
+    protected reorderItems()
+    {
+        let sortedItems = this.items.sort((a:IArrayItem, b:IArrayItem):number => {
+            let d = a.getIndex() - b.getIndex();
+            return (d == 0) ? -1 : d;
+        });
+        this.data.items = [];
+        this.items = [];
+        this.dropableElements = [];
+        for(let item of sortedItems){
+            this.data.items.push(item.getData());
+        }
+        this.renderItems();
     }
 
     public showErrors():void
