@@ -2,8 +2,6 @@ import {IFactory} from '../interfaces/components/IFactory';
 import {IFactory as IAppFactory} from '../interfaces/IFactory';
 import {IAbstractObject} from '../interfaces/components/IAbstractObject';
 import {EInputTypes} from '../types/EInputTypes';
-import {IAppContainer} from '../interfaces/components/IAppContainer';
-import {AppContainer} from './AppContainer';
 import {IModal} from '../interfaces/components/IModal';
 import {Modal} from './Modal';
 import {Composite} from './Composite';
@@ -13,6 +11,7 @@ import {String} from './String';
 import {Text} from './Text';
 import {ObjectsArray} from './ObjectsArray';
 import {ArrayItem} from './ArrayItem';
+import 'jquery';
 
 type TObjectForms = {
     [key:string]:IObjectForm;
@@ -22,8 +21,6 @@ export class Factory implements IFactory {
     
     protected appFactory:IAppFactory;
 
-    protected appContainer:IAppContainer = null;
-
     protected modal:IModal = null;
 
     protected objectForms:TObjectForms = {};
@@ -31,11 +28,6 @@ export class Factory implements IFactory {
     public setAppFactory(factory:IAppFactory)
     {
         this.appFactory = factory;
-    }
-
-    public getAppContainer():IAppContainer
-    {
-        return this.appContainer;
     }
 
     public getModal():IModal
@@ -49,21 +41,6 @@ export class Factory implements IFactory {
             this.modal.eventsListen();
         }
         return this.modal;
-    }
-
-    public init(container:JQuery)
-    {
-        this.appContainer = new AppContainer();
-        this.appContainer.setCompositeCreator(()=>{
-            return this.createComposite();
-        });
-        let appCommands = this.appFactory.getCommandsFactory().getAppCommands();
-        this.appContainer.setAppCommands(appCommands);
-        let objectBus = this.appFactory.getBusFactory().getObjectBus();
-        this.appContainer.setObjectBus(objectBus);
-        let objForm = this.getObjectForm('obj-form-key');
-        this.appContainer.setObjectForm(objForm);
-        this.appContainer.init(container);
     }
 
     public createInputField(type:EInputTypes):IAbstractObject
