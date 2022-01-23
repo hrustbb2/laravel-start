@@ -98,7 +98,7 @@ class ModulesProvider implements IFirstModuleProvider, IAuthModulesProvider, ISi
     {
         if($this->jsonObjectsFactory === null){
             $this->jsonObjectsFactory = new JsonObjectsFactory();
-            $objFactory = new \Src\JsonObjects\Dto\Object\Factory();
+            $objFactory = $this->getCommonFactory()->getDtoFactory()->getObjectFactory();
             $jsonObjectsSettings = [
                 IJsonObjectsFactory::DB_HOST => 'db',
                 IJsonObjectsFactory::DB_NAME => 'dbname',

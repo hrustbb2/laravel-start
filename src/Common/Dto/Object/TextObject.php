@@ -1,12 +1,12 @@
 <?php
 
-namespace Src\JsonObjects\Dto\Object;
+namespace Src\Common\Dto\Object;
 
-class StringObject extends AbstractObject {
+class TextObject extends AbstractObject {
     
     protected ?string $value = null;
 
-    protected string $type = self::STRING_TYPE;
+    protected string $type = self::TEXT_TYPE;
 
     public function getAttributes()
     {

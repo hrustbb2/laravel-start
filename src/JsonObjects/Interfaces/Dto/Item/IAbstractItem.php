@@ -2,7 +2,7 @@
 
 namespace Src\JsonObjects\Interfaces\Dto\Item;
 
-use Src\JsonObjects\Interfaces\Dto\Object\IFactory as IObjectsFactory;
+use Src\Common\Interfaces\Dto\Object\IFactory as IObjectsFactory;
 
 interface IAbstractItem {
     public function setObjectsFactory(IObjectsFactory $factory):void;

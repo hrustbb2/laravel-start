@@ -7,6 +7,8 @@ use Src\Common\Interfaces\Pages\IFactory as IPagesFactory;
 use Src\Common\Pages\Factory as PagesFactory;
 use Src\Common\Interfaces\Adapters\IAdaptersFactory;
 use Src\Common\Adapters\Factory as Adapters;
+use Src\Common\Interfaces\Dto\IFactory as IDtoFactory;
+use Src\Common\Dto\Factory as DtoFactory;
 
 class Factory implements IFactory {
 
@@ -16,6 +18,8 @@ class Factory implements IFactory {
     protected ?IPagesFactory $pagesFactory = null;
 
     protected ?IAdaptersFactory $adaptersFactory = null;
+
+    protected ?IDtoFactory $dtoFactory = null;
 
     protected function newPagesFactory()
     {
@@ -37,6 +41,14 @@ class Factory implements IFactory {
             $this->adaptersFactory = $adapters->getAdaptersFactory($name);
         }
         return $this->adaptersFactory;
+    }
+
+    public function getDtoFactory()
+    {
+        if($this->dtoFactory === null){
+            $this->dtoFactory = new DtoFactory();
+        }
+        return $this->dtoFactory;
     }
 
 }

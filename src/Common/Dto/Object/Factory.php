@@ -1,11 +1,11 @@
 <?php
 
-namespace Src\JsonObjects\Dto\Object;
+namespace Src\Common\Dto\Object;
 
-use Src\JsonObjects\Interfaces\Dto\Object\IFactory;
+use Src\Common\Interfaces\Dto\Object\IFactory;
 
 class Factory implements IFactory {
-
+    
     public function createObjectField(string $type):?AbstractObject
     {
         if($type == AbstractComposite::ARRAY_TYPE){

@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\JsonObjects\Dto\Object;
+namespace Src\Common\Dto\Object;
 
 class NestedComposite extends AbstractComposite {
 

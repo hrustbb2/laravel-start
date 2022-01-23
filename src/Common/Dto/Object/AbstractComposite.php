@@ -1,8 +1,8 @@
 <?php
 
-namespace Src\JsonObjects\Dto\Object;
+namespace Src\Common\Dto\Object;
 
-use Src\JsonObjects\Interfaces\Dto\Object\IFactory as IFieldsFactory;
+use Src\Common\Interfaces\Dto\Object\IFactory as IFieldsFactory;
 
 abstract class AbstractComposite extends AbstractObject {
     

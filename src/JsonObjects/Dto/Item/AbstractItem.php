@@ -2,8 +2,8 @@
 
 namespace Src\JsonObjects\Dto\Item;
 
-use Src\JsonObjects\Dto\Object\AbstractComposite;
-use Src\JsonObjects\Interfaces\Dto\Object\IFactory as IObjectsFactory;
+use Src\Common\Dto\Object\AbstractComposite;
+use Src\Common\Interfaces\Dto\Object\IFactory as IObjectsFactory;
 
 abstract class AbstractItem {
 
