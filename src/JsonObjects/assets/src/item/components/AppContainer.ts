@@ -1,11 +1,10 @@
 import {IAppContainer} from '../interfaces/components/IAppContainer';
 import {IAppCommands} from '../interfaces/commands/IAppCommands';
-import {IObjectBus} from '../interfaces/bus/IObjectBus';
-import {IComposite} from '../interfaces/components/IComposite';
-import {TComposite} from '../types/TComposite';
-import {TAbstractObject} from '../types/TAbstractObject';
-import {TErrors} from '../types/TErrors';
-import {IObjectForm} from '../interfaces/components/IObjectForm';
+import {TAbstractObject} from '@common/object-input/types/TAbstractObject';
+import {TErrors} from '@common/object-input/types/TErrors';
+import {IObjectForm} from '@common/object-input/interfaces/components/IObjectForm';
+import {IObjectBus} from '@common/object-input/interfaces/bus/IObjectBus';
+import {IComposite} from '@common/object-input/interfaces/components/IComposite';
 import {TSettings} from '../types/TSettings';
 
 declare let settings:TSettings;

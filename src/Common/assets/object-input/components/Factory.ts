@@ -1,6 +1,7 @@
 import {IFactory} from '../interfaces/components/IFactory';
 import {IFactory as IAppFactory} from '../interfaces/IFactory';
 import {IAbstractObject} from '../interfaces/components/IAbstractObject';
+import {IComposite} from '../interfaces/components/IComposite';
 import {EInputTypes} from '../types/EInputTypes';
 import {IModal} from '../interfaces/components/IModal';
 import {Modal} from './Modal';
@@ -69,7 +70,7 @@ export class Factory implements IFactory {
         return input;
     }
 
-    protected createComposite()
+    public createComposite():IComposite
     {
         let objectBus = this.appFactory.getBusFactory().getObjectBus();
         let composite = new Composite();

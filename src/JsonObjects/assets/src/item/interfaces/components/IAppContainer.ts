@@ -1,7 +1,7 @@
-import {IComposite} from '../components/IComposite';
-import {IObjectForm} from './IObjectForm';
+import {IComposite} from '@common/object-input/interfaces/components/IComposite';
+import {IObjectForm} from '@common/object-input/interfaces/components/IObjectForm';
 import {IAppCommands} from '../commands/IAppCommands';
-import {IObjectBus} from '../bus/IObjectBus';
+import {IObjectBus} from '@common/object-input/interfaces/bus/IObjectBus';
 
 export interface IAppContainer {
     setCompositeCreator(callback:()=>IComposite):void;

@@ -1,22 +1,28 @@
 import {IFactory} from './interfaces/IFactory';
 import {IFactory as IComponentsFactory} from './interfaces/components/IFactory';
 import {Factory as ComponentsFactory} from './components/Factory';
-import {IFactory as IBusFactory} from './interfaces/bus/IFactory';
-import {Factory as BusFactory} from './bus/Factory';
 import {IFactory as ICommandsFactory} from './interfaces/commands/IFactory';
 import {Factory as CommandsFactory} from './commands/Factory';
+import {IFactory as IObjectInputFactory} from '@common/object-input/interfaces/IFactory';
+import {Factory as ObjectInputFactory} from '@common/object-input/Factory';
 
 export class Factory implements IFactory {
     
     protected componentsFactory:IComponentsFactory = null;
 
-    protected busFactory:IBusFactory = null;
-
     protected commandsFactory:ICommandsFactory = null;
+
+    protected objectInputFactory:IObjectInputFactory;
 
     public init(container:JQuery)
     {
+        this.objectInputFactory = new ObjectInputFactory();
         this.getComponentsFactory().init(container);
+    }
+
+    public getObjectInputFactory():IObjectInputFactory
+    {
+        return this.objectInputFactory;
     }
     
     public getComponentsFactory():IComponentsFactory
@@ -26,15 +32,6 @@ export class Factory implements IFactory {
             this.componentsFactory.setAppFactory(this);
         }
         return this.componentsFactory;
-    }
-
-    public getBusFactory():IBusFactory
-    {
-        if(this.busFactory === null){
-            this.busFactory = new BusFactory();
-            this.busFactory.setAppFactory(this);
-        }
-        return this.busFactory;
     }
 
     public getCommandsFactory():ICommandsFactory
