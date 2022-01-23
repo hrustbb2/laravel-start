@@ -166,6 +166,7 @@ export class ObjectsArray implements IObjectsArray {
             this.items.push(item);
             this.$items.append(dropableEl.template);
             this.$items.append(item.template);
+            item.eventsListen();
         }
     }
 
@@ -241,9 +242,6 @@ export class ObjectsArray implements IObjectsArray {
 
     public eventsListen()
     {
-        for(let item of this.items){
-            item.eventsListen();
-        }
         this.$addItemBtn.on('click', (e:Event)=>{
             e.preventDefault();
             if(this.data.item_proto[0].composite){
