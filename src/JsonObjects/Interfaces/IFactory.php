@@ -28,6 +28,12 @@ interface IFactory {
 
     const OBJECTS_FACTORY = 'objects_factory';
 
+    const ITEMS_DROPDOWN = 'items_dropdown';
+
+    const ITEM_TITLE = 'title';
+
+    const ITEM_TYPE = 'type';
+
     public function injectModules(IModulesProvider $provider);
     public function getSidebarFactory():ISidebarFactory;
     public function getCommonFactory():ICommonFactory;

@@ -30,6 +30,20 @@ export class AppCommands implements IAppCommands {
         });
     }
 
+    public newItem(dirId:string, type:string, name:string):Promise<any>
+    {
+        return new Promise<any>((resolve:any, reject:any)=>{
+            resolve({
+                success: true,
+                errors: [],
+                item: {
+                    id: 'qwe',
+                    name: name,
+                }
+            });
+        });
+    }
+
     public renameDir(dirId:string, name:string):Promise<any>
     {
         return new Promise<any>((resolve:any, reject:any)=>{

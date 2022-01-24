@@ -15,6 +15,8 @@ interface IDir extends IAbstractPage {
     public function setItemStorage(IItemStorage $storage):void;
     public function setItemDtoFactory(IItemDtoFactory $factory):void;
     public function setRouteAdapter(IRoute $adapter):void;
+    public function setItemsDropdown(array $dropDown):void;
     public function init(string $currentDirId):void;
     public function getBreadcrumbs():array;
+    public function getItemsDropdown():array;
 }

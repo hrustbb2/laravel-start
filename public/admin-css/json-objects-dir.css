@@ -18919,3 +18919,6 @@ body {
 .context-menu-item:hover {
   background-color: #bbbbbb;
   cursor: pointer; }
+
+.tools-panel {
+  display: flex; }

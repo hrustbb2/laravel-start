@@ -15,6 +15,10 @@ export class ToolsPanel implements IToolsPanel {
 
     protected $addDirButton:JQuery;
 
+    protected $addItemButton:JQuery;
+
+    protected $itemDropDown:JQuery;
+
     protected $deleteButton:JQuery;
 
     public setAppBus(bus:IAppBus)
@@ -31,6 +35,8 @@ export class ToolsPanel implements IToolsPanel {
     {
         this.$container = container;
         this.$addDirButton = this.$container.find('.js-add-button');
+        this.$addItemButton = this.$container.find('.js-add-item-button');
+        this.$itemDropDown = this.$container.find('.js-items-dropdown');
         this.$deleteButton = this.$container.find('.js-delete-button');
         this.eventsListen();
     }
@@ -47,6 +53,26 @@ export class ToolsPanel implements IToolsPanel {
                         this.appBus.newDir(resp.dir);
                     }
                 });
+        });
+        this.$addItemButton.on('click', ()=>{
+            this.$itemDropDown.toggleClass('show');
+        });
+        this.$itemDropDown.find('.js-dropdown-item').each((index:number, el:HTMLElement)=>{
+            let type = $(el).attr('item');
+            $(el).on('click', ()=>{
+                this.appBus.execItemModal()
+                    .then((name:string)=>{
+                        this.$itemDropDown.removeClass('show');
+                        return this.appCommands.newItem(settings.currentId, type, name);
+                    }, ()=>{
+                        this.$itemDropDown.removeClass('show');
+                    })
+                    .then((resp:any)=>{
+                        if(resp && resp.success){
+                            this.appBus.newItem(resp.item);
+                        }
+                    });
+            });
         });
     }
 

@@ -11,6 +11,7 @@ export interface IAppContainer {
     loadDirs(dirsData:types.TDirs):void;
     loadItems(itemsData:types.TItems):void;
     appendDir(dirData:types.TDir):void;
+    appendItem(itemData:types.TItem):void;
     renameDir(dirData:types.TDir):void;
     renameItem(itemData:types.TItem):void;
     deleteDir(dirData:types.TDir):void;

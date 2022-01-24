@@ -108,6 +108,12 @@ class ModulesProvider implements IFirstModuleProvider, IAuthModulesProvider, ISi
                 IJsonObjectsFactory::FRAMEWORK_NAME => ICommonFactory::LARAVEL,
                 IJsonObjectsFactory::OBJECTS_TABLE => 'json_objects_table',
                 IJsonObjectsFactory::OBJECTS_FACTORY => $objFactory,
+                IJsonObjectsFactory::ITEMS_DROPDOWN => [
+                    [
+                        IJsonObjectsFactory::ITEM_TITLE => 'Example object',
+                        IJsonObjectsFactory::ITEM_TYPE => \Src\Common\Dto\Object\ExampleComposit::EXAMPLE_COMPOSIT,
+                    ]
+                ],
             ];
             $this->jsonObjectsFactory->loadSettings($jsonObjectsSettings);
             $dirsCategoriesFactory = $this->createTreeCategoriesFactory();

@@ -55,6 +55,11 @@ export class AppBus implements IAppBus {
         this.componentsFactory.getAppContainer().appendDir(dir);
     }
 
+    public newItem(item:TItem)
+    {
+        this.componentsFactory.getAppContainer().appendItem(item);
+    }
+
     public renamedDir(dir:TDir)
     {
         this.componentsFactory.getAppContainer().renameDir(dir);

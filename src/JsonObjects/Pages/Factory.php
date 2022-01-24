@@ -32,6 +32,8 @@ class Factory implements IFactory {
         $frameworkName = $this->moduleFactory->getSetting(IModuleFactory::FRAMEWORK_NAME);
         $routeAdapter = $this->moduleFactory->getCommonFactory()->getAdaptersFactory($frameworkName)->getRoute();
         $page->setRouteAdapter($routeAdapter);
+        $itemsDropdown = $this->moduleFactory->getSetting(IModuleFactory::ITEMS_DROPDOWN);
+        $page->setItemsDropdown($itemsDropdown);
         $page->init($currentDirId);
         return $page;
     }

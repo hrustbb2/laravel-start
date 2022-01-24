@@ -9,6 +9,7 @@ export interface IAppBus {
     execDirModal(name?:string):Promise<string>
     execItemModal(name?:string):Promise<string>
     newDir(dir:TDir):void;
+    newItem(item:TItem):void;
     renamedDir(dir:TDir):void;
     renamedItem(item:TItem):void;
     deletedDir(dir:TDir):void;

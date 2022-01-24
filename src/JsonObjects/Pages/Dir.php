@@ -36,6 +36,8 @@ class Dir extends Page implements IDir {
 
     protected IDirResource $currentDir;
 
+    protected array $itemsDropdown = [];
+
     public function setDirsStorage(IDirsStorage $storage):void
     {
         $this->dirsStorage = $storage;
@@ -59,6 +61,11 @@ class Dir extends Page implements IDir {
     public function setRouteAdapter(IRoute $adapter):void
     {
         $this->routeAdapter = $adapter;
+    }
+
+    public function setItemsDropdown(array $dropDown):void
+    {
+        $this->itemsDropdown = $dropDown;
     }
     
     public function init(string $currentDirId):void
@@ -122,6 +129,11 @@ class Dir extends Page implements IDir {
     public function getBreadcrumbs():array
     {
         return [];
+    }
+
+    public function getItemsDropdown():array
+    {
+        return $this->itemsDropdown;
     }
 
 }

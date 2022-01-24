@@ -3,6 +3,7 @@ import {IDir} from '../interfaces/components/IDir';
 import {IItem} from '../interfaces/components/IItem';
 import {IToolsPanel} from '../interfaces/components/IToolsPanel';
 import * as types from '../types';
+import { Item } from './Item';
 
 export class AppContainer implements IAppContainer {
 
@@ -78,6 +79,15 @@ export class AppContainer implements IAppContainer {
         this.$itemsContainer.append(dir.template);
         dir.eventsListen();
         this.dirs.push(dir);
+    }
+
+    public appendItem(itemData:types.TItem)
+    {
+        let item = this.itemCreator();
+        item.load(itemData);
+        this.$itemsContainer.append(item.template);
+        item.eventsListen();
+        this.items.push(item);
     }
 
     public renameDir(dirData:types.TDir)
