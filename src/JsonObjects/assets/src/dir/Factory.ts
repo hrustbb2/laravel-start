@@ -19,7 +19,8 @@ export class Factory implements IFactory {
         let componentsFactory = this.getComponentsFactory();
         componentsFactory.init(appContainer);
         $('body').on('click', ()=>{
-            this.getComponentsFactory().getContextMenu().hide();
+            this.getComponentsFactory().getDirContextMenu().hide();
+            this.getComponentsFactory().getItemContextMenu().hide();
         });
     }
 

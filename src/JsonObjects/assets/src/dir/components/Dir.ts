@@ -59,7 +59,7 @@ export class Dir implements IDir {
         });
         this.template.on('contextmenu', (e:JQuery.Event)=>{
             e.preventDefault();
-            this.appBus.execContextMenu(e.pageX, e.pageY, this.data);
+            this.appBus.execDirContextMenu(e.pageX, e.pageY, this.data);
         });
     }
 

@@ -89,12 +89,31 @@ export class AppContainer implements IAppContainer {
         }
     }
 
+    public renameItem(itemData:types.TItem)
+    {
+        for(let item of this.items){
+            if(item.id == itemData.id){
+                item.rename(itemData.name);
+            }
+        }
+    }
+
     public deleteDir(dirData:types.TDir)
     {
         for(let i in this.dirs){
             if(this.dirs[i].id == dirData.id){
                 this.dirs[i].template.remove();
                 this.dirs.splice(+i, 1);
+            }
+        }
+    }
+
+    public deleteItem(itemData:types.TItem)
+    {
+        for(let i in this.items){
+            if(this.items[i].id == itemData.id){
+                this.items[i].template.remove();
+                this.items.splice(+i, 1);
             }
         }
     }

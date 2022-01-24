@@ -7,6 +7,6 @@ export interface IContextMenu {
     eventsListen():void;
     setAppBus(bus:IAppBus):void;
     setAppCommands(commands:IAppCommands):void;
-    show(x:number, y:number, dirData:TDir):void;
+    show(x:number, y:number, data:any):void;
     hide():void;
 }

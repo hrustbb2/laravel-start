@@ -7,7 +7,8 @@ import {Dir} from '../components/Dir';
 import {IItem} from '../interfaces/components/IItem';
 import {Item} from '../components/Item';
 import {IContextMenu} from '../interfaces/components/IContextMenu';
-import {ContextMenu} from '../components/ContextMenu';
+import {DirContextMenu} from '../components/DirContextMenu';
+import {ItemContextMenu} from '../components/ItemContextMenu';
 import {IToolsPanel} from '../interfaces/components/IToolsPanel';
 import {ToolsPanel} from '../components/ToolsPanel';
 
@@ -17,7 +18,9 @@ export class Factory implements IFactory {
 
     protected appContainer:IAppContainer = null;
 
-    protected contextMenu:IContextMenu = null;
+    protected dirContextMenu:IContextMenu = null;
+
+    protected itemContextMenu:IContextMenu = null;
 
     public setAppFactory(factory:IAppFactory)
     {
@@ -69,18 +72,32 @@ export class Factory implements IFactory {
         return toolsPaenel;
     }
 
-    public getContextMenu():IContextMenu
+    public getDirContextMenu():IContextMenu
     {
-        if(this.contextMenu === null){
-            this.contextMenu = new ContextMenu();
+        if(this.dirContextMenu === null){
+            this.dirContextMenu = new DirContextMenu();
             let appBus = this.appFactory.getBusFactory().getAppBus();
-            this.contextMenu.setAppBus(appBus);
+            this.dirContextMenu.setAppBus(appBus);
             let appCommands = this.appFactory.getCommandsFactory().getAppCommands();
-            this.contextMenu.setAppCommands(appCommands);
-            $('body').append(this.contextMenu.template);
-            this.contextMenu.eventsListen();
+            this.dirContextMenu.setAppCommands(appCommands);
+            $('body').append(this.dirContextMenu.template);
+            this.dirContextMenu.eventsListen();
         }
-        return this.contextMenu;
+        return this.dirContextMenu;
+    }
+
+    public getItemContextMenu():IContextMenu
+    {
+        if(this.itemContextMenu === null){
+            this.itemContextMenu = new ItemContextMenu();
+            let appBus = this.appFactory.getBusFactory().getAppBus();
+            this.itemContextMenu.setAppBus(appBus);
+            let appCommands = this.appFactory.getCommandsFactory().getAppCommands();
+            this.itemContextMenu.setAppCommands(appCommands);
+            $('body').append(this.itemContextMenu.template);
+            this.itemContextMenu.eventsListen();
+        }
+        return this.itemContextMenu;
     }
 
 }

@@ -2,8 +2,9 @@ import {IContextMenu} from '../interfaces/components/IContextMenu';
 import {IAppBus} from '../interfaces/bus/IAppBus';
 import {IAppCommands} from '../interfaces/commands/IAppCommands';
 import {TDir} from '../types/TDir';
+import 'jquery';
 
-export class ContextMenu implements IContextMenu {
+export class DirContextMenu implements IContextMenu {
 
     protected html:string = `
         <div class="context-menu">
@@ -12,9 +13,6 @@ export class ContextMenu implements IContextMenu {
             </div>
             <div class="context-menu-item js-delete-button">
                 Удалить
-            </div>
-            <div class="context-menu-item">
-                Item 3
             </div>
         </div>
     `;

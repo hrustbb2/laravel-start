@@ -55,6 +55,20 @@ export class AppCommands implements IAppCommands {
         });
     }
 
+    public renameItem(itemId:string, name:string):Promise<any>
+    {
+        return new Promise<any>((resolve:any, reject:any)=>{
+            resolve({
+                success:true,
+                errors:[],
+                item: {
+                    id:itemId,
+                    name: name,
+                }
+            });
+        });
+    }
+
     public deleteDir(dirId:string):Promise<any>
     {
         return new Promise<any>((resolve:any, reject:any)=>{
@@ -75,6 +89,16 @@ export class AppCommands implements IAppCommands {
                 error: (e:JQueryXHR) => {
                     reject(e.responseJSON);
                 }
+            });
+        });
+    }
+
+    public deleteItem(itemId:string):Promise<any>
+    {
+        return new Promise<any>((resolve:any, reject:any)=>{
+            resolve({
+                success: true,
+                errors: [],
             });
         });
     }

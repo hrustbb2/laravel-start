@@ -10,5 +10,6 @@ export interface IFactory {
     getAppContainer():IAppContainer;
     createDir():IDir;
     createItem():IItem;
-    getContextMenu():IContextMenu;
+    getDirContextMenu():IContextMenu;
+    getItemContextMenu():IContextMenu;
 }
