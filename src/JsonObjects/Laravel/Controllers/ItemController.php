@@ -43,4 +43,39 @@ class ItemController extends Controller {
         return response()->json($resp, $domain->getResponseCode());
     }
 
+    public function newItem(Request $request)
+    {
+        $data = $request->all();
+        $domain = $this->factory->getApplicationFactory()->getDomain();
+        $resp = [
+            'success' => $domain->createObject($data),
+            'errors' => $domain->getErrors(),
+            'item' => $domain->getItem()->toArray(),
+        ];
+        return response()->json($resp, $domain->getResponseCode());
+    }
+
+    public function renameItem(Request $request)
+    {
+        $data = $request->all();
+        $domain = $this->factory->getApplicationFactory()->getDomain();
+        $resp = [
+            'success' => $domain->renameObject($data),
+            'errors' => $domain->getErrors(),
+            'item' => $domain->getItem()->toArray(),
+        ];
+        return response()->json($resp, $domain->getResponseCode());
+    }
+
+    public function deleteItem(Request $request)
+    {
+        $data = $request->all();
+        $domain = $this->factory->getApplicationFactory()->getDomain();
+        $resp = [
+            'success' => $domain->deleteObject($data),
+            'errors' => $domain->getErrors(),
+        ];
+        return response()->json($resp, $domain->getResponseCode());
+    }
+
 }

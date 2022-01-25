@@ -8,6 +8,9 @@ export type TSettings = {
     url:string;
     itemUrl:string;
     newDirUrl:string;
+    newItemUrl:string;
+    renameItemUrl:string;
+    deleteItemUrl:string;
     renameDirUrl:string;
     deleteDirUrl:string;
 }

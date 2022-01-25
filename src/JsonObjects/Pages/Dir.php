@@ -116,6 +116,9 @@ class Dir extends Page implements IDir {
             'url' => $this->routeAdapter->getRoute('admin.jsonObjects.dir'),
             'itemUrl' => $this->routeAdapter->getRoute('admin.jsonObjects.item'),
             'newDirUrl' => $this->routeAdapter->getRoute('admin.jsonObjects.newDir'),
+            'newItemUrl' => $this->routeAdapter->getRoute('admin.jsonObjects.newItem'),
+            'renameItemUrl' => $this->routeAdapter->getRoute('admin.jsonObjects.renameItem'),
+            'deleteItemUrl' => $this->routeAdapter->getRoute('admin.jsonObjects.deleteItem'),
             'renameDirUrl' => $this->routeAdapter->getRoute('admin.jsonObjects.renameDir'),
             'deleteDirUrl' => $this->routeAdapter->getRoute('admin.jsonObjects.deleteDir'),
         ];

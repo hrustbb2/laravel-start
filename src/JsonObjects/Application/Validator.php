@@ -22,10 +22,6 @@ class Validator extends BaseValidator implements IValidator {
                 'required',
                 'max:32',
             ],
-            'description' => [
-                'required',
-                'max:32',
-            ]
         ];
         $messages = [
 
@@ -53,6 +49,47 @@ class Validator extends BaseValidator implements IValidator {
 
         ];
         return $this->validate($data, $rules, $messages);
+    }
+
+    public function renameObject(array $data):bool
+    {
+        $rules = [
+            'id' => [
+                'required',
+                'max:32',
+            ],
+            'name' => [
+                'required',
+                'max:32',
+            ],
+        ];
+        $messages = [
+
+        ];
+        return $this->validate($data, $rules, $messages);
+    }
+
+    public function deleteObject(array $data):bool
+    {
+        $rules = [
+            'id' => [
+                'required',
+                'max:32',
+            ],
+        ];
+        $messages = [
+
+        ];
+        return $this->validate($data, $rules, $messages);
+    }
+
+    public function getCleanData()
+    {
+        $cleanData = parent::getCleanData();
+        if(key_exists('object', $cleanData)){
+            $cleanData['object'] = json_encode($cleanData['object']);
+        }
+        return $cleanData;
     }
 
 }

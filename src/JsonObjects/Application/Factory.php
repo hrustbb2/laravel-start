@@ -22,6 +22,14 @@ class Factory implements IFactory {
         return new Validator();
     }
 
+    protected function creteDataBuilder()
+    {
+        $dataBuilder = new DataBuilder();
+        $storage = $this->moduleFactory->getDirsTreeFactory()->getInfrastructureFactory()->getStorage();
+        $dataBuilder->setDirStorage($storage);
+        return $dataBuilder;
+    }
+
     public function getDomain():IDomain
     {
         if($this->domain === null){
@@ -34,6 +42,8 @@ class Factory implements IFactory {
             $this->domain->setPersistLayer($persistLayer);
             $storage = $this->moduleFactory->getInfrastructureFactory()->getStorage();
             $this->domain->setStorage($storage);
+            $dataBuilder = $this->creteDataBuilder();
+            $this->domain->setDataBuilder($dataBuilder);
         }
         return $this->domain;
     }

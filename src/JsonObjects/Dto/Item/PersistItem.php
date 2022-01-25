@@ -8,7 +8,7 @@ class PersistItem extends AbstractItem implements IPersistItem {
 
     protected array $updatedAttrs = [];
 
-    protected ?string $dirId;
+    protected string $dirId = '';
 
     public function loadDir(array $dirData):void
     {
@@ -20,7 +20,7 @@ class PersistItem extends AbstractItem implements IPersistItem {
         $this->key = uniqid();
         return [
             'id' => $this->id,
-            'dir_id' => $this->dir->getId(),
+            'dir_id' => $this->dirId,
             'key' => $this->key,
             'name' => $this->name,
             'description' => $this->description,
@@ -47,7 +47,8 @@ class PersistItem extends AbstractItem implements IPersistItem {
             $this->updatedAttrs['description'] = $data['description'];
         }
         if(key_exists('object', $data) && $this->object){
-            $this->object->loadAttributes($data['object']);
+            $objectData = json_decode($data['object'], true);
+            $this->object->loadAttributes($objectData);
             $this->updatedAttrs['object'] = json_encode($this->object->getAttributes());
         }
     }

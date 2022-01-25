@@ -32,4 +32,10 @@ class ItemPersistLayer implements IItemPersistLayer {
         return 0;
     }
 
+    public function delete(string $itemId):int
+    {
+        $qb = DB::table($this->tableName);
+        return $qb->where($this->tableName . '.id', '=', $itemId)->delete();
+    }
+
 }

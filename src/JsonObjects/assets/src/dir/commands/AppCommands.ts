@@ -33,12 +33,24 @@ export class AppCommands implements IAppCommands {
     public newItem(dirId:string, type:string, name:string):Promise<any>
     {
         return new Promise<any>((resolve:any, reject:any)=>{
-            resolve({
-                success: true,
-                errors: [],
-                item: {
-                    id: 'qwe',
-                    name: name,
+            let formData = new FormData();
+            formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+            formData.append('dir-id', dirId);
+            formData.append('object[type]', type);
+            formData.append('name', name);
+            
+            $.ajax({
+                url: settings.newItemUrl,
+                data: formData,
+                type: 'POST',
+                dataType: 'json',
+                processData : false,
+                contentType : false,
+                success: (resp:any) => {
+                    resolve(resp);
+                },
+                error: (e:JQueryXHR) => {
+                    reject(e.responseJSON);
                 }
             });
         });
@@ -72,12 +84,23 @@ export class AppCommands implements IAppCommands {
     public renameItem(itemId:string, name:string):Promise<any>
     {
         return new Promise<any>((resolve:any, reject:any)=>{
-            resolve({
-                success:true,
-                errors:[],
-                item: {
-                    id:itemId,
-                    name: name,
+            let formData = new FormData();
+            formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+            formData.append('id', itemId);
+            formData.append('name', name);
+
+            $.ajax({
+                url: settings.renameItemUrl,
+                data: formData,
+                type: 'POST',
+                dataType: 'json',
+                processData : false,
+                contentType : false,
+                success: (resp:any) => {
+                    resolve(resp);
+                },
+                error: (e:JQueryXHR) => {
+                    reject(e.responseJSON);
                 }
             });
         });
@@ -110,9 +133,23 @@ export class AppCommands implements IAppCommands {
     public deleteItem(itemId:string):Promise<any>
     {
         return new Promise<any>((resolve:any, reject:any)=>{
-            resolve({
-                success: true,
-                errors: [],
+            let formData = new FormData();
+            formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+            formData.append('id', itemId);
+
+            $.ajax({
+                url: settings.deleteItemUrl,
+                data: formData,
+                type: 'POST',
+                dataType: 'json',
+                processData : false,
+                contentType : false,
+                success: (resp:any) => {
+                    resolve(resp);
+                },
+                error: (e:JQueryXHR) => {
+                    reject(e.responseJSON);
+                }
             });
         });
     }

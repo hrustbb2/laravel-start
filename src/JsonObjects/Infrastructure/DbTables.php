@@ -19,8 +19,8 @@ class DbTables extends InitDb implements IDbTables {
     public function init(array $dirsData)
     {
         $this->objectsData = [];
-        $factory = new \Src\JsonObjects\Dto\Object\Factory();
-        $ex = new \Src\JsonObjects\Dto\Object\ExampleComposit();
+        $factory = new \Src\Common\Dto\Object\Factory();
+        $ex = new \Src\Common\Dto\Object\ExampleComposit();
         $ex->setFieldsFactory($factory);
         $ex->init();
         $attrs = [
@@ -30,15 +30,15 @@ class DbTables extends InitDb implements IDbTables {
                 'items' => [
                     [
                         'value' => '',
-                        'type' => \Src\JsonObjects\Dto\Object\AbstractObject::STRING_TYPE,
+                        'type' => \Src\Common\Dto\Object\AbstractObject::STRING_TYPE,
                     ],
                     [
                         'value' => 'Item_2',
-                        'type' => \Src\JsonObjects\Dto\Object\AbstractObject::STRING_TYPE,
+                        'type' => \Src\Common\Dto\Object\AbstractObject::STRING_TYPE,
                     ],
                     [
                         'value' => 'Item_3',
-                        'type' => \Src\JsonObjects\Dto\Object\AbstractObject::STRING_TYPE,
+                        'type' => \Src\Common\Dto\Object\AbstractObject::STRING_TYPE,
                     ],
                 ]
             ],
@@ -69,7 +69,7 @@ class DbTables extends InitDb implements IDbTables {
                 ->addColumn('dir_id', 'string')
                 ->addColumn('key', 'string')
                 ->addColumn('name', 'string')
-                ->addColumn('description', 'string')
+                ->addColumn('description', 'string', ['null' => true])
                 ->addColumn('object', 'json')
                 ->create();
     }
