@@ -26,6 +26,8 @@ interface IFactory {
     
     const TABLE_NAME_SETTING = 'table_name';
 
+    const SUCCESS_URL = 'success_url';
+
     public function injectModules(IModulesProvider $provider);
     
     public function loadSettings(array $settings);

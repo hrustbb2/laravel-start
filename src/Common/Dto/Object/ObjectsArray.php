@@ -7,8 +7,8 @@ use Src\Common\Interfaces\Dto\Object\IFactory as IFieldsFactory;
 class ObjectsArray extends AbstractObject {
     
     protected string $type = self::ARRAY_TYPE;
-    
-    protected array $itemsTypes = [];
+
+    protected array $itemsSettings = [];
 
     /**
      * @var AbstractObject[]
@@ -16,8 +16,6 @@ class ObjectsArray extends AbstractObject {
     protected array $items = [];
 
     protected ?string $itemDescription;
-
-    protected ?string $labelField = null;
 
     protected IFieldsFactory $fieldsFactory;
 
@@ -30,15 +28,14 @@ class ObjectsArray extends AbstractObject {
     {
         $this->fieldsFactory = $factory;
     }
-    
-    public function setLabelField(string $field)
-    {
-        $this->labelField = $field;
-    }
 
-    public function setItemsTypes(array $itemsTypes)
+    public function appendItemsType(string $type, string $description, string $labelField)
     {
-        $this->itemsTypes = $itemsTypes;
+        $this->itemsSettings[] = [
+            'type' => $type,
+            'description' => $description,
+            'label' => $labelField,
+        ];
     }
 
     public function getAttributes()
@@ -61,15 +58,17 @@ class ObjectsArray extends AbstractObject {
             $item->setDescriptionStr($descriptionStr);
             return $item->getJson();
         }, $this->items);
-        $protoTypesJson = array_map(function(string $itemTupe){
-            $protoType = $this->fieldsFactory->createObjectField($itemTupe);
+        $protoTypesJson = array_map(function(string $itemSetting){
+            $protoType = $this->fieldsFactory->createObjectField($itemSetting['type']);
             $protoType->setDescriptionStr($this->itemDescription);
-            return $protoType->getJson();
-        }, $this->itemsTypes);
+            return [
+                'proto' => $protoType->getJson(),
+                'label_field' => $itemSetting['type'],
+            ];
+        }, $this->itemsSettings);
         return [
             'type' => $this->type,
             'composite' => false,
-            'label_field' => $this->labelField,
             'item_proto' => $protoTypesJson,
             'description' => $this->description,
             'items' => $items,

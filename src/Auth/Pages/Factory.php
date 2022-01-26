@@ -20,6 +20,8 @@ class Factory implements IFactory {
         $frameworkName = $this->moduleFactory->getSetting(IModuleFactory::FRAMEWORK_NAME);
         $routeAdapter = $this->moduleFactory->getCommonFactory()->getAdaptersFactory($frameworkName)->getRoute();
         $page->setRouteAdapter($routeAdapter);
+        $successUrl = $this->moduleFactory->getSetting(IModuleFactory::SUCCESS_URL);
+        $page->setSuccessUrl($successUrl);
         return $page;
     }
 

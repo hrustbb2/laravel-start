@@ -72,6 +72,7 @@ class ModulesProvider implements IFirstModuleProvider, IAuthModulesProvider, ISi
                 IAuthFactory::DB_USER => 'user',
                 IAuthFactory::DB_PASS => 'password',
                 IAuthFactory::DB_CHARSET => 'utf8',
+                IAuthFactory::SUCCESS_URL => $this->getCommonFactory()->getAdaptersFactory(ICommonFactory::LARAVEL)->getRoute()->getRoute('admin.jsonObjects.dir'),
                 IAuthFactory::TABLE_NAME_SETTING => 'users',
                 IAuthFactory::FRAMEWORK_NAME => ICommonFactory::LARAVEL,
             ];

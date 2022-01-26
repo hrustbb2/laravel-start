@@ -2,6 +2,9 @@ import {ILoginForm} from '../interfaces/components/ILoginForm';
 import 'jquery';
 import {IAppCommands} from '../interfaces/commands/IAppCommands';
 import {TErrors} from '../types/TErrors';
+import {TSettings} from '../types/TSettings';
+
+declare let settings:TSettings;
 
 export class LoginForm implements ILoginForm {
 
@@ -44,7 +47,7 @@ export class LoginForm implements ILoginForm {
             this.appCommands.login(email, password)
                 .then((resp:any)=>{
                     if(resp.success){
-                        alert('Wellcome!!!');
+                        window.location.href = settings.successUrl;
                     }
                 })
                 .catch((reason:any)=>{
