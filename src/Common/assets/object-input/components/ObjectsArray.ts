@@ -55,9 +55,14 @@ export class ObjectsArray implements IObjectsArray {
         <div class="object-field">
             <div class="object-array-label-row">
                 <div class="js-label"></div>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="add-item-btn js-add-item-btn bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                </svg>
+                <div class="dropdown">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="add-item-btn js-add-item-btn bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                    </svg>
+                    <div class="dropdown-menu js-types-dropdown">
+                        
+                    </div>
+                </div>
             </div>
             <div class="js-items"></div>
         </div>
@@ -68,6 +73,8 @@ export class ObjectsArray implements IObjectsArray {
     protected $label:JQuery;
 
     protected $addItemBtn:JQuery;
+
+    protected $typesDropdown:JQuery;
 
     protected $items:JQuery;
 
@@ -95,6 +102,7 @@ export class ObjectsArray implements IObjectsArray {
         this.$template = $(this.html);
         this.$label = this.$template.find('.js-label');
         this.$addItemBtn = this.$template.find('.js-add-item-btn');
+        this.$typesDropdown = this.$template.find('.js-types-dropdown');
         this.$items = this.$template.find('.js-items');
     }
 
@@ -118,6 +126,12 @@ export class ObjectsArray implements IObjectsArray {
         this.data = data;
         this.$label.text(data.description);
         this.renderItems();
+        for(let type in data.item_proto){
+            let typeBtn = $('<button class="dropdown-item js-dropdown-type"></button>');
+            typeBtn.text(data.item_proto[type].description);
+            typeBtn.attr('type', type);
+            this.$typesDropdown.append(typeBtn);
+        }
     }
 
     protected renderItems()
@@ -252,23 +266,30 @@ export class ObjectsArray implements IObjectsArray {
     public eventsListen()
     {
         this.$addItemBtn.on('click', (e:Event)=>{
-            e.preventDefault();
-            let type = Object.keys(this.data.item_proto)[0];
-            let proto = this.data.item_proto[type].proto;
-            if(this.data.item_proto[type].proto.composite){
-                this.objectBus.renderForm(<TComposite>this.deepClone(proto), this.formKey)
-                    .then((newItem:TComposite)=>{
-                        this.data.items.push(newItem);
-                        this.objectBus.back(this.formKey);
-                    });
-            }else{
+            this.$typesDropdown.toggleClass('show');
+        });
 
-                this.objectBus.execObjectModal(this.deepClone(proto))
-                    .then((newItem:TValueObject)=>{
-                        this.data.items.push(newItem);
-                        this.objectBus.rerender(this.formKey);
-                    })
-            }
+        this.$typesDropdown.find('.js-dropdown-type').each((i:number, el:HTMLElement)=>{
+            $(el).on('click', (e:Event)=>{
+                e.preventDefault();
+                this.$typesDropdown.removeClass('show');
+                let type = $(el).attr('type');
+                let proto = this.data.item_proto[type].proto;
+
+                if(this.data.item_proto[type].proto.composite){
+                    this.objectBus.renderForm(<TComposite>this.deepClone(proto), this.formKey)
+                        .then((newItem:TComposite)=>{
+                            this.data.items.push(newItem);
+                            this.objectBus.back(this.formKey);
+                        });
+                }else{
+                    this.objectBus.execObjectModal(this.deepClone(proto))
+                        .then((newItem:TValueObject)=>{
+                            this.data.items.push(newItem);
+                            this.objectBus.rerender(this.formKey);
+                        })
+                }
+            });
         });
     }
 

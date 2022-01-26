@@ -64,6 +64,7 @@ class ObjectsArray extends AbstractObject {
             $protoType->setDescriptionStr($this->itemDescription);
             $protoTypesJson[$itemSetting['type']] = [
                 'proto' => $protoType->getJson(),
+                'description' => $itemSetting['description'],
                 'label_field' => $itemSetting['label'],
             ];
         }
