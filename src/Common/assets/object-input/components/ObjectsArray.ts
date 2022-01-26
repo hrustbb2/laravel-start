@@ -4,6 +4,7 @@ import {TObjectsArray} from '../types/TObjectsArray';
 import {IObjectBus} from '../interfaces/bus/IObjectBus';
 import {TValueObject} from '../types/TValueObject';
 import { TAbstractObject, TComposite } from '../types';
+import 'jquery';
 
 class DropableElement {
 
@@ -135,7 +136,7 @@ export class ObjectsArray implements IObjectsArray {
                 this.objectBus.rerender(this.formKey);
             });
             item.loadData(this.data.items[i]);
-            let descriptionField = this.data.label_field;
+            let descriptionField = this.data.item_proto[this.data.items[i].type].label_field;
             if(descriptionField && this.data.items[i].composite){
                 let label = (<TValueObject>(<TComposite>this.data.items[i]).fields[descriptionField]).value;
                 item.setLabel(label);
@@ -252,14 +253,17 @@ export class ObjectsArray implements IObjectsArray {
     {
         this.$addItemBtn.on('click', (e:Event)=>{
             e.preventDefault();
-            if(this.data.item_proto[0].composite){
-                this.objectBus.renderForm(<TComposite>this.deepClone(this.data.item_proto[0]), this.formKey)
+            let type = Object.keys(this.data.item_proto)[0];
+            let proto = this.data.item_proto[type].proto;
+            if(this.data.item_proto[type].proto.composite){
+                this.objectBus.renderForm(<TComposite>this.deepClone(proto), this.formKey)
                     .then((newItem:TComposite)=>{
                         this.data.items.push(newItem);
                         this.objectBus.back(this.formKey);
                     });
             }else{
-                this.objectBus.execObjectModal(this.deepClone(this.data.item_proto[0]))
+
+                this.objectBus.execObjectModal(this.deepClone(proto))
                     .then((newItem:TValueObject)=>{
                         this.data.items.push(newItem);
                         this.objectBus.rerender(this.formKey);

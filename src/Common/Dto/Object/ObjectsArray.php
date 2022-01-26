@@ -29,7 +29,7 @@ class ObjectsArray extends AbstractObject {
         $this->fieldsFactory = $factory;
     }
 
-    public function appendItemsType(string $type, string $description, string $labelField)
+    public function appendItemsType(string $type, string $description, string $labelField = '')
     {
         $this->itemsSettings[] = [
             'type' => $type,
@@ -58,14 +58,15 @@ class ObjectsArray extends AbstractObject {
             $item->setDescriptionStr($descriptionStr);
             return $item->getJson();
         }, $this->items);
-        $protoTypesJson = array_map(function(string $itemSetting){
+        $protoTypesJson = [];
+        foreach($this->itemsSettings as $itemSetting){
             $protoType = $this->fieldsFactory->createObjectField($itemSetting['type']);
             $protoType->setDescriptionStr($this->itemDescription);
-            return [
+            $protoTypesJson[$itemSetting['type']] = [
                 'proto' => $protoType->getJson(),
-                'label_field' => $itemSetting['type'],
+                'label_field' => $itemSetting['label'],
             ];
-        }, $this->itemsSettings);
+        }
         return [
             'type' => $this->type,
             'composite' => false,
