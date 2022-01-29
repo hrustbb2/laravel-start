@@ -67,10 +67,10 @@ class ModulesProvider implements IFirstModuleProvider, IAuthModulesProvider, ISi
         if($this->authFactory === null){
             $this->authFactory = new AuthFactory();
             $settings = [
-                IAuthFactory::DB_HOST => 'db',
-                IAuthFactory::DB_NAME => 'dbname',
-                IAuthFactory::DB_USER => 'user',
-                IAuthFactory::DB_PASS => 'password',
+                IAuthFactory::DB_HOST => env('DB_HOST'),
+                IAuthFactory::DB_NAME => env('DB_DATABASE'),
+                IAuthFactory::DB_USER => env('DB_USERNAME'),
+                IAuthFactory::DB_PASS => env('DB_PASSWORD'),
                 IAuthFactory::DB_CHARSET => 'utf8',
                 IAuthFactory::SUCCESS_URL => $this->getCommonFactory()->getAdaptersFactory(ICommonFactory::LARAVEL)->getRoute()->getRoute('admin.jsonObjects.dir'),
                 IAuthFactory::TABLE_NAME_SETTING => 'users',
@@ -102,10 +102,10 @@ class ModulesProvider implements IFirstModuleProvider, IAuthModulesProvider, ISi
             //$objFactory = $this->getCommonFactory()->getDtoFactory()->getObjectFactory();
             $objFactory = new \App\Models\JsonObjects\Factory();
             $jsonObjectsSettings = [
-                IJsonObjectsFactory::DB_HOST => 'db',
-                IJsonObjectsFactory::DB_NAME => 'dbname',
-                IJsonObjectsFactory::DB_USER => 'user',
-                IJsonObjectsFactory::DB_PASS => 'password',
+                IJsonObjectsFactory::DB_HOST => env('DB_HOST'),
+                IJsonObjectsFactory::DB_NAME => env('DB_DATABASE'),
+                IJsonObjectsFactory::DB_USER => env('DB_USERNAME'),
+                IJsonObjectsFactory::DB_PASS => env('DB_PASSWORD'),
                 IJsonObjectsFactory::DB_CHARSET => 'utf8',
                 IJsonObjectsFactory::FRAMEWORK_NAME => ICommonFactory::LARAVEL,
                 IJsonObjectsFactory::OBJECTS_TABLE => 'json_objects_table',
@@ -120,10 +120,10 @@ class ModulesProvider implements IFirstModuleProvider, IAuthModulesProvider, ISi
             $this->jsonObjectsFactory->loadSettings($jsonObjectsSettings);
             $dirsCategoriesFactory = $this->createTreeCategoriesFactory();
             $treeSettings = [
-                ITreeCategoriesFactory::DB_HOST => 'db',
-                ITreeCategoriesFactory::DB_NAME => 'dbname',
-                ITreeCategoriesFactory::DB_USER => 'user',
-                ITreeCategoriesFactory::DB_PASS => 'password',
+                ITreeCategoriesFactory::DB_HOST => env('DB_HOST'),
+                ITreeCategoriesFactory::DB_NAME => env('DB_DATABASE'),
+                ITreeCategoriesFactory::DB_USER => env('DB_USERNAME'),
+                ITreeCategoriesFactory::DB_PASS => env('DB_PASSWORD'),
                 ITreeCategoriesFactory::DB_CHARSET => 'utf8',
                 ITreeCategoriesFactory::FRAMEWORK_NAME => ICommonFactory::LARAVEL,
                 ITreeCategoriesFactory::TABLE_NAME => 'json_objects_dirs',
