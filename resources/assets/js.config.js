@@ -4,8 +4,11 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: {
+      'edit-button': [
+        './src/edit-button/main.ts',
+      ],
       'index': [
-        './src/index.js'
+        './src/index/main.ts'
       ]
   },
   plugins: [
@@ -25,12 +28,14 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
+          'vue-style-loader',
           'css-loader'
         ],
       },
       {
         test: /\.scss$/,
         use: [
+          'vue-style-loader',
           'css-loader',
           'sass-loader'
         ],
@@ -38,6 +43,7 @@ module.exports = {
       {
         test: /\.sass$/,
         use: [
+          'vue-style-loader',
           'css-loader',
           'sass-loader?indentedSyntax'
         ],
@@ -51,10 +57,12 @@ module.exports = {
             // the "scss" and "sass" values for the lang attribute to the right configs here.
             // other preprocessors should work out of the box, no loader config like this necessary.
             'scss': [
+              'vue-style-loader',
               'css-loader',
               'sass-loader'
             ],
             'sass': [
+              'vue-style-loader',
               'css-loader',
               'sass-loader?indentedSyntax'
             ]

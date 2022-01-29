@@ -24,6 +24,24 @@ class Factory extends BaseFactory implements IFactory {
             $obj->init();
             return $obj;
         }
+        if($type == Info::TYPE){
+            $obj = new Info();
+            $obj->setFieldsFactory($this);
+            $obj->init();
+            return $obj;
+        }
+        if($type == Topic::TYPE){
+            $obj = new Topic();
+            $obj->setFieldsFactory($this);
+            $obj->init();
+            return $obj;
+        }
+        if($type == Header::TYPE){
+            $obj = new Header();
+            $obj->setFieldsFactory($this);
+            $obj->init();
+            return $obj;
+        }
         if(in_array($type, [TopMenu::TYPE, TopMenuItem::TYPE])){
             return $this->getTopMenuFactory()->createObjectField($type);
         }

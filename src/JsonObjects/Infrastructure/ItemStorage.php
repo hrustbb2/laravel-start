@@ -39,6 +39,11 @@ class ItemStorage extends BaseStorage implements IItemStorage {
         return $itemData;
     }
 
+    public function getByKey(string $key, array $dsl):array
+    {
+        return $this->objectsQuery->select($dsl)->whereKey($key)->one();
+    }
+
     public function getByDirId(string $dirId, array $dsl = []):array
     {
         return $this->objectsQuery->select($dsl)->whereDirId($dirId)->all();

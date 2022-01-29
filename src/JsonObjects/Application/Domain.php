@@ -112,8 +112,12 @@ class Domain extends BaseDomain implements IDomain {
     {
         if($this->validator->deleteObject($data)){
             $cleanData = $this->validator->getCleanData();
-            $this->persistLayer->delete($cleanData['id']);
-            return true;
+            $itemData = $this->getItem($cleanData['id']);
+            if(!$itemData['disabled']){
+                $this->persistLayer->delete($cleanData['id']);
+                return true;
+            }
+            return false;
         }else{
             $this->errors = $this->validator->getErrors();
             $this->responseCode = self::VALIDATION_FAILED_CODE;

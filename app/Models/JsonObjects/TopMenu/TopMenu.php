@@ -2,10 +2,11 @@
 
 namespace App\Models\JsonObjects\TopMenu;
 
+use App\Models\JsonObjects\Base;
 use Src\Common\Dto\Object\AbstractComposite;
 use Src\Common\Dto\Object\ObjectsArray;
 
-class TopMenu extends AbstractComposite {
+class TopMenu extends Base {
 
     const TYPE = 'top-menu';
 
@@ -18,8 +19,7 @@ class TopMenu extends AbstractComposite {
         $items = $this->fieldsFactory->createObjectField(AbstractComposite::ARRAY_TYPE);
         $items->setDescriptionStr('Menu items');
         $items->setItemDescription('Item');
-        $items->setItemsTypes([TopMenuItem::TYPE]);
-        $items->setLabelField('name');
+        $items->appendItemsType(TopMenuItem::TYPE, 'Item', 'title');
         $this->fields['items'] = $items;
     }
 

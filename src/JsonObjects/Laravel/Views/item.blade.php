@@ -35,7 +35,7 @@
                     <div class="js-app-container">
                         <div class="col-sm-12 col-lg-6 col-xl-3">
                             <label class="form-label">Key</label>
-                            <input type="text" class="form-control js-key-input">
+                            <input type="text" class="form-control js-key-input" {{ ($page->getItem()->isDisabled()) ? 'disabled' : '' }}>
                             <div class="invalid-feedback js-key-error-message"></div>
                         </div>
 

@@ -26,11 +26,10 @@ class TopMenuItem extends AbstractComposite {
     public function validate()
     {
         $result = true;
-        if(!$this->getTitle()){
+        if(!$this->getItemTitle()){
             $this->fields['title']->appendErrorMessage('Обязательное поле');
             $result = false;
         }
-        $result = true;
         if(!$this->getHref()){
             $this->fields['href']->appendErrorMessage('Обязательное поле');
             $result = false;
@@ -38,7 +37,7 @@ class TopMenuItem extends AbstractComposite {
         return $result;
     }
 
-    public function getTitle()
+    public function getItemTitle()
     {
         /** @var StringObject $field */
         $field = $this->fields['title'];

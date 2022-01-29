@@ -2,11 +2,10 @@
 
 namespace App\Models\JsonObjects;
 
-use Src\Common\Dto\Object\AbstractComposite;
 use Src\Common\Dto\Object\AbstractObject;
 use Src\Common\Dto\Object\TextObject;
 
-class Header extends AbstractComposite {
+class Header extends Base {
 
     const TYPE = 'header';
 

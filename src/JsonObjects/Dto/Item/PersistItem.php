@@ -3,6 +3,7 @@
 namespace Src\JsonObjects\Dto\Item;
 
 use Src\JsonObjects\Interfaces\Dto\Item\IPersistItem;
+use Src\Common\Dto\Object\AbstractComposite;
 
 class PersistItem extends AbstractItem implements IPersistItem {
 
@@ -15,16 +16,24 @@ class PersistItem extends AbstractItem implements IPersistItem {
         $this->dirId = $dirData['id'];
     }
 
+    public function setObject(AbstractComposite $obj)
+    {
+        $this->object = $obj;
+    }
+
     public function getInsertAttrs():array
     {
-        $this->key = uniqid();
+        if(!$this->key){
+            $this->key = uniqid();
+        }
         return [
             'id' => $this->id,
-            'dir_id' => $this->dirId,
+            'dir_id' => $this->dirId ?? '',
             'key' => $this->key,
             'name' => $this->name,
-            'description' => $this->description,
+            'description' => $this->description ?? '',
             'object' => json_encode($this->object->getAttributes()),
+            'disabled' => $this->disabled,
         ];
     }
 

@@ -9,13 +9,15 @@ abstract class AbstractItem {
 
     protected string $id;
 
-    protected string $key;
+    protected ?string $key;
 
     protected string $name;
 
     protected string $description;
 
     protected AbstractComposite $object;
+
+    protected int $disabled = 0;
 
     protected IObjectsFactory $objectsFactory;
 
@@ -36,6 +38,7 @@ abstract class AbstractItem {
             'key' => $this->key,
             'name' => $this->name,
             'description' => $this->description,
+            'disabled' => $this->disabled,
         ];
         if($this->object){
             $attrs['object'] = json_encode($this->object->getAttributes());
@@ -49,6 +52,7 @@ abstract class AbstractItem {
         $this->key = $data['key'] ?? '';
         $this->name = $data['name'] ?? '';
         $this->description = $data['description'] ?? '';
+        $this->disabled = $data['disabled'] ?? 0;
         if(key_exists('object', $data)){
             $objectData = json_decode($data['object'], true);
             $type = $objectData['type'];

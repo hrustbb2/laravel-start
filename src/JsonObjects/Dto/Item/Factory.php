@@ -17,11 +17,15 @@ class Factory implements IFactory {
         $this->dtoFactory = $factory;
     }
 
-    public function createPersist():IPersistItem
+    public function createPersist(string $type = ''):IPersistItem
     {
         $persist = new PersistItem();
         $objFactory = $this->dtoFactory->getModulesFactory()->getSetting(IModuleFactory::OBJECTS_FACTORY);
         $persist->setObjectsFactory($objFactory);
+        if($type){
+            $obj = $objFactory->createObjectField($type);
+            $persist->setObject($obj);
+        }
         return $persist;
     }
 

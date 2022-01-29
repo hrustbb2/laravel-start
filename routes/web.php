@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Providers\AppServiceProvider;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $factory = app()->get(AppServiceProvider::FRONT_FACTORY);
+    $page = $factory->getPagesFactory()->createHome();
+    return view('home', ['page' => $page]);
 })->name('home');

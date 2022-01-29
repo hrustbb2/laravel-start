@@ -27,22 +27,22 @@ class Factory extends BaseFactory implements IFactory {
     {
         $menu = parent::getMenu();
         $menuData = [
-            [
-                'title' => 'Item',
-                'url' => '',
-                'subItems' => [
-                    [
-                        'title' => 'SubItem1',
-                        'url' => '#',
-                        'bage' => '10',
-                    ],
-                    [
-                        'title' => 'SubItem2',
-                        'url' => '#',
-                        'bage' => '20',
-                    ],
-                ],
-            ],
+            // [
+            //     'title' => 'Item',
+            //     'url' => '',
+            //     'subItems' => [
+            //         [
+            //             'title' => 'SubItem1',
+            //             'url' => '#',
+            //             'bage' => '10',
+            //         ],
+            //         [
+            //             'title' => 'SubItem2',
+            //             'url' => '#',
+            //             'bage' => '20',
+            //         ],
+            //     ],
+            // ],
             [
                 'title' => 'JsonObjects',
                 'url' => $this->routeAdapter->getRoute('admin.jsonObjects.dir'),

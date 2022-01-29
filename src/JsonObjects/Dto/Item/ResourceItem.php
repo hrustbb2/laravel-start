@@ -4,7 +4,7 @@ namespace Src\JsonObjects\Dto\Item;
 
 use Src\JsonObjects\Interfaces\Dto\Item\IResourceItem;
 use Src\Lib\CategoriesTree\Interfaces\Dto\IResource as IDirResource;
-use Src\JsonObjects\Dto\Object\ExampleComposit;
+use Src\Common\Dto\Object\AbstractComposite;
 
 class ResourceItem extends AbstractItem implements IResourceItem {
 
@@ -51,7 +51,12 @@ class ResourceItem extends AbstractItem implements IResourceItem {
         return $this->dir;
     }
 
-    public function getObject():ExampleComposit
+    public function isDisabled():bool
+    {
+        return (bool) $this->disabled;
+    }
+
+    public function getObject():AbstractComposite
     {
         return $this->object;
     }

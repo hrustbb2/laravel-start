@@ -166,12 +166,9 @@ export class ArrayItem implements IArrayItem {
     {
         this.$template.off();
         this.$removeBtn.off();
-        this.$removeBtn.on('click', (e:Event)=>{
-            e.stopPropagation();
-            this.onDelete(this.data);
-        });
         this.$removeBtn.on('mousedown', (event:Event)=>{
             event.stopPropagation();
+            this.onDelete(this.data);
         });
         let draggable = true;
         this.$template.on('mousedown', (event:Event)=>{

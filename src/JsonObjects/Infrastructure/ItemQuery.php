@@ -18,7 +18,7 @@ class ItemQuery extends SqlQueryBase implements IItemQuery {
     public function select(array $fields = [])
     {
         $this->queryBuilder = DB::table($this->tableName);
-        $select = $this->getSelectSection($fields, ['id', 'dir_id', 'key', 'name', 'description', 'object'], $this->tableName, 'object_');
+        $select = $this->getSelectSection($fields, ['id', 'dir_id', 'key', 'name', 'description', 'object', 'disabled'], $this->tableName, 'object_');
         $this->queryBuilder->select($select);
         $this->arrayProcConf = ['prefix' => 'object_'];
         return $this;
@@ -27,6 +27,12 @@ class ItemQuery extends SqlQueryBase implements IItemQuery {
     public function whereId(string $id)
     {
         $this->queryBuilder->where($this->tableName . '.id', '=', $id);
+        return $this;
+    }
+
+    public function getByKey(string $key)
+    {
+        $this->queryBuilder->where($this->tableName . '.key', '=', $key);
         return $this;
     }
 

@@ -71,6 +71,7 @@ class DbTables extends InitDb implements IDbTables {
                 ->addColumn('name', 'string')
                 ->addColumn('description', 'string', ['null' => true])
                 ->addColumn('object', 'json')
+                ->addColumn('disabled', 'integer', ['default' => 0])
                 ->create();
     }
 

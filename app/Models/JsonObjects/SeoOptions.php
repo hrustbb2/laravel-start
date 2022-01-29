@@ -6,7 +6,7 @@ use Src\Common\Dto\Object\AbstractComposite;
 use Src\Common\Dto\Object\StringObject;
 use Src\Common\Dto\Object\TextObject;
 
-class SeoOptions extends AbstractComposite {
+class SeoOptions extends Base {
 
     const TYPE = 'seo-options';
 
@@ -24,14 +24,14 @@ class SeoOptions extends AbstractComposite {
         $this->fields['description'] = $description;
     }
 
-    public function getTitle():?string
+    public function getPageTitle():?string
     {
         /** @var StringObject $field */
         $field = $this->fields['title'];
         return $field->getValue();
     }
 
-    public function getDescription():?string
+    public function getPageDescription():?string
     {
         /** @var TextObject $field */
         $field = $this->fields['description'];
@@ -41,11 +41,11 @@ class SeoOptions extends AbstractComposite {
     public function validate()
     {
         $result = true;
-        if(!$this->getTitle()){
+        if(!$this->getPageTitle()){
             $this->fields['title']->appendErrorMessage('Обязательное поле');
             $result = false;
         }
-        if(!$this->getDescription()){
+        if(!$this->getPageDescription()){
             $this->fields['description']->appendErrorMessage('Обязательное поле');
             $result = false;
         }

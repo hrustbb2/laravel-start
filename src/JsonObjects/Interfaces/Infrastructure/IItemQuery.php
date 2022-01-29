@@ -16,6 +16,10 @@ interface IItemQuery extends IQueryBase {
     /**
      * @return $this
      */
+    public function getByKey(string $key);
+    /**
+     * @return $this
+     */
     public function whereKey(string $key);
     /**
      * @return $this

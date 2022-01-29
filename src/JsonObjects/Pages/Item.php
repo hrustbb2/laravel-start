@@ -44,6 +44,11 @@ class Item extends Page implements IItem {
         $itemData = $this->itemStorage->getById($itemId, $dsl);
         $this->item->load($itemData);
     }
+
+    public function getItem():IResourceItem
+    {
+        return $this->item;
+    }
     
     public function getCssStack():array
     {
