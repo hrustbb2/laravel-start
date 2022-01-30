@@ -57,7 +57,7 @@ class DirController extends Controller {
 
     public function deleteDir(Request $request)
     {
-        $domain = $this->factory->getDirsTreeFactory()->getApplicationFactory()->getDomain();
+        $domain = $this->factory->getApplicationFactory()->getDomain();
         $data = $request->all();
         $resp = [
             'success' => $domain->deleteDir($data),

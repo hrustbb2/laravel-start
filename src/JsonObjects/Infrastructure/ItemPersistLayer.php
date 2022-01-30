@@ -38,4 +38,10 @@ class ItemPersistLayer implements IItemPersistLayer {
         return $qb->where($this->tableName . '.id', '=', $itemId)->delete();
     }
 
+    public function deleteInDirs(array $dirIds):int
+    {
+        $qb = DB::table($this->tableName);
+        return $qb->whereIn($this->tableName . '.dir_id', $dirIds)->delete();
+    }
+
 }

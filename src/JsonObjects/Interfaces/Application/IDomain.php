@@ -9,6 +9,9 @@ use Src\JsonObjects\Interfaces\Infrastructure\IItemPersistLayer;
 use Src\JsonObjects\Interfaces\Infrastructure\IItemStorage;
 use Src\JsonObjects\Interfaces\Dto\Item\IResourceItem;
 use Src\JsonObjects\Interfaces\Application\IDataBuilder;
+use Src\Lib\CategoriesTree\Interfaces\Application\IValidator as IDirValidator;
+use Src\Lib\CategoriesTree\Interfaces\Application\IDomain as IDirDomain;
+use Src\Lib\CategoriesTree\Interfaces\Infrastructure\IStorage as IDirStorage;
 
 interface IDomain extends IBaseDomain {
     public function setValidator(IValidator $validator):void;
@@ -16,9 +19,13 @@ interface IDomain extends IBaseDomain {
     public function setPersistLayer(IItemPersistLayer $layer):void;
     public function setStorage(IItemStorage $storage):void;
     public function setDataBuilder(IDataBuilder $dataBuilder):void;
+    public function setDirValidator(IDirValidator $validator):void;
+    public function setDirDomain(IDirDomain $domain):void;
+    public function setDirStorage(IDirStorage $storage):void;
     public function createObject(array $data):bool;
     public function editObject(array $data):bool;
     public function renameObject(array $data):bool;
     public function deleteObject(array $data):bool;
+    public function deleteDir(array $data):bool;
     public function getItem():IResourceItem;
 }

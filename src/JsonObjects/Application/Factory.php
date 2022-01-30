@@ -44,6 +44,12 @@ class Factory implements IFactory {
             $this->domain->setStorage($storage);
             $dataBuilder = $this->creteDataBuilder();
             $this->domain->setDataBuilder($dataBuilder);
+            $dirValidator = $this->moduleFactory->getDirsTreeFactory()->getApplicationFactory()->createValidator();
+            $this->domain->setDirValidator($dirValidator);
+            $dirDomain = $this->moduleFactory->getDirsTreeFactory()->getApplicationFactory()->getDomain();
+            $this->domain->setDirDomain($dirDomain);
+            $dirStorage = $this->moduleFactory->getDirsTreeFactory()->getInfrastructureFactory()->getStorage();
+            $this->domain->setDirStorage($dirStorage);
         }
         return $this->domain;
     }

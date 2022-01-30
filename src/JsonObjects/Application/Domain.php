@@ -10,6 +10,9 @@ use Src\JsonObjects\Interfaces\Dto\Item\IResourceItem;
 use Src\JsonObjects\Interfaces\Infrastructure\IItemPersistLayer;
 use Src\JsonObjects\Interfaces\Infrastructure\IItemStorage;
 use Src\JsonObjects\Interfaces\Application\IDataBuilder;
+use Src\Lib\CategoriesTree\Interfaces\Application\IValidator as IDirValidator;
+use Src\Lib\CategoriesTree\Interfaces\Application\IDomain as IDirDomain;
+use Src\Lib\CategoriesTree\Interfaces\Infrastructure\IStorage as IDirStorage;
 
 class Domain extends BaseDomain implements IDomain {
 
@@ -24,6 +27,12 @@ class Domain extends BaseDomain implements IDomain {
     protected IResourceItem $item;
 
     protected IDataBuilder $dataBuilder;
+
+    protected IDirValidator $dirValidator;
+
+    protected IDirDomain $dirDomain;
+
+    protected IDirStorage $dirStorage;
 
     public function setValidator(IValidator $validator):void
     {
@@ -48,6 +57,21 @@ class Domain extends BaseDomain implements IDomain {
     public function setDataBuilder(IDataBuilder $dataBuilder):void
     {
         $this->dataBuilder = $dataBuilder;
+    }
+
+    public function setDirValidator(IDirValidator $validator):void
+    {
+        $this->dirValidator = $validator;
+    }
+
+    public function setDirDomain(IDirDomain $domain):void
+    {
+        $this->dirDomain = $domain;
+    }
+
+    public function setDirStorage(IDirStorage $storage):void
+    {
+        $this->dirStorage = $storage;
     }
 
     public function createObject(array $data):bool
@@ -120,6 +144,22 @@ class Domain extends BaseDomain implements IDomain {
             return false;
         }else{
             $this->errors = $this->validator->getErrors();
+            $this->responseCode = self::VALIDATION_FAILED_CODE;
+            return false;
+        }
+    }
+
+    public function deleteDir(array $data):bool
+    {
+        if($this->dirValidator->deleteDir($data)){
+            $cleanData = $this->dirValidator->getCleanData();
+            $dirIds = $this->dirStorage->getIdsInDir($cleanData['id']);
+            $dirIds[] = $cleanData['id'];
+            $this->persistLayer->deleteInDirs($dirIds);
+            $this->dirDomain->deleteDir($data);
+            return true;
+        }else{
+            $this->errors = $this->dirValidator->getErrors();
             $this->responseCode = self::VALIDATION_FAILED_CODE;
             return false;
         }

@@ -5,6 +5,7 @@ namespace Src\Lib\CategoriesTree\Application;
 use Src\Lib\CategoriesTree\Interfaces\Application\IFactory;
 use Src\Lib\CategoriesTree\Interfaces\IFactory as ILibFactory;
 use Src\Lib\CategoriesTree\Interfaces\Application\IDomain;
+use Src\Lib\CategoriesTree\Interfaces\Application\IValidator;
 
 class Factory implements IFactory {
 
@@ -38,7 +39,7 @@ class Factory implements IFactory {
         return $this->domain;
     }
 
-    protected function createValidator()
+    public function createValidator():IValidator
     {
         return new Validator();
     }
