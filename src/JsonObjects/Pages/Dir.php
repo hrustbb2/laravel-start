@@ -71,7 +71,7 @@ class Dir extends Page implements IDir {
     public function init(string $currentDirId):void
     {
         $this->currentDir = $this->dirsDtoFactory->createResource();
-        $currentDirData = $this->dirsStorage->getById($currentDirId);
+        $currentDirData = $this->dirsStorage->getById($currentDirId, ['*', 'path' => ['*'], 'parent' => ['*']]);
         $this->currentDir->load($currentDirData);
         $dirsData = $this->dirsStorage->getByParentId($currentDirId);
         foreach($dirsData as $dirData){
@@ -131,7 +131,25 @@ class Dir extends Page implements IDir {
 
     public function getBreadcrumbs():array
     {
-        return [];
+        $bc = [
+            [
+                'title' => 'jsonObjects',
+                'href' => $this->routeAdapter->getRoute('admin.jsonObjects.dir'),
+            ],
+        ];
+        foreach($this->currentDir->getPath() as $pathItem){
+            $bc[] = [
+                'title' => $pathItem->getName(),
+                'href' => $this->routeAdapter->getRoute('admin.jsonObjects.dir', ['dir-id' => $pathItem->getId()]),
+            ];
+        }
+        if($this->currentDir->getParent()){
+            $bc[] = [
+                'title' => $this->currentDir->getParent()->getName(),
+                'href' => $this->routeAdapter->getRoute('admin.jsonObjects.dir', ['dir-id' => $this->currentDir->getParent()->getId()]),
+            ];
+        }   
+        return $bc;
     }
 
     public function getItemsDropdown():array

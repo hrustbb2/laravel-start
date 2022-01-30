@@ -39,7 +39,7 @@ class Item extends Page implements IItem {
         $this->item = $this->itemDtoFactory->createResource();
         $dsl = [
             '*',
-            'dir' => ['*'],
+            'dir' => ['*', 'path' => ['*'], 'parent' => ['*']],
         ];
         $itemData = $this->itemStorage->getById($itemId, $dsl);
         $this->item->load($itemData);
@@ -80,7 +80,29 @@ class Item extends Page implements IItem {
 
     public function getBreadcrumbs():array
     {
-        return [];
+        $bc = [
+            [
+                'title' => 'jsonObjects',
+                'href' => $this->routeAdapter->getRoute('admin.jsonObjects.dir'),
+            ],
+        ];
+        foreach($this->item->getDir()->getPath() as $pathItem){
+            $bc[] = [
+                'title' => $pathItem->getName(),
+                'href' => $this->routeAdapter->getRoute('admin.jsonObjects.dir', ['dir-id' => $pathItem->getId()]),
+            ];
+        }
+        if($this->item->getDir()->getParent()){
+            $bc[] = [
+                'title' => $this->item->getDir()->getParent()->getName(),
+                'href' => $this->routeAdapter->getRoute('admin.jsonObjects.dir', ['dir-id' => $this->item->getDir()->getParent()->getId()]),
+            ];
+        }  
+        $bc[] = [
+            'title' => $this->item->getName(),
+            'href' => $this->routeAdapter->getRoute('admin.jsonObjects.editItem', ['item-id' => $this->item->getId()]),
+        ];
+        return $bc;
     }
 
 }

@@ -61,4 +61,9 @@ class ResourceItem extends AbstractItem implements IResourceItem {
         return $this->object;
     }
 
+    public function getName():string
+    {
+        return $this->name;
+    }
+
 }

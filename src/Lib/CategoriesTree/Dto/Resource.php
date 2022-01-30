@@ -37,6 +37,21 @@ class Resource extends AbstractCategory implements IResource {
         }
     }
 
+    public function getPath():array
+    {
+        return $this->path;
+    }
+
+    public function getName():string
+    {
+        return $this->name;
+    }
+
+    public function getParent():?IResource
+    {
+        return $this->parent;
+    }
+
     public function loadParent(array $data)
     {
         $this->parent = $this->dtoFactory->createResource();

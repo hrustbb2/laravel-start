@@ -11,4 +11,5 @@ interface IResourceItem extends IAbstractItem {
     public function getDir():IDirResource;
     public function isDisabled():bool;
     public function getObject():AbstractComposite;
+    public function getName():string;
 }
