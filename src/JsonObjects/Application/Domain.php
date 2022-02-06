@@ -136,7 +136,7 @@ class Domain extends BaseDomain implements IDomain {
     {
         if($this->validator->deleteObject($data)){
             $cleanData = $this->validator->getCleanData();
-            $itemData = $this->getItem($cleanData['id']);
+            $itemData = $this->storage->getById($cleanData['id']);
             if(!$itemData['disabled']){
                 $this->persistLayer->delete($cleanData['id']);
                 return true;
