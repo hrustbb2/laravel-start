@@ -18911,3 +18911,8 @@ body {
 
 .array-item-dropable-active {
   border: solid; }
+
+.fb-modal .files-container {
+  height: 300px;
+  display: flex;
+  flex-wrap: wrap; }

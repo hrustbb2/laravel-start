@@ -3,14 +3,22 @@
 namespace Src\Common\Pages;
 
 use Src\Common\Interfaces\Pages\Sidebar\IMenu;
+use Src\Common\Interfaces\Adapters\IRoute;
 
 abstract class Page {
 
-    const CSS_VERSION = '1.0';
+    const CSS_VERSION = '2.0';
 
-    const JS_VERSION = '1.0';
+    const JS_VERSION = '2.0';
 
     protected IMenu $sidebar;
+
+    protected IRoute $routeAdapter;
+
+    public function setRouteAdapter(IRoute $adapter):void
+    {
+        $this->routeAdapter = $adapter;
+    }
 
     /**
      * @return array

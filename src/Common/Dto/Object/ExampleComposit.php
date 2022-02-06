@@ -11,6 +11,10 @@ class ExampleComposit extends AbstractComposite {
         $this->type = self::EXAMPLE_COMPOSIT;
         $this->description = 'Example';
 
+        $file = $this->fieldsFactory->createObjectField(AbstractComposite::FILE_TYPE);
+        $file->setDescriptionStr('File');
+        $this->fields['file'] = $file;
+
         $name = $this->fieldsFactory->createObjectField(AbstractComposite::STRING_TYPE);
         $name->setDescriptionStr('name');
         $this->fields['name'] = $name;

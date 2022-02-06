@@ -12,6 +12,8 @@ import {String} from './String';
 import {Text} from './Text';
 import {ObjectsArray} from './ObjectsArray';
 import {ArrayItem} from './ArrayItem';
+import {IFactory as IFileInputFactory} from '../interfaces/components/file-input/IFactory';
+import {Factory as FileInputFactory} from './file-input/Factory';
 import 'jquery';
 
 type TObjectForms = {
@@ -26,9 +28,16 @@ export class Factory implements IFactory {
 
     protected objectForms:TObjectForms = {};
 
+    protected fileInputFactory:IFileInputFactory = null;
+
     public setAppFactory(factory:IAppFactory)
     {
         this.appFactory = factory;
+    }
+
+    public getAppFactory():IAppFactory
+    {
+        return this.appFactory;
     }
 
     public getModal():IModal
@@ -66,6 +75,10 @@ export class Factory implements IFactory {
             });
             return input;
         }
+        if(type == EInputTypes.file){
+            let input = this.getFileInputFactory().createFileInput();
+            return input;
+        }
         let input = this.createComposite();
         return input;
     }
@@ -92,6 +105,15 @@ export class Factory implements IFactory {
             this.objectForms[key] = objectForm;
         }
         return this.objectForms[key];
+    }
+
+    public getFileInputFactory():IFileInputFactory
+    {
+        if(this.fileInputFactory === null){
+            this.fileInputFactory = new FileInputFactory();
+            this.fileInputFactory.setComponentsFactory(this);
+        }
+        return this.fileInputFactory;
     }
 
 }

@@ -8,6 +8,8 @@ abstract class AbstractObject {
     
     const TEXT_TYPE = 'text';
 
+    const FILE_TYPE = 'file';
+
     const ARRAY_TYPE = 'array';
 
     const COMPOSITE_TYPE = 'composite';

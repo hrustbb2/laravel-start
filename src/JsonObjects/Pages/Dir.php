@@ -3,7 +3,6 @@
 namespace Src\JsonObjects\Pages;
 
 use Src\Common\Pages\Page;
-use Src\Common\Interfaces\Adapters\IRoute;
 use Src\JsonObjects\Interfaces\Pages\IDir;
 use Src\Lib\CategoriesTree\Interfaces\Infrastructure\IStorage as IDirsStorage;
 use Src\Lib\CategoriesTree\Interfaces\Dto\IFactory as IDirsDtoFactory;
@@ -26,8 +25,6 @@ class Dir extends Page implements IDir {
     protected IDirsStorage $dirsStorage;
 
     protected IDirsDtoFactory $dirsDtoFactory;
-
-    protected IRoute $routeAdapter;
 
     /**
      * @var IDirResource[]
@@ -56,11 +53,6 @@ class Dir extends Page implements IDir {
     public function setItemDtoFactory(IItemDtoFactory $factory):void
     {
         $this->itemDtoFactory = $factory;
-    }
-
-    public function setRouteAdapter(IRoute $adapter):void
-    {
-        $this->routeAdapter = $adapter;
     }
 
     public function setItemsDropdown(array $dropDown):void
