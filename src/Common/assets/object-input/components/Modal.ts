@@ -2,6 +2,7 @@ import {IModal} from '../interfaces/components/IModal';
 import {TAbstractObject} from '../types/TAbstractObject';
 import {EInputTypes} from '../types/EInputTypes';
 import {IAbstractObject} from '../interfaces/components/IAbstractObject';
+import 'jquery';
 import 'bootstrap';
 
 export class Modal implements IModal {

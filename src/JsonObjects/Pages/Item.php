@@ -60,7 +60,7 @@ class Item extends Page implements IItem {
     {
         return [
             'fileInputSettings' => [
-                'getDirUrl' => $this->routeAdapter->getRoute('admin.common.dir'),
+                'getDirUrl' => $this->routeAdapter->getRoute('admin.common.filesBrowser.dir'),
             ],
             'item' => $this->item->toArray(),
             'editObjUrl' => $this->routeAdapter->getRoute('admin.jsonObjects.editItem'),

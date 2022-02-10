@@ -96,7 +96,11 @@ export class FileInput implements IFileInput {
         });
         this.$browserBtn.on('click', (e:Event)=>{
             e.preventDefault();
-            this.bus.execBrowserModal();
+            this.bus.execBrowserModal()
+                .then((fileName:string)=>{
+                    this.data.value = fileName;
+                    this.$input.val(fileName);
+                });
         });
     }
 

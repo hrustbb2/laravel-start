@@ -9,6 +9,8 @@ use Src\Common\Interfaces\Adapters\IAdaptersFactory;
 use Src\Common\Adapters\Factory as Adapters;
 use Src\Common\Interfaces\Dto\IFactory as IDtoFactory;
 use Src\Common\Dto\Factory as DtoFactory;
+use Src\Common\Interfaces\Application\IFilesBrowser;
+use Src\Common\Application\FilesBrowser;
 
 class Factory implements IFactory {
 
@@ -21,12 +23,14 @@ class Factory implements IFactory {
 
     protected ?IDtoFactory $dtoFactory = null;
 
+    protected ?IFilesBrowser $filesBrowser = null;
+
     protected function newPagesFactory()
     {
         return new PagesFactory();
     }
 
-    public function getPagesFactory()
+    public function getPagesFactory():IPagesFactory
     {
         if($this->pagesFactory === null){
             $this->pagesFactory = $this->newPagesFactory();
@@ -34,7 +38,7 @@ class Factory implements IFactory {
         return $this->pagesFactory;
     }
 
-    public function getAdaptersFactory(string $name)
+    public function getAdaptersFactory(string $name):IAdaptersFactory
     {
         if($this->adaptersFactory === null){
             $adapters = new Adapters();
@@ -43,12 +47,20 @@ class Factory implements IFactory {
         return $this->adaptersFactory;
     }
 
-    public function getDtoFactory()
+    public function getDtoFactory():IDtoFactory
     {
         if($this->dtoFactory === null){
             $this->dtoFactory = new DtoFactory();
         }
         return $this->dtoFactory;
+    }
+
+    public function getFilesBrowser():IFilesBrowser
+    {
+        if($this->filesBrowser === null){
+            $this->filesBrowser = new FilesBrowser();
+        }
+        return $this->filesBrowser;
     }
 
 }

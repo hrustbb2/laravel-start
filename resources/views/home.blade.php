@@ -12,11 +12,11 @@
     <body>
         <div class="wrapper js-app-container">
             <div class="content">
-                <div class="main-section">
+                <div class="main-section" style="background-image: url('./uploads{{ $page->getHeader()->getBackgroundImage() }}');">
                     <div class="top-menu">
                         <div class="top-menu__logo">
                             <a href="#">
-                                <img src="img/logo.png">
+                                <img src="/uploads{{ $page->getTopMenu()->getLogo() }}">
                             </a>
                         </div>
                         <div class="top-menu__center">
@@ -132,7 +132,7 @@
                     <div class="content-wrapper about-section__content-wrapper">
                         <div class="about-section__content js-editable-block" edit-url="{{ $page->getTopic()->getEditFormUrl() }}">
                             <div class="about-picture">
-                                <img src="img/computer.png" class="about-picture-img">
+                                <img src="/uploads{{ $page->getTopic()->getPicture() }}" class="about-picture-img">
                             </div>
                             <div class="about-text">
                                 <h2 class="section-header about-text__section-header">

@@ -1,4 +1,5 @@
 @import "~common/css/main.scss";
+@import "~common/css/file-input.scss";
 @import "../../node_modules/bootstrap/dist/css/bootstrap.css";
 
 .object-field:not(:first-child) {
@@ -38,10 +39,4 @@
 
 .array-item-dropable-active {
     border: solid;
-}
-
-.fb-modal .files-container {
-    height: 300px;
-    display: flex;
-    flex-wrap: wrap;
 }

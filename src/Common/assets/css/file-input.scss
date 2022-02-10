@@ -1,0 +1,29 @@
+.fb-modal .files-container {
+    height: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.fb-item {
+    width: 48px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 5px;
+}
+
+.fb-item:hover {
+    background-color: #6c6c6c75;
+}
+
+.fb-item-icon {
+    margin: 4px;
+}
+
+.fb-item-name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 12px;
+    margin: 0 2px;
+}

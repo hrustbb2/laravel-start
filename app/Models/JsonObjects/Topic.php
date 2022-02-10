@@ -2,9 +2,11 @@
 
 namespace App\Models\JsonObjects;
 
+use Src\Common\Dto\Object\AbstractComposite;
 use Src\Common\Dto\Object\AbstractObject;
 use Src\Common\Dto\Object\StringObject;
 use Src\Common\Dto\Object\TextObject;
+use Src\Common\Dto\Object\FileObject;
 
 class Topic extends Base {
 
@@ -14,6 +16,10 @@ class Topic extends Base {
     {
         $this->type = self::TYPE;
         $this->setDescriptionStr('Topic');
+
+        $img = $this->fieldsFactory->createObjectField(AbstractComposite::FILE_TYPE);
+        $img->setDescriptionStr('Picture');
+        $this->fields['img'] = $img;
 
         $header = $this->fieldsFactory->createObjectField(AbstractObject::STRING_TYPE);
         $header->setDescriptionStr('Header');
@@ -36,6 +42,13 @@ class Topic extends Base {
             $result = false;
         }
         return $result;
+    }
+
+    public function getPicture()
+    {
+        /** @var FileObject $field */
+        $field = $this->fields['img'];
+        return $field->getValue();
     }
 
     public function getHeader()

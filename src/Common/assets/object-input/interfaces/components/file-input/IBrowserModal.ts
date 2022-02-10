@@ -1,5 +1,6 @@
 import {IFilesBrowserCommands} from '../../commands/IFilesBrowserCommands';
 import {IItem} from './IItem';
+import {TFilesBrowserIcon} from '../../../types/TFilesBrowserIcon';
 
 export interface IBrowserModal {
     template:JQuery;
@@ -8,4 +9,5 @@ export interface IBrowserModal {
     show():Promise<string>;
     hide():void;
     eventsListen():void;
+    update(icons:TFilesBrowserIcon[]):void;
 }

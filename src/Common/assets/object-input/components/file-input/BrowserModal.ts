@@ -1,6 +1,7 @@
 import {IBrowserModal} from '../../interfaces/components/file-input/IBrowserModal';
 import {IFilesBrowserCommands} from '../../interfaces/commands/IFilesBrowserCommands';
 import {IItem} from '../../interfaces/components/file-input/IItem';
+import {TFilesBrowserIcon} from '../../types/TFilesBrowserIcon';
 import 'jquery';
 import 'bootstrap';
 
@@ -74,9 +75,19 @@ export class BrowserModal implements IBrowserModal {
             this.reject = reject;
             let items = this.filesBrowserCommands.getDir('')
                 .then((resp:any)=>{
-                    for(let i of resp.dirs){
+                    this.$jsContainer.empty();
+                    for(let data of resp){
+                        if(data.name == '.'){
+                            continue;
+                        }
                         let item = this.createItem();
+                        item.setOnSelectedFile((fileName:string)=>{
+                            this.resolve(fileName);
+                            this.hide();
+                        });
+                        item.load(data);
                         this.$jsContainer.append(item.template);
+                        item.eventsListen();
                     }
                 });
             console.log(items);
@@ -96,6 +107,24 @@ export class BrowserModal implements IBrowserModal {
             this.hide();
             this.resolve('qwe');
         });
+    }
+
+    public update(icons:TFilesBrowserIcon[])
+    {
+        this.$jsContainer.empty();
+        for(let data of icons){
+            if(data.name == '.'){
+                continue;
+            }
+            let item = this.createItem();
+            item.setOnSelectedFile((fileName:string)=>{
+                this.resolve(fileName);
+                this.hide();
+            });
+            item.load(data);
+            this.$jsContainer.append(item.template);
+            item.eventsListen();
+        }
     }
 
 }

@@ -5,6 +5,7 @@ namespace App\Models\JsonObjects\TopMenu;
 use App\Models\JsonObjects\Base;
 use Src\Common\Dto\Object\AbstractComposite;
 use Src\Common\Dto\Object\ObjectsArray;
+use Src\Common\Dto\Object\FileObject;
 
 class TopMenu extends Base {
 
@@ -14,6 +15,10 @@ class TopMenu extends Base {
     {
         $this->type = self::TYPE;
         $this->description = 'Top menu';
+
+        $logo = $this->fieldsFactory->createObjectField(AbstractComposite::FILE_TYPE);
+        $logo->setDescriptionStr('Logo');
+        $this->fields['logo'] = $logo;
 
         /** @var ObjectsArray $items */
         $items = $this->fieldsFactory->createObjectField(AbstractComposite::ARRAY_TYPE);
@@ -34,6 +39,13 @@ class TopMenu extends Base {
             }
         }
         return $result;
+    }
+
+    public function getLogo()
+    {
+        /** @var FileObject $field */
+        $field = $this->fields['logo'];
+        return $field->getValue();
     }
 
     public function getItems()

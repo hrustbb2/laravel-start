@@ -44,6 +44,10 @@ export class Factory implements IFactory {
     protected createItem():IItem
     {
         let item = new Item();
+        let commands = this.componentsFactory.getAppFactory().getCommandsFactory().getFilesBrowserCommands();
+        item.setFBCommands(commands);
+        let bus = this.componentsFactory.getAppFactory().getBusFactory().getFileInputBus();
+        item.setFBBus(bus);
         return item;
     }
 

@@ -1,5 +1,6 @@
 import {IFileInputBus} from '../interfaces/bus/IFileInputBus';
 import {IFactory as IComponentsFactory} from '../interfaces/components/IFactory';
+import {TFilesBrowserIcon} from '../types/TFilesBrowserIcon';
 
 export class FileInputBus implements IFileInputBus {
 
@@ -13,6 +14,11 @@ export class FileInputBus implements IFileInputBus {
     public execBrowserModal():Promise<string>
     {
         return this.componentsFactory.getFileInputFactory().getBrowserModal().show();
+    }
+
+    public updateFileBrowser(icons:TFilesBrowserIcon[])
+    {
+        this.componentsFactory.getFileInputFactory().getBrowserModal().update(icons);
     }
 
 }
