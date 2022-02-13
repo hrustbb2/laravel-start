@@ -55,6 +55,11 @@ abstract class AbstractComposite extends AbstractObject {
         }
     }
 
+    public function validate():bool
+    {
+        return true;
+    }
+
     abstract public function init();
 
 }

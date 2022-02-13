@@ -25,7 +25,7 @@ class Header extends Base {
         $this->fields['header'] = $header;
     }
 
-    public function validate()
+    public function validate():bool
     {
         $result = true;
         if(!$this->getHeader()){

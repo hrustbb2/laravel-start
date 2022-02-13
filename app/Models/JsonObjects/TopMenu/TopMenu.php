@@ -28,9 +28,13 @@ class TopMenu extends Base {
         $this->fields['items'] = $items;
     }
 
-    public function validate()
+    public function validate():bool
     {
         $result = true;
+        if(!$this->getLogo()){
+            $this->fields['logo']->appendErrorMessage('Обязательное поле');
+            $result = false;
+        }
         foreach($this->getItems() as $item){
             /** @var TopMenuItem $item */
             if(!$item->validate()){

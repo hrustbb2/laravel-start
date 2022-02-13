@@ -32,6 +32,12 @@ export class ObjectForm implements IObjectForm {
 
     }
 
+    public setData(data:TComposite)
+    {
+        this.stack = [];
+        this.stack.push(data);
+    }
+
     public getData():TAbstractObject
     {
         return this.stack[0];

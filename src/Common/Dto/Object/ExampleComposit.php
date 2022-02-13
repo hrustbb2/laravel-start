@@ -42,9 +42,10 @@ class ExampleComposit extends AbstractComposite {
         $this->fields['array_obj'] = $arrayObj;
     }
 
-    public function validate()
+    public function validate():bool
     {
         $this->fields['name']->appendErrorMessage('Error!!!');
+        return false;
     }
 
 }

@@ -38,7 +38,7 @@ class SeoOptions extends Base {
         return $field->getValue();
     }
 
-    public function validate()
+    public function validate():bool
     {
         $result = true;
         if(!$this->getPageTitle()){

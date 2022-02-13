@@ -5,6 +5,7 @@ import {TErrors} from '@common/object-input/types/TErrors';
 import {IObjectForm} from '@common/object-input/interfaces/components/IObjectForm';
 import {IObjectBus} from '@common/object-input/interfaces/bus/IObjectBus';
 import {IComposite} from '@common/object-input/interfaces/components/IComposite';
+import {TComposite} from '@common/object-input/types';
 import {TSettings} from '../types/TSettings';
 
 declare let settings:TSettings;
@@ -21,7 +22,7 @@ export class AppContainer implements IAppContainer {
 
     protected $submitButton:JQuery;
 
-    protected stack:TAbstractObject[] = [];
+    // protected stack:TAbstractObject[] = [];
 
     protected appCommands:IAppCommands;
 
@@ -75,8 +76,8 @@ export class AppContainer implements IAppContainer {
                 })
                 .catch((resp:any)=>{
                     this.showErrors(resp.errors);
-                    this.stack[this.stack.length - 1] = resp.item.object;
-                    this.objectBus.rerender('obj-form-key');
+                    this.objectForm.setData(resp.item.object);
+                    this.objectForm.rerender();
                 });
         })
     };
@@ -87,6 +88,11 @@ export class AppContainer implements IAppContainer {
             this.$keyError.text(errors['key'][0]);
             this.$keyError.addClass('is-invalid');
         }
+    }
+
+    public renderObjForm(data:TComposite)
+    {
+        this.objectForm.render(data);
     }
 
 }

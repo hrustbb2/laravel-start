@@ -23,7 +23,7 @@ class TopMenuItem extends AbstractComposite {
         $this->fields['href'] = $href;
     }
 
-    public function validate()
+    public function validate():bool
     {
         $result = true;
         if(!$this->getItemTitle()){

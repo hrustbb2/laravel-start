@@ -1,6 +1,7 @@
 import {IFileInput} from '../../interfaces/components/file-input/IFileInput';
 import {TValueObject} from '../../types/TValueObject';
 import {IFileInputBus} from '../../interfaces/bus/IFileInputBus';
+import 'jquery';
 
 export class FileInput implements IFileInput {
 
@@ -74,6 +75,7 @@ export class FileInput implements IFileInput {
         if(this.data.errors.length){
             this.$input.addClass('is-invalid');
             this.$errorMessage.text(this.data.errors[0]);
+            this.$errorMessage.css('display', 'block');
         }
     }
 
@@ -81,6 +83,7 @@ export class FileInput implements IFileInput {
     {
         this.$input.removeClass('is-invalid');
         this.$errorMessage.text('');
+        this.$errorMessage.hide();
     }
 
     public serialize():TValueObject

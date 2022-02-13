@@ -65,6 +65,11 @@ abstract class AbstractItem {
         }
     }
 
+    public function validate():bool
+    {
+        return $this->object->validate();
+    }
+
     abstract public function loadDir(array $dirData):void;
 
 }
