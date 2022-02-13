@@ -18901,6 +18901,35 @@ body {
   font-size: 12px;
   margin: 0 2px; }
 
+.fb-context-menu {
+  background-color: #e8e8e8;
+  border-radius: 5px;
+  width: 150px;
+  position: absolute;
+  z-index: 10000;
+  display: none; }
+
+.fb-context-menu-item:first-child {
+  border-radius: 5px 5px 0 0; }
+
+.fb-context-menu-item {
+  padding: 5px; }
+
+.fb-context-menu-item:last-child {
+  border-radius: 0 0 5px 5px; }
+
+.fb-context-menu-item:hover {
+  background-color: #bbbbbb;
+  cursor: pointer; }
+
+.fb-file-input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1; }
+
 .object-field:not(:first-child) {
   margin-top: 10px; }
 

@@ -13,10 +13,55 @@ class FilesBrowserControllers extends Controller {
         $factory = new CommonFactory();
         $path = $request->get('path') ?? '';
         $path = ($this->isPathVerify($path)) ? $path : '';
-        /** TODO Засунуть это в конфиг */
-        $resp = $factory->getFilesBrowser()->setRootDir(config('admin.filesBrowser.rootDir'));
+        $factory->getFilesBrowser()->setRootDir(config('admin.filesBrowser.rootDir'));
         $resp = $factory->getFilesBrowser()->scanDir($path);
         return response()->json($resp);
+    }
+
+    public function createDir(Request $request)
+    {
+        $path = $request->get('path');
+        if($this->isPathVerify($path)){
+            $factory = new CommonFactory();
+            $factory->getFilesBrowser()->setRootDir(config('admin.filesBrowser.rootDir'));
+            $resp = $factory->getFilesBrowser()->createDir($path);
+            return response()->json($resp);
+        }
+    }
+
+    public function renameFile(Request $request)
+    {
+        $path = $request->get('path');
+        $newPath = $request->get('new_path');
+        if($this->isPathVerify($path) && $this->isPathVerify($newPath)){
+            $factory = new CommonFactory();
+            $factory->getFilesBrowser()->setRootDir(config('admin.filesBrowser.rootDir'));
+            $resp = $factory->getFilesBrowser()->renameFile($path, $newPath);
+            return response()->json($resp);
+        }
+    }
+
+    public function deleteFile(Request $request)
+    {
+        $path = $request->get('path');
+        if($this->isPathVerify($path)){
+            $factory = new CommonFactory();
+            $factory->getFilesBrowser()->setRootDir(config('admin.filesBrowser.rootDir'));
+            $resp = $factory->getFilesBrowser()->deleteFile($path);
+            return response()->json($resp);
+        }
+    }
+
+    public function uploadFile(Request $request)
+    {
+        $path = $request->get('path') ?? '/';
+        $file = $request->file('file');
+        if($this->isPathVerify($path)){
+            $factory = new CommonFactory();
+            $factory->getFilesBrowser()->setRootDir(config('admin.filesBrowser.rootDir'));
+            $resp = $factory->getFilesBrowser()->uploadFile($path, $file);
+            return response()->json($resp);
+        }
     }
 
     protected function isPathVerify($path)

@@ -11,7 +11,7 @@ class Route extends RouteServiceProvider {
 
     public function map()
     {
-        RouteFacade::group(['middleware' => ['web']], function(){
+        RouteFacade::group(['middleware' => ['web', 'admin.auth']], function(){
             RouteFacade::prefix('admin/common')
                 ->as('admin.common.')
                 ->namespace($this->namespace)

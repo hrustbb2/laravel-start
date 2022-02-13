@@ -6,12 +6,16 @@ import {IBrowserModal} from '../../interfaces/components/file-input/IBrowserModa
 import {BrowserModal} from './BrowserModal';
 import {IItem} from '../../interfaces/components/file-input/IItem';
 import {Item} from './Item';
+import {IFileContextMenu} from '../../interfaces/components/file-input/IFileContextMenu';
+import {FileContextMenu} from './FileContextMenu';
 
 export class Factory implements IFactory {
 
     protected componentsFactory:IComponentsFactory;
 
     protected browserModal:IBrowserModal = null;
+
+    protected fileContextMenu:IFileContextMenu = null;
 
     public setComponentsFactory(factory:IComponentsFactory)
     {
@@ -30,6 +34,8 @@ export class Factory implements IFactory {
     {
         if(this.browserModal === null){
             this.browserModal = new BrowserModal();
+            let bus = this.componentsFactory.getAppFactory().getBusFactory().getFileInputBus();
+            this.browserModal.setFileInputBus(bus);
             this.browserModal.setItemCreator(()=>{
                 return this.createItem();
             });
@@ -49,6 +55,20 @@ export class Factory implements IFactory {
         let bus = this.componentsFactory.getAppFactory().getBusFactory().getFileInputBus();
         item.setFBBus(bus);
         return item;
+    }
+
+    public getFileContextMenu():IFileContextMenu
+    {
+        if(this.fileContextMenu === null){
+            this.fileContextMenu = new FileContextMenu();
+            let commands = this.componentsFactory.getAppFactory().getCommandsFactory().getFilesBrowserCommands();
+            this.fileContextMenu.setFilesBrowserCommands(commands);
+            let bus = this.componentsFactory.getAppFactory().getBusFactory().getFileInputBus();
+            this.fileContextMenu.setFileBrowserBus(bus);
+            $('body').append(this.fileContextMenu.template);
+            this.fileContextMenu.eventsListen();
+        }
+        return this.fileContextMenu;
     }
 
 }

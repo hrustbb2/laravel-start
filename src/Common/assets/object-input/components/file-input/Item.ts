@@ -75,6 +75,17 @@ export class Item implements IItem {
         this.$name.text(data.name);
     }
 
+    public rename(name:string)
+    {
+        this.data.name = name;
+        this.$name.text(name);
+    }
+
+    public getData():TFilesBrowserIcon
+    {
+        return this.data;
+    }
+
     public eventsListen()
     {
         this.$template.on('click', (e:Event)=>{
@@ -85,13 +96,17 @@ export class Item implements IItem {
                 this.selectFile(this.data.path + '/' + this.data.name);
             }
         });
+        this.template.on('contextmenu', (e:JQuery.Event)=>{
+            e.preventDefault();
+            this.bus.execItemContextMenu(e.pageX, e.pageY, this.data);
+        });
     }
 
     protected openDir()
     {
         this.commands.getDir(this.data.path + '/' + this.data.name)
             .then((resp:TFilesBrowserIcon[])=>{
-                this.bus.updateFileBrowser(resp);
+                this.bus.updateFileBrowser(resp, this.data.path + '/' + this.data.name);
             });
     }
 
