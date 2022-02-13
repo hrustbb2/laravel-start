@@ -7,9 +7,9 @@ use Src\Common\Interfaces\Adapters\IRoute;
 
 abstract class Page {
 
-    const CSS_VERSION = '3.0';
+    const CSS_VERSION = '4.0';
 
-    const JS_VERSION = '3.0';
+    const JS_VERSION = '4.0';
 
     protected IMenu $sidebar;
 

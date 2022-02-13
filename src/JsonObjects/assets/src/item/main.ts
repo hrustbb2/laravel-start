@@ -10,5 +10,6 @@ $(()=>{
     adminPanelFactory.initAdminPanel();
     let factory = new Factory();
     factory.init($('.js-app-container'));
-    factory.getComponentsFactory().getObjectForm('obj-form-key').render(settings.item.object);
+    factory.getComponentsFactory().getAppContainer().renderObjForm(settings.item.object);
+    // factory.getComponentsFactory().getObjectForm('obj-form-key').render(settings.item.object);
 });

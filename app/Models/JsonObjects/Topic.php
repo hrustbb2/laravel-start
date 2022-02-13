@@ -30,7 +30,7 @@ class Topic extends Base {
         $this->fields['text'] = $text;
     }
 
-    public function validate()
+    public function validate():bool
     {
         $result = true;
         if(!$this->getHeader()){

@@ -82,9 +82,13 @@ class Domain extends BaseDomain implements IDomain {
             $fullData = $this->dataBuilder->build($cleanData);
             $item = $this->dtoFactory->getItemFactory()->createPersist();
             $item->load($fullData);
-            $this->persistLayer->create($item);
             $this->item->load($item->getAttributes());
-            return true;
+            if($this->item->validate()){
+                $this->persistLayer->create($item);
+                return true;
+            }
+            $this->responseCode = self::VALIDATION_FAILED_CODE;
+            return false;
         }else{
             $this->errors = $this->validator->getErrors();
             $this->responseCode = self::VALIDATION_FAILED_CODE;
@@ -101,11 +105,13 @@ class Domain extends BaseDomain implements IDomain {
             $item = $this->dtoFactory->getItemFactory()->createPersist();
             $item->load($itemData);
             $item->update($cleanData);
-            $this->persistLayer->update($item);
             $this->item->load($item->getAttributes());
-            //$this->item->getObject()->validate();
-            //$this->responseCode = self::VALIDATION_FAILED_CODE;
-            return true;
+            if($this->item->validate()){
+                $this->persistLayer->update($item);
+                return true;
+            }
+            $this->responseCode = self::VALIDATION_FAILED_CODE;
+            return false;
         }else{
             $this->errors = $this->validator->getErrors();
             $this->responseCode = self::VALIDATION_FAILED_CODE;

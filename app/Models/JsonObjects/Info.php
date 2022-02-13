@@ -27,7 +27,7 @@ class Info extends Base {
         $this->fields['current_money'] = $currentMoney;
     }
 
-    public function validate()
+    public function validate():bool
     {
         $result = true;
         if(!$this->getLearners()){
