@@ -28,8 +28,12 @@ class Header extends Base {
     public function validate():bool
     {
         $result = true;
+        if(!$this->getBackgroundImage()){
+            $this->fields['bg']->appendErrorMessage('Обязательное поле');
+            $result = false;
+        }
         if(!$this->getHeader()){
-            $result = true;
+            $result = false;
             $this->fields['header']->appendErrorMessage('Поле обязательно');
         };
         return $result;
