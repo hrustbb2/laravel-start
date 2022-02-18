@@ -15,6 +15,16 @@ class ExampleComposit extends AbstractComposite {
         $file->setDescriptionStr('File');
         $this->fields['file'] = $file;
 
+        /** @var ImageObject */
+        $image = $this->fieldsFactory->createObjectField(AbstractComposite::IMAGE_TYPE);
+        $image->setDescriptionStr('Image');
+        $image->setPath('/uploads');
+        $this->fields['image'] = $image;
+
+        $color = $this->fieldsFactory->createObjectField(AbstractComposite::COLOR_TYPE);
+        $color->setDescriptionStr('Color');
+        $this->fields['color'] = $color;
+
         $name = $this->fieldsFactory->createObjectField(AbstractComposite::STRING_TYPE);
         $name->setDescriptionStr('name');
         $this->fields['name'] = $name;

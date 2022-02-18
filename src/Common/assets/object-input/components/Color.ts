@@ -2,12 +2,12 @@ import {TValueObject} from '../types/TValueObject';
 import {IValueObject} from '../interfaces/components/IValueObject';
 import 'jquery';
 
-export class String implements IValueObject {
+export class Color implements IValueObject {
 
     protected html:string = `
         <div class="object-field">
             <label class="form-label js-label"></label>
-            <input type="text" class="form-control js-input">
+            <input type="color" class="form-control js-input">
             <div class="invalid-feedback js-error-message"></div>
         </div>
     `;

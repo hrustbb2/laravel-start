@@ -8,7 +8,11 @@ abstract class AbstractObject {
     
     const TEXT_TYPE = 'text';
 
+    const COLOR_TYPE = 'color';
+
     const FILE_TYPE = 'file';
+
+    const IMAGE_TYPE = 'image';
 
     const ARRAY_TYPE = 'array';
 

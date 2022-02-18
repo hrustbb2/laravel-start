@@ -18930,6 +18930,9 @@ body {
   position: absolute;
   z-index: -1; }
 
+.img-prev {
+  margin-top: 5px; }
+
 .object-field:not(:first-child) {
   margin-top: 10px; }
 

@@ -6,7 +6,7 @@ use Src\Common\Dto\Object\AbstractComposite;
 use Src\Common\Dto\Object\AbstractObject;
 use Src\Common\Dto\Object\StringObject;
 use Src\Common\Dto\Object\TextObject;
-use Src\Common\Dto\Object\FileObject;
+use Src\Common\Dto\Object\ImageObject;
 
 class Topic extends Base {
 
@@ -17,8 +17,11 @@ class Topic extends Base {
         $this->type = self::TYPE;
         $this->setDescriptionStr('Topic');
 
-        $img = $this->fieldsFactory->createObjectField(AbstractComposite::FILE_TYPE);
+        /** @var ImageObject $img */
+        $img = $this->fieldsFactory->createObjectField(AbstractComposite::IMAGE_TYPE);
         $img->setDescriptionStr('Picture');
+        $img->setPath('/uploads');
+        $img->setAR(1);
         $this->fields['img'] = $img;
 
         $header = $this->fieldsFactory->createObjectField(AbstractObject::STRING_TYPE);
@@ -46,7 +49,7 @@ class Topic extends Base {
 
     public function getPicture()
     {
-        /** @var FileObject $field */
+        /** @var ImageObject $field */
         $field = $this->fields['img'];
         return $field->getValue();
     }

@@ -2,6 +2,8 @@ import {IFactory} from '../../interfaces/components/file-input/IFactory';
 import {IFactory as IComponentsFactory} from '../../interfaces/components/IFactory';
 import {IFileInput} from '../../interfaces/components/file-input/IFileInput';
 import {FileInput} from './FileInput';
+import {IImageInput} from '../../interfaces/components/file-input/IImageInput';
+import {ImageInput} from './ImageInput';
 import {IBrowserModal} from '../../interfaces/components/file-input/IBrowserModal';
 import {BrowserModal} from './BrowserModal';
 import {IItem} from '../../interfaces/components/file-input/IItem';
@@ -28,6 +30,14 @@ export class Factory implements IFactory {
         let bus = this.componentsFactory.getAppFactory().getBusFactory().getFileInputBus();
         fileInput.setBus(bus);
         return fileInput;
+    }
+
+    public createImageInput():IImageInput
+    {
+        let imageInput = new ImageInput();
+        let bus = this.componentsFactory.getAppFactory().getBusFactory().getFileInputBus();
+        imageInput.setBus(bus);
+        return imageInput;
     }
 
     public getBrowserModal():IBrowserModal

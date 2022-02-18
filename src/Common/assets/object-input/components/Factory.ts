@@ -10,6 +10,7 @@ import {ObjectForm} from './ObjectForm';
 import {IObjectForm} from '../interfaces/components/IObjectForm';
 import {String} from './String';
 import {Text} from './Text';
+import {Color} from './Color';
 import {ObjectsArray} from './ObjectsArray';
 import {ArrayItem} from './ArrayItem';
 import {IFactory as IFileInputFactory} from '../interfaces/components/file-input/IFactory';
@@ -64,6 +65,10 @@ export class Factory implements IFactory {
             let input = new Text();
             return input;
         }
+        if(type == EInputTypes.color){
+            let input = new Color();
+            return input;
+        }
         if(type == EInputTypes.array){
             let input = new ObjectsArray();
             input.setObjectBus(objectBus);
@@ -77,6 +82,10 @@ export class Factory implements IFactory {
         }
         if(type == EInputTypes.file){
             let input = this.getFileInputFactory().createFileInput();
+            return input;
+        }
+        if(type == EInputTypes.image){
+            let input = this.getFileInputFactory().createImageInput();
             return input;
         }
         let input = this.createComposite();
