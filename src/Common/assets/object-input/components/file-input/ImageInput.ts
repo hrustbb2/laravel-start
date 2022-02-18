@@ -148,6 +148,7 @@ export class ImageInput implements IImageInput {
             let imgW = img.width;
             if(this.data.ar == 0){
                 this.canvasContext.drawImage(img, 0, 0, imgW, imgH, 0, 0, canvasWidth, canvasHeight);
+                this.$preloader.hide();
                 return;
             }
             let dx = 0; let dy = 0;
