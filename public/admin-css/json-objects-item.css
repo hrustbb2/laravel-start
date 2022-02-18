@@ -18930,8 +18930,42 @@ body {
   position: absolute;
   z-index: -1; }
 
+.object-field .preloader {
+  position: absolute;
+  top: calc(50% - 40px);
+  left: calc(50% - 40px); }
+
 .img-prev {
   margin-top: 5px; }
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px; }
+
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  -webkit-animation: lds-dual-ring 1.2s linear infinite;
+          animation: lds-dual-ring 1.2s linear infinite; }
+
+@-webkit-keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
 
 .object-field:not(:first-child) {
   margin-top: 10px; }

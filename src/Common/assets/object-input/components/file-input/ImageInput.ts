@@ -20,7 +20,12 @@ export class ImageInput implements IImageInput {
                 </div>
             </div>
             <div class="invalid-feedback js-error-message"></div>
-            <canvas class="img-prev js-canvas"></canvas>
+            <div class="prev-container">
+                <canvas class="img-prev js-canvas"></canvas>
+                <div class="preloader js-preloader">
+                    <div class="lds-dual-ring"></div>
+                </div>
+            </div>
         </div>
     `;
 
@@ -35,6 +40,8 @@ export class ImageInput implements IImageInput {
     protected $errorMessage:JQuery;
 
     protected $prevImg:JQuery;
+
+    protected $preloader:JQuery;
 
     protected data:TImageObject;
 
@@ -61,6 +68,7 @@ export class ImageInput implements IImageInput {
         this.$input = this.$template.find('.js-input');
         this.$browserBtn = this.$template.find('.js-browser-btn');
         this.$errorMessage = this.template.find('.js-error-message');
+        this.$preloader = this.template.find('.js-preloader');
         this.$prevImg = this.template.find('.js-canvas');
         this.canvasContext = (<any>this.$prevImg.get(0)).getContext('2d');
     }
@@ -133,6 +141,7 @@ export class ImageInput implements IImageInput {
         let canvasWidth = this.$prevImg.attr('width');
         let canvasHeight = this.$prevImg.attr('height');
         let img = new Image();
+        this.$preloader.show();
         img.onload = ()=>{
             this.canvasContext.clearRect(0, 0, canvasWidth, canvasHeight);
             let imgH = img.height;
@@ -152,6 +161,7 @@ export class ImageInput implements IImageInput {
                 dy = (imgH - +canvasHeight * scale) / 2;
             }
             this.canvasContext.drawImage(img, dx, dy, imgW - 2*dx, imgH - 2*dy, 0, 0, canvasWidth, canvasHeight);
+            this.$preloader.hide();
         }
         img.src = this.data.path + fileName;
     }
